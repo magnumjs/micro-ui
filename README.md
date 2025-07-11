@@ -53,13 +53,13 @@ npm install @magnumjs/micro-ui
 import { createComponent } from '@magnumjs/micro-ui';
 
 export const Counter = createComponent(
-  ({ count = 0 }) => \`
+  ({ count = 0 }) => `
     <div>
-      <p>Count: \${count}</p>
+      <p>Count: ${count}</p>
       <button id="decrement">-</button>
       <button id="increment">+</button>
     </div>
-  \`,
+  `,
   {
     events: {
       'click #increment': function () {
