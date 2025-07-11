@@ -29,7 +29,8 @@ npm install
 To start the dev server (for docs and examples):
 
 ```bash
-npm install @magnumjs/micro-ui
+npm start
+Demo running at http://localhost:3000
 ```
 
 ## To consume the library as a client see this repo:
@@ -39,6 +40,12 @@ https://github.com/magnumjs/micro-ui-client
 ---
 
 ## 🛠 Usage Example
+
+Install the library
+
+```bash
+npm install @magnumjs/micro-ui
+```
 
 ### Counter Component
 
