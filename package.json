@@ -1,5 +1,5 @@
 {
-  "name": "microui",
+  "name": "@magnumjs/micro-ui",
   "version": "1.0.0",
   "description": "A tiny reactive component system with declarative slots, keyed lists, reactive props, and DOM diffing.",
   "main": "lib/reactive-core.js",
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/magnumjs/microui.git"
+    "url": "git+https://github.com/magnumjs/micro-ui.git"
   },
   "keywords": [
     "reactive",
@@ -42,7 +42,7 @@
   "author": "Michael Glazer",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/magnumjs/microui/issues"
+    "url": "https://github.com/magnumjs/micro-ui/issues"
   },
-  "homepage": "https://github.com/magnumjs/microui#readme"
+  "homepage": "https://github.com/magnumjs/micro-ui#readme"
 }

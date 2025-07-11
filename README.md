@@ -29,7 +29,7 @@ npm install
 To start the dev server (for docs and examples):
 
 ```bash
-npm start
+npm install @magnumjs/micro-ui
 ```
 
 ---
@@ -95,6 +95,7 @@ Start the docs server:
 
 ```bash
 npm start
+Demo running at http://localhost:3000
 ```
 
 ---
