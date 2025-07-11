@@ -14,7 +14,7 @@ A minimal reactive UI framework inspired by Vue, React, and Svelte — with zero
 - 🧱 Child component slots
 - 🧵 DOM diffing with keyed list rendering
 - 🧽 Built-in helpers to mount/unmount on demand (`mountTo`)
-- 📚 Auto-generated interactive documentation with Prettier formatting
+- 📚 Auto-generated interactive documentation with Prism formatting
 
 ---
 
@@ -50,7 +50,7 @@ npm install @magnumjs/micro-ui
 ### Counter Component
 
 ```js
-import { createComponent } from './lib/reactive-core.js';
+import { createComponent } from '@magnumjs/micro-ui';
 
 export const Counter = createComponent(
   ({ count = 0 }) => \`
@@ -99,7 +99,7 @@ Tests live under `__tests__/`.
 The `example/docs/` directory contains an auto-generated documentation UI with:
 
 - Live interactive demos
-- Prettified source code (via Prettier)
+- Prettified source code (via Prism)
 - Step-by-step API breakdown
 
 Start the docs server:
@@ -154,7 +154,7 @@ For keyed list rendering and patching.
 
 ## 🧼 Formatting
 
-Prettier runs in the browser to auto-format code in documentation:
+Prism runs in the browser to auto-format code in documentation:
 
 ```js
 <pre>
