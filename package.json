@@ -1,0 +1,48 @@
+{
+  "name": "microui",
+  "version": "1.0.0",
+  "description": "A tiny reactive component system with declarative slots, keyed lists, reactive props, and DOM diffing.",
+  "main": "lib/reactive-core.js",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "esbuild lib/reactive-core.js --bundle --minify --sourcemap --outfile=dist/reactive-core.js",
+    "prepublishOnly": "npm run build",
+    "start": "node server.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.12",
+    "express": "^4.18.4",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^30.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magnumjs/microui.git"
+  },
+  "keywords": [
+    "reactive",
+    "framework",
+    "minimal",
+    "vanilla-js",
+    "js",
+    "library",
+    "component",
+    "template",
+    "architecture",
+    "modular"
+  ],
+  "author": "Michael Glazer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/magnumjs/microui/issues"
+  },
+  "homepage": "https://github.com/magnumjs/microui#readme"
+}

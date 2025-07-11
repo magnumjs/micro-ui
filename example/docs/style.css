@@ -1,0 +1,48 @@
+body {
+  font-family: system-ui, sans-serif;
+  background: #f9f9f9;
+  padding: 2rem;
+}
+
+#storybook {
+  max-width: 800px;
+  margin: auto;
+}
+
+.story {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.story h2 {
+  margin-top: 0;
+}
+
+.story pre {
+  background: #f4f4f4;
+  padding: 0.5rem;
+  overflow-x: auto;
+}
+
+
+/* docs.css */
+.controls {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+}
+.controls label {
+  font-family: sans-serif;
+  margin: 0.25rem 0;
+  display: block;
+}
+.preview {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
