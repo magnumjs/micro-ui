@@ -32,6 +32,10 @@ To start the dev server (for docs and examples):
 npm install @magnumjs/micro-ui
 ```
 
+## To consume the library as a client see this repo:
+
+https://github.com/magnumjs/micro-ui-client
+
 ---
 
 ## 🛠 Usage Example
@@ -146,13 +150,11 @@ For keyed list rendering and patching.
 Prettier runs in the browser to auto-format code in documentation:
 
 ```js
-import prettier from 'prettier/standalone';
-import babelParser from 'prettier/parser-babel';
-
-const formatted = prettier.format(rawCode, {
-  parser: 'babel',
-  plugins: [babelParser],
-});
+<pre>
+  <code class="language-js">
+    ${escapeCode(LoggedIn.renderFn.toString())}
+  </code>
+</pre>
 ```
 
 ---
