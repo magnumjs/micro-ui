@@ -33,7 +33,7 @@ npm start
 Demo running at http://localhost:3000
 ```
 
-## To consume the library as a client see this repo:
+## To consume the library as a client see this repo
 
 https://github.com/magnumjs/micro-ui-client
 
