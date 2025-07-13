@@ -2,15 +2,16 @@
   "name": "@magnumjs/micro-ui",
   "version": "1.0.0",
   "description": "A tiny reactive component system with declarative slots, keyed lists, reactive props, and DOM diffing.",
-  "main": "lib/reactive-core.js",
+  "main": "dist/reactive-core.js",
   "type": "module",
   "files": [
     "dist",
     "README.md"
   ],
   "scripts": {
-    "build": "esbuild lib/reactive-core.js --bundle --minify --sourcemap --outfile=dist/reactive-core.js",
-    "prepublishOnly": "npm run build",
+    "bump": "npm version patch --no-git-tag-version",
+    "build": "node build.js",
+    "prepublishOnly": "npm run bump && npm run build",
     "start": "node server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
