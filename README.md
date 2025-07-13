@@ -35,7 +35,7 @@ Demo running at http://localhost:3000
 
 ## To consume the library as a client see this repo
 
-https://github.com/magnumjs/micro-ui-client
+[GitHub MicroUI Client](https://github.com/magnumjs/micro-ui-client)
 
 ---
 
@@ -72,6 +72,22 @@ export const Counter = createComponent(
   }
 );
 ```
+
+### Browser install
+```js
+<script src="//unpkg.com/@magnumjs/micro-ui"></script>
+```
+
+```js
+ const {
+   createComponent, createState
+ } = MicroUI;
+
+ const Hello = createComponent(() => `<h1>Hello World</h1>`);
+ Hello.mountTo("#app");
+ ```
+
+ [JS Bin](https://jsbin.com/socuzavojo/edit?js,output)
 
 Mount it in your app:
 
