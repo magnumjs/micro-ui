@@ -3,7 +3,11 @@
 [![npm version](https://img.shields.io/npm/v/@magnumjs/micro-ui.svg)](https://www.npmjs.com/package/@magnumjs/micro-ui)
 [![Build Status](https://github.com/magnumjs/micro-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/magnumjs/micro-ui/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@magnumjs/micro-ui)](https://bundlephobia.com/package/@magnumjs/micro-ui)
+[![npm downloads](https://img.shields.io/npm/dw/@magnumjs/micro-ui)](https://www.npmjs.com/package/@magnumjs/micro-ui)
+[![Known Vulnerabilities](https://snyk.io/test/npm/@magnumjs/micro-ui/badge.svg)](https://snyk.io/test/npm/@magnumjs/micro-ui)
+[![Bundle Size](https://pkg-size.dev/badge/bundle/2278)](https://pkg-size.dev/@magnumjs/micro-ui)
+
+<!-- [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@magnumjs/micro-ui)](https://bundlephobia.com/package/@magnumjs/micro-ui) -->
 
 A minimal reactive UI framework inspired by Vue, React, and Svelte — with zero dependencies and a beautiful, built-in documentation viewer.
 
