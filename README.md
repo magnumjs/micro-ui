@@ -84,6 +84,14 @@ export const Counter = createComponent(
 );
 ```
 
+Mount it in your app:
+
+```js
+Counter.mountTo('#app');
+Counter.update({ count: 0 });
+```
+
+
 ### Browser install
 ```js
 <script src="//unpkg.com/@magnumjs/micro-ui"></script>
@@ -99,13 +107,6 @@ export const Counter = createComponent(
  ```
 
  [JS Bin](https://jsbin.com/socuzavojo/edit?js,output)
-
-Mount it in your app:
-
-```js
-Counter.mountTo('#app');
-Counter.update({ count: 0 });
-```
 
 ---
 
