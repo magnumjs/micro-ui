@@ -1,6 +1,6 @@
 {
   "name": "@magnumjs/micro-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tiny reactive component system with declarative slots, keyed lists, reactive props, and DOM diffing.",
   "main": "dist/reactive-core.js",
   "type": "module",
