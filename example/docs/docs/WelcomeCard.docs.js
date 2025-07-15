@@ -1,9 +1,10 @@
-import { WelcomeCard } from '../../components/WelcomeCard.js';
-import { escapeCode } from '../utils/escapeCode.js';
+import { WelcomeCard } from "../../components/WelcomeCard.js";
+import { escapeCode } from "../utils/escapeCode.js";
+import { authState } from "../utils/state.js";
 
 export function renderWelcomeCardDocs() {
-  const section = document.createElement('section');
-  section.id = 'welcome-card';
+  const section = document.createElement("section");
+  section.id = "welcome-card";
 
   section.innerHTML = `
     <h2>👋 WelcomeCard Component</h2>
@@ -12,21 +13,25 @@ export function renderWelcomeCardDocs() {
 
     <div class="step">
       <h4>1. Define the Component</h4>
-       <pre><code class="language-js">${escapeCode(WelcomeCard.renderFn.toString())}</code></pre>
+       <pre class="line-numbers"><code class="language-js">${escapeCode(
+         WelcomeCard.renderFn.toString()
+       )}</code></pre>
     </div>
 
     <div class="step">
       <h4>2. Mount to DOM</h4>
-       <pre><code class="language-js">WelcomeCard.mountTo('#welcome-demo');</code></pre>
+       <pre class="line-numbers"><code class="language-js">WelcomeCard.mountTo('#welcome-demo');</code></pre>
     </div>
 
     <div class="step">
       <h4>3. Update Reactively</h4>
-       <pre><code class="language-js">WelcomeCard.update({ user: { name: 'Alice' } });</code></pre>
+       <pre class="line-numbers"><code class="language-js">WelcomeCard.update({ user: { name: 'Alice' } });</code></pre>
     </div>
   `;
 
-  document.getElementById('docs-root').appendChild(section);
-  WelcomeCard.mountTo('#welcome-demo');
-  WelcomeCard.update({ user: { name: 'Alice' } });
+  document.getElementById("docs-root").appendChild(section);
+  WelcomeCard.mountTo("#welcome-demo");
+  authState.subscribe((state) => {
+    WelcomeCard.update({ user: state.user });
+  });
 }

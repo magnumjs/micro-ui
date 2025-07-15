@@ -6,26 +6,16 @@ import { fetchUser, loginUser, logoutUser } from "./logic.js";
 import { initTodoList } from "./components/TodoList.init.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+AuthCard.mountTo('#auth');
 
   // WelcomeCard
   // WelcomeCard
   WelcomeCard.mountTo("#examples");
-  appState.subscribe((state) => {
-    WelcomeCard.update({ user: state.user });
-  });
-  fetchUser();
 
-
-  // Initial state
-Counter.mountTo('#counter');
-Counter.update({ count: 0 });
-
-
-
-AuthCard.mountTo('#auth');
 
   // Subscribe to state changes
   appState.subscribe((state) => {
+    console.log("State changed:", state);
     WelcomeCard.update({ user: state.user });
     AuthCard.update({
       user: state.user,
@@ -37,6 +27,13 @@ AuthCard.mountTo('#auth');
     });
   });
 
+  // Initial state
+Counter.mountTo('#counter');
+Counter.update({ count: 0 });
+
+    fetchUser();
+// initTodoList('#todos');
+
+
 });
 
-initTodoList('#todos');

@@ -7,6 +7,7 @@ export function fetchUser() {
 }
 
 export function loginUser(name) {
+  console.log("Logging in user:", name);
   appState.setState({ user: { name } });
 }
 

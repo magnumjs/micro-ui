@@ -1,32 +1,36 @@
-import { createComponent } from '../../lib/reactive-core.js';
-import { Card } from './Card.js';
-import { LoginForm } from './LoginForm.js';
-import { LoggedIn } from './LoggedIn.js';
+import { createComponent } from "../../lib/reactive-core.js";
+import { Card } from "./Card.js";
+import { LoginForm } from "./LoginForm.js";
+import { LoggedIn } from "./LoggedIn.js";
 
-export const AuthCard = createComponent(({ user, onLogin, onLogout }) => {
-  const children = user
-    ? `
-      ${LoggedIn.render({ user, onLogout })}
-      <button id="logout" style="margin-top: 1rem;">Log Out</button>
-    `
-    : LoginForm.render();
+export const AuthCard = createComponent(
+  ({ user, onLogin, onLogout }) => {
+    const children = user
+      ? LoggedIn.render({ user, onLogout }) +
+        `<button id="logout" style="margin-top: 1rem;">Log Out</button>`
+      : LoginForm.render();
 
-  return Card.render({
-    title: user ? 'Welcome Back' : 'Please Log In',
-    children,
-  });
-},
+    return Card.render({
+      title: user ? "Welcome Back" : "Please Log In",
+      children, // this gets slotted into Card
+    });
+  },
   {
     events: {
-      'click #logout': function (e) {
-        // Call onLogout callback passed via props
+      "click #logout": function () {
         this.props.onLogout?.();
       },
-      // Optionally delegate login events here too if LoginForm's buttons are inside children
-      'submit #login-form': function (e) {
+      "submit #login-form": function (e) {
         e.preventDefault();
-        const usernameInput = this.el.querySelector('#username');
-        if (usernameInput?.value) {
+        const usernameInput = this.el.querySelector("#username");
+        const passwordInput = this.el.querySelector("#password");
+        console.log(
+          "Login form submitted with:",
+          usernameInput?.value,
+          passwordInput?.value
+        );
+        if (usernameInput?.value && passwordInput?.value) {
+          console.log("Logging in user:", usernameInput.value, this.props);
           this.props.onLogin?.(usernameInput.value);
         }
       },
