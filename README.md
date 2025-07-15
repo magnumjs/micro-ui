@@ -7,23 +7,20 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Known Vulnerabilities](https://snyk.io/test/npm/@magnumjs/micro-ui/badge.svg)](https://snyk.io/test/npm/@magnumjs/micro-ui)
 
-
-
-A minimal reactive UI framework inspired by Vue, React, and Svelte — with zero dependencies and a beautiful, built-in documentation viewer.
+A tiny reactive UI library with components, state management, and DOM diffing — no build step required.
 
 ---
 
 ## ✨ Features
 
-- 🔁 Reactive state management (`createState`)
-- 🧩 Declarative component system (`createComponent`)
-- 🎯 Event binding via selectors (`events: { 'click .btn': fn }`)
-- 🧠 Lifecycle hooks (`onMount`, `onDestroy`)
-- 🎛️ Reactive props with automatic re-rendering
-- 🧱 Child component slots
-- 🧵 DOM diffing with keyed list rendering
-- 🧽 Built-in helpers to mount/unmount on demand (`mountTo`)
-- 📚 Auto-generated interactive documentation with Prism formatting
+- ✅ Declarative component creation with `createComponent`
+- ⚡ Reactive global state with `createState`
+- 🧠 DOM diffing with keyed list support
+- 🧩 `<slot></slot>` and named slot support
+- 🔁 `renderList` with smart diffing and reordering
+- 🎯 `this.refs` for easy DOM node access
+- ⚙️ Lifecycle hooks: `onMount`, `onDestroy`
+- 📦 Zero dependencies, no build tools
 
 ---
 
@@ -59,9 +56,11 @@ npm install @magnumjs/micro-ui
 ### Counter Component
 
 ```js
-import { createComponent } from '@magnumjs/micro-ui';
+import { createComponent, createState } from "@magnumjs/micro-ui";
 
-export const Counter = createComponent(
+const state = createState({ count: 0 });
+
+const Counter = createComponent(
   ({ count = 0 }) => `
     <div>
       <p>Count: ${count}</p>
@@ -71,11 +70,11 @@ export const Counter = createComponent(
   `,
   {
     events: {
-      'click #increment': function () {
-        this.update({ count: this.props.count + 1 });
+      "click #increment": function () {
+        state.setState({ count: state.get().count + 1 });
       },
-      'click #decrement': function () {
-        this.update({ count: this.props.count - 1 });
+      "click #decrement": function () {
+        state.setState({ count: state.get().count - 1 });
       },
     },
   }
@@ -85,26 +84,27 @@ export const Counter = createComponent(
 Mount it in your app:
 
 ```js
-Counter.mountTo('#app');
-Counter.update({ count: 0 });
+Counter.mountTo("#app");
+
+state.subscribe(({ count }) => {
+  Counter.update({ count });
+});
 ```
 
-
 ### Browser install
+
 ```js
 <script src="//unpkg.com/@magnumjs/micro-ui"></script>
 ```
 
 ```js
- const {
-   createComponent, createState
- } = MicroUI;
+const { createComponent, createState } = MicroUI;
 
- const Hello = createComponent(() => `<h1>Hello World</h1>`);
- Hello.mountTo("#app");
- ```
+const Hello = createComponent(() => `<h1>Hello World</h1>`);
+Hello.mountTo("#app");
+```
 
- [JS Bin](https://jsbin.com/socuzavojo/edit?js,output)
+[JS Bin](https://jsbin.com/socuzavojo/edit?js,output)
 
 ---
 
@@ -148,6 +148,81 @@ All can be found in [`example/components/`](./example/components).
 
 ---
 
+## 🧩 Named Slots
+
+```js
+const Card = createComponent(
+  ({ title, children, slots = {} }) => `
+  <div class="card">
+    <header>${title}</header>
+    <main>${slots.default ?? children}</main>
+    <footer>${slots.footer ?? ""}</footer>
+  </div>
+`
+);
+```
+
+**Usage:**
+
+```js
+Card.update({
+  title: "Hello",
+  slots: {
+    default: "<p>This is the main content</p>",
+    footer: "<small>Footer info</small>",
+  },
+});
+```
+
+---
+
+## 🔁 renderList + diffHTML
+
+```js
+import { renderList } from "@magnumjs/micro-ui";
+
+const List = createComponent(
+  ({ items }) => `
+  <ul>
+    ${renderList(
+      items,
+      (item) => `<li>${item.text}</li>`,
+      (item) => item.id
+    )}
+  </ul>
+`
+);
+```
+
+When `items` change, DOM is updated in-place using keys for performance.
+
+---
+
+## 🔍 Using this.refs
+
+Refs give you easy access to named DOM nodes using `data-ref="name"`.
+
+```js
+const Login = createComponent(
+  () => `
+  <form>
+    <input type="text" data-ref="username" />
+    <button data-ref="submit">Login</button>
+  </form>
+`,
+  {
+    onMount() {
+      this.refs.submit.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("Username:", this.refs.username.value);
+      });
+    },
+  }
+);
+```
+
+---
+
 ## 🧩 API
 
 ### `createComponent(templateFn, options)`
@@ -165,6 +240,7 @@ All can be found in [`example/components/`](./example/components).
 ### `renderList(array, renderFn, keyFn)`
 
 For keyed list rendering and patching.
+Smart keyed list renderer. Keys are used in data-key="..." for diffing.
 
 ---
 
@@ -183,10 +259,8 @@ For keyed list rendering and patching.
 Prism runs in the browser to auto-format code in documentation:
 
 ```js
-<pre>
-  <code class="language-js">
-    ${escapeCode(LoggedIn.renderFn.toString())}
-  </code>
+<pre class="line-numbers">
+  <code class="language-js">${escapeCode(LoggedIn.renderFn.toString())}</code>
 </pre>
 ```
 
