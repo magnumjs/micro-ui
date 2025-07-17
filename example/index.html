@@ -66,6 +66,10 @@
         class="tag logic">logic</span>, and <span class="tag view">view</span>.
     </p>
 
+    <h2>📚 Docs</h2>
+
+    <a href="/docs">View the full documentation</a>
+
     <h2>📚 API</h2>
 
     <h3><code>createState(initialState)</code> <span
@@ -73,7 +77,8 @@
     <p>
       Creates a reactive state container.
     </p>
-     <pre class="line-numbers"><code class="language-js">const state = createState({ count: 0 });
+    <pre
+      class="line-numbers"><code class="language-js">const state = createState({ count: 0 });
 
 state.subscribe(newState => {
   console.log(newState.count);
@@ -86,18 +91,14 @@ state.setState({ count: 1 });</code></pre>
     <p>
       Declares a UI component from a render function that receives props.
     </p>
-     <pre class="line-numbers"><code class="language-js">const Counter = createComponent(({ count }) => `
+    <pre
+      class="line-numbers"><code class="language-js">const Counter = createComponent(({ count }) => `
   &lt;h1&gt;Count: ${count}&lt;/h1&gt;
   &lt;button id="inc"&gt;+&lt;/button&gt;
 `);
 
 Counter.mount(document.getElementById('app'));
 Counter.update({ count: 0 });</code></pre>
-
-
-    <h2>📚 Docs</h2>
-
-    <a href="/docs">View the full documentation</a>
 
     <h2>🧪 Examples</h2>
 

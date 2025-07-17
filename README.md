@@ -233,7 +233,7 @@ const Login = createComponent(
 
 ### `createState(initialState)`
 
-- `.get()` → current state
+- `.getState()` → current state
 - `.setState(next)` → updates state
 - `.subscribe(fn)` → listen to changes
 
@@ -246,11 +246,15 @@ Smart keyed list renderer. Keys are used in data-key="..." for diffing.
 
 ## ✨ Built-in Helpers
 
-- `Component.mountTo(selector)` → mount component to a DOM node
+- `Component.mountTo(selector)` → mount component to a DOM selector
+- `Component.mount(domElement)` → mount component to a DOM node
 - `Component.update(newProps)` → update props and re-render
+- `Component.render(newProps)` → render String for DOM
 - `Component.destroy()` → remove from DOM
+- `Component.renderFn` → String of Component Function
 - `Component.el` → direct DOM reference
 - `Component.props` → current props
+- `Component.refs` → current DOmNode references
 
 ---
 
