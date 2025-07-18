@@ -3,6 +3,7 @@ import { Counter } from "./components/Counter.js";
 import { AuthCard } from "./components/AuthCard.js";
 import { appState } from "./state.js";
 import { fetchUser, loginUser, logoutUser } from "./logic.js";
+import ShowHide from "./components/ShowHide.js";
 import { initTodoList } from "./components/TodoList.init.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -32,8 +33,10 @@ Counter.mountTo('#counter');
 Counter.update({ count: 0 });
 
     fetchUser();
-// initTodoList('#todos');
+ initTodoList('#todos');
 
+  ShowHide.mountTo("#message");
+  ShowHide.update({ showMessage: true }); 
 
 });
 

@@ -1,6 +1,6 @@
 {
   "name": "@magnumjs/micro-ui",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A tiny reactive component system with declarative slots, keyed lists, reactive props, and DOM diffing.",
   "type": "module",
   "main": "dist/magnumjs-micro-ui.js",
@@ -20,7 +20,7 @@
     "build": "node build.js",
     "prepublishOnly": "npm run bump && npm run build",
     "start": "node server.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --coverageReporters=text --coverageReporters=html --coverageDirectory=coverage"
   },
   "publishConfig": {
     "access": "public"

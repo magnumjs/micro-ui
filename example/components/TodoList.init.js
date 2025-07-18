@@ -1,10 +1,10 @@
-import { TodoList } from './TodoList.js';
-import { createState } from '../lib/reactive-core.js';
+import { TodoList } from "./TodoList.js";
+import { createState } from "../lib/reactive-core.js";
 
 const state = createState({
   todos: [
-    { id: 1, text: 'Learn reactive-core', done: false },
-    { id: 2, text: 'Write a TodoList', done: false },
+    { id: 1, text: "Learn reactive-core", done: false },
+    { id: 2, text: "Write a TodoList", done: false },
   ],
 });
 
@@ -24,23 +24,19 @@ const handlers = {
   },
   onAdd: (text) => {
     state.setState(({ todos }) => ({
-      todos: [
-        ...todos,
-        { id: Date.now(), text, done: false },
-      ],
+      todos: [...todos, { id: Date.now(), text, done: false }],
     }));
   },
 };
 
 export function initTodoList(selector) {
-TodoList.mountTo('#todo-demo');
+  TodoList.mountTo("#todo-demo");
 
-// Subscribe only to update `todos`, and merge in static handlers
-state.subscribe(({ todos }) => {
-  TodoList.update({
-    todos,
-    ...handlers,
+  // Subscribe only to update `todos`, and merge in static handlers
+  state.subscribe(({ todos }) => {
+    TodoList.update({
+      todos,
+      ...handlers,
+    });
   });
-});
-
 }

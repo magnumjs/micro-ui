@@ -9,6 +9,7 @@ export const Counter = createComponent(
       <p>Count: ${count}</p>
       <button id="decrement">-</button>
       <button id="increment">+</button>
+      <button id="reset">Reset</button>
     </div>
   `,
   {
@@ -21,6 +22,9 @@ export const Counter = createComponent(
         internalCount--;
         this.update({ count: internalCount });
       },
+      'click #reset': function () {
+        this.reset()
+      },
     },
   }
 );
@@ -28,4 +32,5 @@ export const Counter = createComponent(
 // Add a reset function for tests to reset internal state
 Counter.reset = () => {
   internalCount = 0;
+  Counter.update({ count: internalCount });
 };
