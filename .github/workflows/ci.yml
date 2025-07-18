@@ -25,3 +25,6 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+      - name: Cleanup coverage directory
+        run: rm -rf coverage
