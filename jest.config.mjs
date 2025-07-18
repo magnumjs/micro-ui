@@ -1,10 +1,10 @@
 // jest.config.mjs
 export default {
   transform: {},
-  extensionsToTreatAsEsm: ['.js'],
   testEnvironment: 'jsdom',
   collectCoverage: true,
   coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'html'],
   coverageThreshold: {
     global: {
       branches: 90,
