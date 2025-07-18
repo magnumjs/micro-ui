@@ -17,12 +17,10 @@ A minimalist reactive component library with support for state, props, named slo
 - Diffing DOM updates for performance
 - Full unit test coverage
 
-## 📖 [Core API Docs](./README-API.md)
-
 ## 🚀 Getting Started
 
 ```bash
-npm install @magnumjs/micro-ui
+npm i @magnumjs/micro-ui
 ```
 
 ```js
@@ -87,6 +85,10 @@ const Card = createComponent(() => `
   </section>
 `);
 ```
+
+## 📖 [Core API Docs](./README-API.md)
+
+## 🧩 [MicroUI Client Example](https://github.com/magnumjs/micro-ui-client)
 
 ## 🧪 Testing
 
