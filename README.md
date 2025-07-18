@@ -17,6 +17,8 @@ A minimalist reactive component library with support for state, props, named slo
 - Diffing DOM updates for performance
 - Full unit test coverage
 
+## 📖 [Core API Docs](./README-API.md)
+
 ## 🚀 Getting Started
 
 ```bash
