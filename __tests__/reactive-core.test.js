@@ -231,5 +231,32 @@ describe("createComponent", () => {
     comp.mount(container); 
     expect(container.innerHTML).toBe("<p></p>");
   });
+it('this.props = props; // ✅ Keep api.props up-to-date for event handlers', () => {
+    const renderFn = `<p>Test</p>`;
+    const comp = createComponent(renderFn);
+    comp.mount(container);
+    expect(comp.props).toEqual({});
+  });
+  it('this.props can be access within createComponent', () => {
+    const renderFn = function() {
+      return `<p>${this.props.text}</p>`;
+    };
+    const comp = createComponent(renderFn);
+    comp.mount(container);
+    comp.update({ text: "Hello" });
+    expect(container.innerHTML).toContain("Hello");
+  });
+  it('this.props can be access within createComponent after update', () => {
+    const renderFn = function() {
+      return `<p>${this.props.text}</p>`;
+    }
+    const comp = createComponent(renderFn);
+    comp.mount(container);    
+    comp.update({ text: "Hello" });    
+    expect(container.innerHTML).toContain("Hello");    
+    comp.update({ text: "World" });    
+    expect(container.innerHTML).toContain("World");    
+  });
+  
 
 });
