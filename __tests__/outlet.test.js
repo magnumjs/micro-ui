@@ -1,5 +1,5 @@
 import { describe, it, expect } from "@jest/globals";
-import { Outlet } from "../lib/outlet.js"; // wherever you put the helper
+import Outlet from "../lib/outlet.js"; // wherever you put the helper
 
 describe("Outlet helper", () => {
   it("replaces unnamed <slot> with string children", () => {

@@ -49,4 +49,15 @@ describe('renderList and DOM diffing', () => {
     Component.update({ items: [{ id: 2, label: 'Two' }] }); // drop one
     expect(root.innerHTML).not.toContain('One');
   });
+  it('if currentNode !== existing', () => {
+    Component.update({ items: [{ id: 1, label: 'One' }, { id: 2, label: 'Two' }] });
+    const firstNode = root.querySelector('[data-key="1"]');
+
+    // Update the first item
+    Component.update({ items: [{ id: 1, label: 'Updated One' }, { id: 2, label: 'Two' }] });
+
+    const updatedNode = root.querySelector('[data-key="1"]');
+    expect(updatedNode).not.toBe(firstNode); // ✅ should be a different node
+    expect(updatedNode.innerHTML).toContain('Updated One');
+  });
 });
