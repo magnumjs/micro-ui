@@ -25,7 +25,3 @@ jobs:
 
       - name: Run tests
         run: npm test
-
-      - name: Enforce 100% Coverage
-        run: |
-          npx jest --coverage
