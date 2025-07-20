@@ -14,7 +14,8 @@ A minimalist reactive component library with support for state, props, named slo
 - Props are read-only (passed in by parent)
 - Named and default slots (`<slot name="...">` and `data-slot="..."` support)
 - Support for `this.refs` inside components
-- Diffing DOM updates for performance
+- Lifecycle hooks: `onBeforeMount`, `onMount`, `onBeforeUnmount`, `onUnmount`
+- Diffing DOM updates for performance with `data-key="..."`
 - Full unit test coverage
 
 ## 🚀 Getting Started
@@ -85,7 +86,28 @@ const Card = createComponent(() => `
   </section>
 `);
 ```
+## 🔁 Lifecycle Hooks
 
+```js
+createComponent(
+  () => "<p>Lifecycle</p>",
+  {
+    onBeforeMount() {
+      // Called before initial mount (async supported)
+    },
+    onMount() {
+      // Called after initial mount
+    },
+    onBeforeUnmount(next) {
+      // Delay unmount with callback or Promise or just sync
+      setTimeout(() => next(), 100);
+    },
+    onUnmount() {
+      // Final cleanup logic
+    }
+  }
+);
+```
 ## 📖 [Core API Docs](./README-API.md)
 
 ## 🧩 [MicroUI Client Example](https://github.com/magnumjs/micro-ui-client)
@@ -110,6 +132,13 @@ open coverage/index.html
 - `components/` – reusable UI components
 - `example/` – live demos and docs
 - `__tests__/` – Jest unit tests
+
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome!
 
 ---
 

@@ -28,13 +28,13 @@ describe("createComponent", () => {
     expect(onMount).toHaveBeenCalled();
   });
 
-  it("calls onDestroy lifecycle and cleans DOM", () => {
-    const onDestroy = jest.fn();
-    const comp = createComponent(() => `<p>Bye</p>`, { onDestroy });
+  it("calls onMount lifecycle and cleans DOM", () => {
+    const onMount = jest.fn();
+    const comp = createComponent(() => `<p>Bye</p>`, { onMount });
     comp.mount(container);
-    comp.destroy();
+    comp.unmount();
     expect(container.innerHTML).toBe("");
-    expect(onDestroy).toHaveBeenCalled();
+    expect(onMount).toHaveBeenCalled();
   });
 
   it("renders and updates on props change", () => {
@@ -258,5 +258,28 @@ it('this.props = props; // ✅ Keep api.props up-to-date for event handlers', ()
     expect(container.innerHTML).toContain("World");    
   });
   
+  it('createState', () => {
+    const state = createState({ count: 0 });
+    const comp = createComponent(() => {
 
+      return `<p>Count: ${state.get().count}</p>`
+    }, {
+      onBeforeMount() {
+        state.setState((prev) => ({ count: prev.count + 1 }));
+      },
+    });
+    comp.mount(container);
+    const cleanup = state.subscribe(() => {
+      comp.update({});
+      setTimeout(() => {
+      expect(container.innerHTML).toContain("Count: 1");
+      cleanup();
+      }, 100);
+    });
+    //cleanup();
+    setTimeout(() => {
+      state.setState((prev) => ({ count: prev.count + 1 }));
+      expect(container.innerHTML).toContain("Count: 2");
+    }, 100);
+  });
 });

@@ -1,6 +1,8 @@
+
 // jest.config.mjs
 export default {
   transform: {},
+  "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
   testEnvironment: 'jsdom',
   collectCoverage: true,
   coverageDirectory: 'coverage',

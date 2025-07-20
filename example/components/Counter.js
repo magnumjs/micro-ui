@@ -5,11 +5,11 @@ let internalCount = 0;
 
 export const Counter = createComponent(
   ({ count = internalCount }) => `
-    <div>
-      <p>Count: ${count}</p>
-      <button id="decrement">-</button>
-      <button id="increment">+</button>
-      <button id="reset">Reset</button>
+    <div data-testid="counter-root">
+      <p data-testid="count-display">Count: ${count}</p>
+      <button id="decrement" data-testid="decrement-button">-</button>
+      <button id="increment" data-testid="increment-button">+</button>
+      <button id="reset" data-testid="reset-button">Reset</button>
     </div>
   `,
   {
@@ -23,7 +23,7 @@ export const Counter = createComponent(
         this.update({ count: internalCount });
       },
       'click #reset': function () {
-        this.reset()
+        this.reset();
       },
     },
   }

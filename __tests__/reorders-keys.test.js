@@ -24,7 +24,7 @@ describe('DOM diffing - reorders keyed elements', () => {
   });
 
   afterEach(() => {
-    Component.destroy();
+    Component.unmount();
     document.body.innerHTML = '';
   });
 

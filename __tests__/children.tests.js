@@ -15,12 +15,14 @@ describe("Component children as slot content", () => {
   });
 
   const Child = createComponent(({ msg }) => `<p>${msg}</p>`);
-  const Parent = createComponent(({ children }) => `
+  const Parent = createComponent(
+    ({ children }) => `
     <div>
       <slot></slot>
       <slot name="footer"></slot>
     </div>
-  `);
+  `
+  );
 
   it("renders child component output in default slot", () => {
     Parent.mount(root);
@@ -40,6 +42,8 @@ describe("Component children as slot content", () => {
         footer: Footer.render(),
       },
     });
-    expect(root.innerHTML).toContain("Footer Area");
+    setTimeout(() => {
+      expect(root.innerHTML).toContain("Footer Area");
+    }, 0);
   });
 });

@@ -24,7 +24,7 @@ describe('renderList and DOM diffing', () => {
   });
 
   afterEach(() => {
-    Component.destroy();
+    Component.unmount();
     document.body.innerHTML = '';
   });
 
