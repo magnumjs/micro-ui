@@ -161,7 +161,7 @@ Auto-populated with the Parent `Node` after mount.
 ### `Comp.refs`
 Auto-populated with `[data-ref="name"]` nodes after mount.
 ### `Comp.props`
-Auto-populated with `props` nodes before each render.
+Auto-populated with `props` from `Comp.update(nextProps)` before each render.
 ### `Comp.state`
 Auto-populated with `state` after setState.
 
