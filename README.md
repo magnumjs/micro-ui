@@ -35,7 +35,7 @@ import { createComponent } from "@magnumjs/micro-ui";
 ## 🧬 Component Example
 
 ```js
-const MyCard = createComponent(({ title = "", children }) => `
+const MyCard = createComponent(({ props: { title = "", children }}) => `
   <div class="card">
     <header data-slot="header">${title}</header>
     <main><slot></slot></main>
@@ -122,12 +122,12 @@ createComponent(
 
 ```js
 const Comp = createComponent(({ state, setState, props, refs }) => {
-  return state.show ? \`
+  return state.show ? `
     <div data-ref="container">
       <span>${state.count}</span>
       <button data-ref="inc">+</button>
     </div>
-  \` : null;
+  ` : null;
 }, {
   state: { count: 0, show: true },
   on: {

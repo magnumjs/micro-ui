@@ -61,7 +61,7 @@ import { createComponent, createState } from "@magnumjs/micro-ui";
 const state = createState({ count: 0 });
 
 const Counter = createComponent(
-  ({ props: { count = 0 } }) => `
+  ({ props: { count = 0 }}) => `
     <div>
       <p>Count: ${count}</p>
       <button id="decrement">-</button>
@@ -152,7 +152,7 @@ All can be found in [`example/components/`](./example/components).
 
 ```js
 const Card = createComponent(
-  ({ title, children, slots = {} }) => `
+  ({ props: { title, children, slots = {} }}) => `
   <div class="card">
     <header>${title}</header>
     <slot>default content</slot>
@@ -164,7 +164,7 @@ const Card = createComponent(
 
 ```js
 const Card = createComponent(
-  ({ title, children, slots = {} }) => `
+  ({ props: { title, children, slots = {} }}) => `
   <div class="card">
     <header>${title}</header>
     <main>${slots.default ?? children}</main>
@@ -185,7 +185,7 @@ Card.update({
   },
 });
 ```
-[JSBin](https://jsbin.com/vasacohomu/edit?js,output)
+[JSBin](https://jsbin.com/bisafiyaga/edit?js,output)
 
 ---
 
@@ -195,7 +195,7 @@ Card.update({
 import { renderList } from "@magnumjs/micro-ui";
 
 const List = createComponent(
-  ({ items }) => `
+  ({ props: { items }}) => `
   <ul>
     ${renderList(
       items,
@@ -233,16 +233,16 @@ const Login = createComponent(
   }
 );
 ```
-
+[JSBin](https://jsbin.com/jimapayahu/edit?js,output)
 ---
 
 ## 🧩 API
 
 ### `createComponent(templateFn, options)`
 
-- `templateFn(props)` → HTML string
-- `options.events` → event delegation map
-- `options.onMount` / `onDestroy` → lifecycle hooks
+- `templateFn({props, state, setState, refs})` → HTML string
+- `options.on` → event delegation map
+- `options.onMount` / `onUnmount` / `onBeforeMount` / `onBeforeUnmount` → lifecycle hooks
 
 ### `createState(initialState)`
 
