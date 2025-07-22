@@ -166,7 +166,7 @@ If `render()` returns `null`, the previous DOM is cached and restored if `render
 Renders keyed list efficiently:
 
 ```js
-renderList(data, item => \`<li>${item.label}</li>\`, item => item.id);
+renderList(data, item => `<li>${item.label}</li>`, item => item.id);
 ```
 
 Auto-wraps each root tag with `data-key` for DOM diffing.
@@ -178,9 +178,9 @@ Auto-wraps each root tag with `data-key` for DOM diffing.
 
 ```js
 const Counter = createComponent(({ state, setState }) => {
-  return \`
+  return `
     <button data-ref="btn">${state.count}</button>
-  \`;
+  `;
 }, {
   state: { count: 0 },
   on: {
