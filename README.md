@@ -154,9 +154,16 @@ const Comp = createComponent(({ state, setState, props, refs }) => {
 - `Comp.update(nextProps)` — Update props and re-render
 - `Comp.setState(nextState)` — Trigger state update
 - `Comp.unmount()` — Cleanly unmount component
+- `Comp.renderFn()` — Returns the original component as String
 
+### `Comp.el`
+Auto-populated with the Parent `Node` after mount.
 ### `Comp.refs`
 Auto-populated with `[data-ref="name"]` nodes after mount.
+### `Comp.props`
+Auto-populated with `props` nodes before each render.
+### `Comp.state`
+Auto-populated with `state` after setState.
 
 ### DOM Caching on `null`
 If `render()` returns `null`, the previous DOM is cached and restored if `render()` returns content again.
@@ -166,6 +173,8 @@ If `render()` returns `null`, the previous DOM is cached and restored if `render
 Renders keyed list efficiently:
 
 ```js
+import { renderList } from "@magnumjs/micro-ui";
+
 renderList(data, item => `<li>${item.label}</li>`, item => item.id);
 ```
 
