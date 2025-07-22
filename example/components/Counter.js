@@ -1,36 +1,28 @@
 // example/components/Counter.js
-import { createComponent } from '../../lib/reactive-core.js';
-
-let internalCount = 0;
+import { createComponent } from "../../lib/reactive-core.js";
 
 export const Counter = createComponent(
-  ({ count = internalCount }) => `
-    <div data-testid="counter-root">
-      <p data-testid="count-display">Count: ${count}</p>
-      <button id="decrement" data-testid="decrement-button">-</button>
-      <button id="increment" data-testid="increment-button">+</button>
-      <button id="reset" data-testid="reset-button">Reset</button>
-    </div>
-  `,
+  ({ state }) => {
+    return `
+      <div>
+          <p data-testid="count-display">Count: ${state.count || 0}</p>
+          <button data-testid="decrement-button">-</button>
+          <button data-testid="increment-button">+</button>
+          <button data-testid="reset-button">Reset</button>
+        </div>
+    `;
+  },
   {
-    events: {
-      'click #increment': function () {
-        internalCount++;
-        this.update({ count: internalCount });
-      },
-      'click #decrement': function () {
-        internalCount--;
-        this.update({ count: internalCount });
-      },
-      'click #reset': function () {
-        this.reset();
-      },
+    state: { count: 0 },
+    on: {
+      'click [data-testid="increment-button"]': ({ setState }) =>
+        setState((s) => ({ count: s.count + 1 })),
+
+      'click [data-testid="decrement-button"]': ({ setState }) =>
+        setState((s) => ({ count: s.count - 1 })),
+
+      'click [data-testid="reset-button"]': ({ setState }) =>
+        setState({ count: 0 }),
     },
   }
 );
-
-// Add a reset function for tests to reset internal state
-Counter.reset = () => {
-  internalCount = 0;
-  Counter.update({ count: internalCount });
-};

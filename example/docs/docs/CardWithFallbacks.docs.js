@@ -46,7 +46,7 @@ CardWithFallbacks.update({
 
   document.getElementById("docs-root").appendChild(section);
 
-  CardWithFallbacks.mountTo("#fallback-card-demo");
+  CardWithFallbacks.mount("#fallback-card-demo");
   CardWithFallbacks.update({
     slots: {
       header: "<h1>🪄 Hello from Slot</h1>",

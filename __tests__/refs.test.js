@@ -14,7 +14,7 @@ describe('this.refs support in createComponent', () => {
   });
 
   afterEach(() => {
-    if (Component?.destroy) Component.destroy();
+    if (Component?.unmount) Component.unmount();
     document.body.innerHTML = '';
   });
 
@@ -33,7 +33,7 @@ describe('this.refs support in createComponent', () => {
   });
 
   it('updates refs after update', () => {
-    Component = createComponent(({ showExtra = false }) => `
+    Component = createComponent(({ props: {showExtra = false} }) => `
       <div>
         <input data-ref="email" />
         ${showExtra ? `<input data-ref="extra" />` : ``}
@@ -51,7 +51,7 @@ describe('this.refs support in createComponent', () => {
   });
 
   it('clears stale refs on update', () => {
-    Component = createComponent(({ show }) => `
+    Component = createComponent(({ props: {show} }) => `
       <div>
         ${show ? `<div data-ref="foo">Visible</div>` : ''}
       </div>

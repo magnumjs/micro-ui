@@ -4,7 +4,7 @@ import { LoginForm } from "./LoginForm.js";
 import { LoggedIn } from "./LoggedIn.js";
 
 export const AuthCard = createComponent(
-  ({ user, onLogin, onLogout }) => {
+  ({ props: {user, onLogin, onLogout} }) => {
     const children = user
       ? LoggedIn.render({ user, onLogout }) +
         `<button id="logout" style="margin-top: 1rem;">Log Out</button>`
@@ -16,12 +16,13 @@ export const AuthCard = createComponent(
     });
   },
   {
-    events: {
+    on: {
       "click #logout": function () {
         this.props.onLogout?.();
       },
-      "submit #login-form": function (e) {
-        e.preventDefault();
+      "submit #login-form": function ({event}) {
+        console.log("Login form submitted",this.el );
+        event.preventDefault();
         const usernameInput = this.el.querySelector("#username");
         const passwordInput = this.el.querySelector("#password");
         console.log(

@@ -30,7 +30,7 @@ export function renderWelcomeCardDocs() {
   `;
 
   document.getElementById("docs-root").appendChild(section);
-  WelcomeCard.mountTo("#welcome-demo");
+  WelcomeCard.mount("#welcome-demo");
   authState.subscribe((state) => {
     WelcomeCard.update({ user: state.user });
   });

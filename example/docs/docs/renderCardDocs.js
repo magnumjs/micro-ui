@@ -36,7 +36,7 @@ Card.update({
   document.getElementById("docs-root").appendChild(section);
 
   // Live Demo
-  Card.mountTo("#card-demo");
+  Card.mount("#card-demo");
   Card.update({
     title: "Hello Slots",
     slots: {

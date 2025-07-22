@@ -4,19 +4,16 @@
 import { screen, fireEvent } from '@testing-library/dom';
 import { Counter } from '../example/components/Counter.js';
 
-describe('Counter Component', () => {
-  let container;
+document.body.innerHTML = '<div id="test-root"></div>';
 
+describe('Counter Component', () => {
   beforeEach(() => {
-    document.body.innerHTML = '<div id="test-root"></div>';
-    // container = document.getElementById('test-root');
-    Counter.mountTo('#test-root');
-    Counter.update({ count: 0 });
+    Counter.mount('#test-root');
   });
 
   afterEach(() => {
     Counter.unmount();
-    Counter.reset();
+    Counter.setState({ count: 0 }); // resets for next test
   });
 
   it('renders initial count', () => {
@@ -38,7 +35,10 @@ describe('Counter Component', () => {
   });
 
   it('resets the count on reset click', async () => {
-    Counter.update({ count: 5 });
+    // manually bump count before testing reset
+    Counter.setState({ count: 5 });
+    expect(screen.getByTestId('count-display').textContent).toContain('Count: 5');
+
     const resetBtn = await screen.findByTestId('reset-button');
     fireEvent.click(resetBtn);
 

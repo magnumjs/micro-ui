@@ -5,7 +5,7 @@
 import { createComponent, renderList } from "../lib/reactive-core.js";
 import { fireEvent, screen } from '@testing-library/dom';
 
-describe("DOM diffing - reorders keyed elements", () => {
+describe("diffHTML branch coverage: moves existing DOM nodes", () => {
   let root;
   let Component;
 
@@ -13,11 +13,13 @@ describe("DOM diffing - reorders keyed elements", () => {
     root = document.createElement("div");
     document.body.appendChild(root);
 
-    // Component returns just the list items — no wrapping div
     Component = createComponent(({ props }) => {
+      // if (!props.items || props.items.length === 0) {
+      //   return `<p>No items found.</p>`; // Or a loading spinner
+      // }
       return `<ul data-testid="list"> ${renderList(
         props.items || [],
-        (item) => `<div>${item.label}</div>`,
+        (item) => `<div data-key="${item.id}">${item.label}</div>`,
         (item) => item.id
       )} </ul>`;
     });
@@ -30,38 +32,44 @@ describe("DOM diffing - reorders keyed elements", () => {
     document.body.innerHTML = "";
   });
 
-  test("moves existing DOM node when order changes (covers insertBefore)", () => {
-    // Initial render with two items
+  test("moves existing DOM node when order changes (forces insertBefore)", () => {
+    // Initial render: id order 1,2,3
     Component.update({
       items: [
         { id: 1, label: "One" },
         { id: 2, label: "Two" },
+        { id: 3, label: "Three" },
       ],
     });
 
-    // Check initial keyed nodes exist
+    
+    // Immediately after update, DOM should have 3 children
+    expect(screen.getByTestId("list").children.length).toBe(3);
+
     const oneBefore = root.querySelector('[data-key="1"]');
     const twoBefore = root.querySelector('[data-key="2"]');
-    expect(oneBefore).not.toBeNull();
-    expect(twoBefore).not.toBeNull();
+    const threeBefore = root.querySelector('[data-key="3"]');
 
-    // Update with reversed order
+    // Reorder nodes
     Component.update({
       items: [
         { id: 2, label: "Two" },
         { id: 1, label: "One" },
+        { id: 3, label: "Three" },
       ],
     });
 
     const oneAfter = root.querySelector('[data-key="1"]');
     const twoAfter = root.querySelector('[data-key="2"]');
+    const threeAfter = root.querySelector('[data-key="3"]');
 
-    // Same DOM nodes reused
+    // Nodes should be reused
     expect(oneAfter).toStrictEqual(oneBefore);
     expect(twoAfter).toStrictEqual(twoBefore);
+    expect(threeAfter).toStrictEqual(threeBefore);
 
-    // The order of the children should now be ["2", "1"]
-    const childrenKeys = Array.from(screen.getByTestId("list").children).map((el) => el.dataset.key);
-    expect(childrenKeys).toEqual(["2", "1"]);
+    // The new DOM order should be [2,1,3]
+    const keys = Array.from(screen.getByTestId("list").children).map((el) => el.dataset.key);
+    expect(keys).toEqual(["2", "1", "3"]);
   });
 });

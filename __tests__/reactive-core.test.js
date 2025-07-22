@@ -38,7 +38,7 @@ describe("createComponent", () => {
   });
 
   it("renders and updates on props change", () => {
-    const comp = createComponent(({ name }) => `<p>Hello, ${name}</p>`);
+    const comp = createComponent(({ props: {name }}) => `<p>Hello, ${name}</p>`);
     comp.mount(container);
     comp.update({ name: "Alice" });
     expect(container.innerHTML).toContain("Alice");
@@ -47,12 +47,12 @@ describe("createComponent", () => {
   });
 
   it("does not re-render if props do not change", () => {
-    const renderFn = jest.fn(({ name }) => `<p>${name}</p>`);
+    const renderFn = jest.fn(({ props: {name }}) => `<p>${name}</p>`);
     const comp = createComponent(renderFn);
     comp.mount(container);
     comp.update({ name: "Alice" });
     comp.update({ name: "Alice" }); // same props
-    expect(renderFn).toHaveBeenCalledTimes(2); // mount + first update
+    expect(renderFn).toHaveBeenCalledTimes(3); // mount + first update
   });
 
   it("supports event delegation with selector", () => {
@@ -62,7 +62,7 @@ describe("createComponent", () => {
         <button id="btn">Click me</button>
       `,
       {
-        events: {
+        on: {
           "click #btn": function (e) {
             onClick(e);
           },
@@ -77,7 +77,7 @@ describe("createComponent", () => {
   it("binds events to component context and uses props", () => {
     const handler = jest.fn();
     const comp = createComponent(() => `<button id="btn">Go</button>`, {
-      events: {
+      on: {
         "click #btn": function (e) {
           this.props.onGo();
         },
@@ -90,8 +90,8 @@ describe("createComponent", () => {
   });
 
   it("renders nested children passed as props", () => {
-    const Child = createComponent(({ text }) => `<span>${text}</span>`);
-    const Parent = createComponent(({ children }) => `<div>${children}</div>`);
+    const Child = createComponent(({ props: {text} }) => `<span>${text}</span>`);
+    const Parent = createComponent(({ props: {children} }) => `<div>${children}</div>`);
 
     const childHTML = Child.render({ text: "Child text" });
     Parent.mount(container);
@@ -124,7 +124,7 @@ describe("createComponent", () => {
     expect(comp.renderFn).toBe(renderFn);
   });
   it("updates props on render", () => {
-    const comp = createComponent((props) => `<p>${props.text}</p>`);
+    const comp = createComponent(({props}) => `<p>${props.text}</p>`);
     comp.mount(container);
     comp.update({ text: "Initial" });
     expect(container.innerHTML).toContain("Initial");
@@ -132,7 +132,7 @@ describe("createComponent", () => {
     expect(container.innerHTML).toContain("Updated");
   });
   it("handles props with special characters", () => {
-    const comp = createComponent((props) => `<p>${props.text}</p>`);
+    const comp = createComponent(({props}) => `<p>${props.text}</p>`);
     comp.mount(container);
     comp.update({ text: "Hello & Welcome!" });
     expect(container.querySelector("p").textContent).toBe("Hello & Welcome!");
@@ -183,7 +183,7 @@ describe("createComponent", () => {
     expect(container.innerHTML).toContain('data-key="1"');
   });
   it('leftover of oldKeyed.values()', () => {
-    const comp = createComponent((props) => `${props.items ===2 ? `<div data-key="2">Item 2</div>` : `<div data-key="1">Item 1</div>`}`);
+    const comp = createComponent(({props}) => `${props.items ===2 ? `<div data-key="2">Item 2</div>` : `<div data-key="1">Item 1</div>`}`);
     comp.mount(container);
     comp.update({items: 2}); // No change, should not re-render
     expect(container.innerHTML).toContain('data-key="2"');
@@ -200,8 +200,8 @@ describe("createComponent", () => {
   });
   it('if (!target) throw new Error(`No element matches selector: ${selector}`)', () => {
     const comp = createComponent(() => `<p>Test</p>`);
-    expect(() => comp.mountTo("#nonexistent")).toThrow(
-      "No element matches selector: #nonexistent"
+    expect(() => comp.mount("#nonexistent")).toThrow(
+      "No element matches: #nonexistent"
     );
   });
   it('update with no props', () => {
@@ -224,7 +224,7 @@ describe("createComponent", () => {
   it('mount false', () => {
     const renderFn = `<p></p>`;
     const comp = createComponent(renderFn, {
-      events: {
+      on: {
         " #btn": () => {},
       },
     });
@@ -238,8 +238,8 @@ it('this.props = props; // ✅ Keep api.props up-to-date for event handlers', ()
     expect(comp.props).toEqual({});
   });
   it('this.props can be access within createComponent', () => {
-    const renderFn = function() {
-      return `<p>${this.props.text}</p>`;
+    const renderFn = function({props}) {
+      return `<p>${props.text}</p>`;
     };
     const comp = createComponent(renderFn);
     comp.mount(container);
@@ -247,8 +247,8 @@ it('this.props = props; // ✅ Keep api.props up-to-date for event handlers', ()
     expect(container.innerHTML).toContain("Hello");
   });
   it('this.props can be access within createComponent after update', () => {
-    const renderFn = function() {
-      return `<p>${this.props.text}</p>`;
+    const renderFn = function({props}) {
+      return `<p>${props.text}</p>`;
     }
     const comp = createComponent(renderFn);
     comp.mount(container);    

@@ -7,14 +7,14 @@ describe("Component children as slot content", () => {
     document.body.appendChild(root);
   });
   afterEach(() => {
-    Parent?.destroy?.();
-    Child?.destroy?.();
+    Parent?.unmount?.();
+    Child?.unmount?.();
     if (root) root.remove();
     document.body.innerHTML = "";
     root = null;
   });
 
-  const Child = createComponent(({ msg }) => `<p>${msg}</p>`);
+  const Child = createComponent(({ props: {msg} }) => `<p>${msg}</p>`);
   const Parent = createComponent(
     ({ children }) => `
     <div>

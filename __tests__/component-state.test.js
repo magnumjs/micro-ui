@@ -15,8 +15,8 @@ describe("createComponent with internal state", () => {
   });
 
   it("initializes with default state and updates DOM on setState", () => {
-    const Box = createComponent(function () {
-      const count = this.state.count ?? 0;
+    const Box = createComponent(function ({state}) {
+      const count = state.count ?? 0;
       return `<div><p>Count: ${count}</p></div>`;
     });
 
@@ -28,13 +28,13 @@ describe("createComponent with internal state", () => {
   });
 
   it("supports functional setState updater", () => {
-    const Counter = createComponent(function () {
-      const count = this.state.count ?? 0;
+    const Counter = createComponent(function ({state}) {
+      const count = state.count ?? 0;
       return `<div><button id="inc">+</button><p>${count}</p></div>`;
     }, {
-      events: {
-        "click #inc": function () {
-          this.setState(prev => ({ count: (prev.count || 0) + 1 }));
+      on: {
+        "click #inc": function ({setState}) {
+          setState(prev => ({ count: (prev.count || 0) + 1 }));
         }
       }
     });
@@ -50,9 +50,9 @@ describe("createComponent with internal state", () => {
   it("does not rerender if setState is called with unchanged values", () => {
     const renderSpy = jest.fn();
 
-    const Comp = createComponent(function () {
+    const Comp = createComponent(function ({state}) {
       renderSpy();
-      const msg = this.state.msg ?? "Hi";
+      const msg = state.msg ?? "Hi";
       return `<p>${msg}</p>`;
     });
 
@@ -64,9 +64,9 @@ describe("createComponent with internal state", () => {
   });
 
   it("updates when props change separately from state", () => {
-    const Comp = createComponent(function ({ title }) {
-      const count = this.state.count ?? 0;
-      return `<h1>${title}</h1><p>${count}</p>`;
+    const Comp = createComponent(function ({ props, state, setState }) {
+      const count = state.count ?? 0;
+      return `<h1>${props.title}</h1><p>${count}</p>`;
     });
 
     Comp.mount(container);
@@ -78,8 +78,8 @@ describe("createComponent with internal state", () => {
   });
 
   it("has access to props/state/setState inside event handlers", () => {
-    const Comp = createComponent(function () {
-      const visible = this.state.visible ?? false;
+    const Comp = createComponent(function ({state}) {
+      const visible = state.visible ?? false;
       return `
         <div>
           <button id="toggle">Toggle</button>
@@ -87,7 +87,7 @@ describe("createComponent with internal state", () => {
         </div>
       `;
     }, {
-      events: {
+      on: {
         "click #toggle": function () {
           this.setState(prev => ({ visible: !prev.visible }));
         }

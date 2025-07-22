@@ -1,6 +1,6 @@
 import { createComponent } from '../../lib/reactive-core.js';
 // example/components/NamedSlotsCard.js
-const NamedSlotsCard = createComponent(({ title, slots = {}, children }) => `
+const NamedSlotsCard = createComponent(({ props : {title, slots = {}, children } }) => `
   <div class="card">
     <h3>${title}</h3>
     <div class="body">

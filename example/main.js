@@ -7,11 +7,11 @@ import ShowHide from "./components/ShowHide.js";
 import { initTodoList } from "./components/TodoList.init.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-AuthCard.mountTo('#auth');
+AuthCard.mount('#auth');
 
   // WelcomeCard
   // WelcomeCard
-  WelcomeCard.mountTo("#examples");
+  WelcomeCard.mount("#examples");
 
 
   // Subscribe to state changes
@@ -29,13 +29,13 @@ AuthCard.mountTo('#auth');
   });
 
   // Initial state
-Counter.mountTo('#counter');
+Counter.mount('#counter');
 Counter.update({ count: 0 });
 
     fetchUser();
  initTodoList('#todos');
 
-  ShowHide.mountTo("#message");
+  ShowHide.mount("#message");
   ShowHide.update({ showMessage: true }); 
 
 });

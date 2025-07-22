@@ -10,12 +10,16 @@ A minimalist reactive component library with support for state, props, named slo
 
 ## ✨ Features
 
-- Reactive `state` and `setState` per component
+- `createComponent()` with internal `state`, `setState`, and `refs`
 - Props are read-only (passed in by parent)
+- Declarative rendering using template strings or render functions
 - Named and default slots (`<slot name="...">` and `data-slot="..."` support)
 - Support for `this.refs` inside components
-- Lifecycle hooks: `onBeforeMount`, `onMount`, `onBeforeUnmount`, `onUnmount`
+- Lifecycle hooks: `onMount`, `onUnmount`, `onBeforeMount`, `onBeforeUnmount`
 - Diffing DOM updates for performance with `data-key="..."`
+- Keyed list rendering with `renderList()` for efficient updates
+- DOM caching when `render()` returns `null`
+- Event binding via `on` option (e.g. `"click .btn"`)
 - Full unit test coverage
 
 ## 🚀 Getting Started
@@ -43,7 +47,7 @@ const MyCard = createComponent(({ title = "", children }) => `
 ## ✅ Mounting & Updating
 
 ```js
-MyCard.mountTo("#demo");
+MyCard.mount("#demo");
 MyCard.update({
   children: {
     default: "<p>Hello world!</p>",
@@ -65,7 +69,7 @@ const Counter = createComponent(function () {
   onMount() {
     this.setState({ count: 0 });
   },
-  events: {
+  on: {
     "click button"(e) {
       this.setState((s) => ({ count: s.count + 1 }));
     }
@@ -112,27 +116,82 @@ createComponent(
 
 ## 🧩 [MicroUI Client Example](https://github.com/magnumjs/micro-ui-client)
 
+## 🧱 API
+
+### `createComponent(renderFn, options)`
+
+```js
+const Comp = createComponent(({ state, setState, props, refs }) => {
+  return state.show ? \`
+    <div data-ref="container">
+      <span>${state.count}</span>
+      <button data-ref="inc">+</button>
+    </div>
+  \` : null;
+}, {
+  state: { count: 0, show: true },
+  on: {
+    "click [data-ref='inc']": ({ setState, state }) => {
+      setState({ count: state.count + 1 });
+    }
+  },
+  onMount() {
+    console.log("Mounted!");
+  },
+  onBeforeUnmount(cleanup) {
+    console.log("Before unmount");
+    cleanup();
+  },
+  onUnmount() {
+    console.log("Unmounted!");
+  }
+});
+```
+
+### Instance Methods
+
+- `Comp.mount(target)` — Mount to target container
+- `Comp.update(nextProps)` — Update props and re-render
+- `Comp.setState(nextState)` — Trigger state update
+- `Comp.unmount()` — Cleanly unmount component
+
+### `Comp.refs`
+Auto-populated with `[data-ref="name"]` nodes after mount.
+
+### DOM Caching on `null`
+If `render()` returns `null`, the previous DOM is cached and restored if `render()` returns content again.
+
+## 🔁 `renderList(array, renderFn, keyFn?)`
+
+Renders keyed list efficiently:
+
+```js
+renderList(data, item => \`<li>${item.label}</li>\`, item => item.id);
+```
+
+Auto-wraps each root tag with `data-key` for DOM diffing.
+
 ## 🧪 Testing
 
-Run all tests with coverage:
 
-```bash
-npm test
+## ✅ Example Test Case
+
+```js
+const Counter = createComponent(({ state, setState }) => {
+  return \`
+    <button data-ref="btn">${state.count}</button>
+  \`;
+}, {
+  state: { count: 0 },
+  on: {
+    "click [data-ref='btn']": ({ state, setState }) => {
+      setState({ count: state.count + 1 });
+    }
+  }
+});
 ```
 
-Check coverage in HTML:
-
-```bash
-open coverage/index.html
-```
-
-## 📁 Folder Structure
-
-- `lib/` – core rendering engine
-- `components/` – reusable UI components
-- `example/` – live demos and docs
-- `__tests__/` – Jest unit tests
-
+Mount and assert changes after click.
 
 ---
 

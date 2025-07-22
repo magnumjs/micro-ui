@@ -1,6 +1,6 @@
 import { createComponent } from '/lib/reactive-core.js';
 
-export const WelcomeCard = createComponent(({ user }) => {
+export const WelcomeCard = createComponent(({ props : { user } }) => {
   console.log(`[reactive-core] Rendering WelcomeCard with user:`, user);
   if (!user) return `<div>Loading...</div>`;
   return `

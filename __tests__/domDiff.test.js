@@ -13,7 +13,7 @@ describe('renderList and DOM diffing', () => {
     document.body.appendChild(root);
 
     Component = createComponent(
-      ({ items = [] }) => `
+      ({ props: {items = []} }) => `
         <div>
           ${renderList(items, (item) => `<div>${item.label}</div>`, (item) => item.id)}
         </div>

@@ -60,5 +60,5 @@ this.refs.submitBtn // ➜ &lt;button /&gt;
     },
   });
 
-  RefsExample.mountTo("#refs-demo");
+  RefsExample.mount("#refs-demo");
 }

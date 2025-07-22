@@ -11,7 +11,7 @@ export const ToggleBox = createComponent(
     `;
   },
   {
-    events: {
+    on: {
       "click #toggle-btn": function () {
         this.setState((prev) => ({ isOn: !prev.isOn }));
       },

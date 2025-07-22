@@ -48,7 +48,7 @@ state.subscribe(({ todos }) => {
     ],
   });
 
-  TodoList.mountTo('#todo-demo');
+  TodoList.mount('#todo-demo');
 
   state.subscribe(({ todos }) => {
     TodoList.update({

@@ -28,6 +28,6 @@ export function renderCounterDocs() {
   `;
 
   document.getElementById('docs-root').appendChild(section);
-  Counter.mountTo('#counter-demo');
+  Counter.mount('#counter-demo');
   Counter.update({ count: 0 });
 }

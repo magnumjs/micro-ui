@@ -32,9 +32,9 @@ describe("Conditional Rendering & Lifecycle", () => {
     LoginForm = createComponent(() => `<button id="login">Log In</button>`, {
       onMount: loginMount,
       onUnmount: loginDestroy,
-      events: {
-        click(e) {
-          if (e.target.id === "login") {
+      on: {
+        click({event}) {
+          if (event.target.id === "login") {
             appState.setState({ user: { name: "Tester" } });
           }
         },
@@ -42,7 +42,7 @@ describe("Conditional Rendering & Lifecycle", () => {
     });
 
     LoggedIn = createComponent(
-      ({ user }) => {
+      ({ props: {user} }) => {
         if (!user) return `<p>No user info</p>`;
         return `<h1>Welcome, ${user.name}!</h1>`;
       },

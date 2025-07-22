@@ -61,7 +61,7 @@ import { createComponent, createState } from "@magnumjs/micro-ui";
 const state = createState({ count: 0 });
 
 const Counter = createComponent(
-  ({ count = 0 }) => `
+  ({ props: { count = 0 } }) => `
     <div>
       <p>Count: ${count}</p>
       <button id="decrement">-</button>
@@ -69,12 +69,12 @@ const Counter = createComponent(
     </div>
   `,
   {
-    events: {
+    on: {
       "click #increment": function () {
-        state.setState({ count: state.get().count + 1 });
+        state.setState({ count: state.count + 1 });
       },
       "click #decrement": function () {
-        state.setState({ count: state.get().count - 1 });
+        state.setState({ count: state.count - 1 });
       },
     },
   }
@@ -84,7 +84,7 @@ const Counter = createComponent(
 Mount it in your app:
 
 ```js
-Counter.mountTo("#app");
+Counter.mount("#app");
 
 state.subscribe(({ count }) => {
   Counter.update({ count });
@@ -101,7 +101,7 @@ state.subscribe(({ count }) => {
 const { createComponent, createState } = MicroUI;
 
 const Hello = createComponent(() => `<h1>Hello World</h1>`);
-Hello.mountTo("#app");
+Hello.mount("#app");
 ```
 
 [JS Bin](https://jsbin.com/socuzavojo/edit?js,output)
@@ -259,15 +259,15 @@ Smart keyed list renderer. Keys are used in data-key="..." for diffing.
 
 ## ✨ Built-in Helpers
 
-- `Component.mountTo(selector)` → mount component to a DOM selector
-- `Component.mount(domElement)` → mount component to a DOM node
+- `Component.mount(domElement | selector)` → mount component to a DOM node OR DOM selector
 - `Component.update(newProps)` → update props and re-render
 - `Component.render(newProps)` → render String for DOM
-- `Component.destroy()` → remove from DOM
+- `Component.unmount()` → remove from DOM
 - `Component.renderFn` → String of Component Function
 - `Component.el` → direct DOM reference
 - `Component.props` → current props
 - `Component.refs` → current DOmNode references
+- `Component.state` → current DOmNode state
 
 ---
 

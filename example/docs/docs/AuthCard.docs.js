@@ -60,7 +60,7 @@ authState.subscribe((state) => {
   // Subscribe to update the AuthCard on state changes
 
   // Mount the AuthCard component into DOM
-  AuthCard.mountTo("#auth-demo");
+  AuthCard.mount("#auth-demo");
 
   authState.subscribe((state) => {
     AuthCard.update({

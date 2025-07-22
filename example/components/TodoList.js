@@ -1,7 +1,7 @@
 import { createComponent, renderList } from '../lib/reactive-core.js';
 
 export const TodoList = createComponent(
-  ({ todos = [], onToggle, onRemove, onAdd }) => {
+  ({ props:{todos = [], onToggle, onRemove, onAdd} }) => {
     const items = renderList(
       todos,
       (todo) => `
@@ -26,9 +26,10 @@ export const TodoList = createComponent(
     `;
   },
   {
-    events: {
-      'submit #add-form': function (e) {
-        e.preventDefault();
+    on: {
+      'submit #add-form': function ({event}) {
+        console.log(event)
+        event.preventDefault();
         const input = this.el.querySelector('#new-todo');
         const text = input.value.trim();
         if (text) {
@@ -36,12 +37,12 @@ export const TodoList = createComponent(
           input.value = '';
         }
       },
-      'click .remove': function (e) {
-        const id = e.target.dataset.id;
+      'click .remove': function ({event}) {
+        const id = event.target.dataset.id;
         this.props.onRemove?.(id);
       },
-      'click input[type="checkbox"]': function (e) {
-        const id = e.target.dataset.id;
+      'click input[type="checkbox"]': function ({event}) {
+        const id = event.target.dataset.id;
         this.props.onToggle?.(id);
       },
     },

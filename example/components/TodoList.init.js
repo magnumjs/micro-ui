@@ -30,7 +30,7 @@ const handlers = {
 };
 
 export function initTodoList(selector) {
-  TodoList.mountTo("#todo-demo");
+  TodoList.mount("#todo-demo");
 
   // Subscribe only to update `todos`, and merge in static handlers
   state.subscribe(({ todos }) => {

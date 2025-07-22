@@ -1,6 +1,6 @@
 import { createComponent } from "../lib/reactive-core.js";
 
-export const CardWithFallbacks = createComponent(({ slots = {} }) => {
+export const CardWithFallbacks = createComponent(({ props : {slots = {} } }) => {
   return `
     <div class="card">
       <header>

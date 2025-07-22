@@ -2,7 +2,7 @@ import { createComponent } from "../lib/reactive-core.js";
 import { Message } from "./Message.js";
 
 const ShowHide = createComponent(
-  ({ showMessage }) => `
+  ({ props:{showMessage} }) => `
     <div>
       <div id="msg-area">
         ${Message.render({ visible: showMessage }) ?? ""}
@@ -12,7 +12,7 @@ const ShowHide = createComponent(
     </div>
   `,
   {
-    events: {
+    on: {
       "click #toggle-btn": function () {
         const next = !this.props.showMessage;
         this.update({ showMessage: next });
