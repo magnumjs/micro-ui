@@ -104,7 +104,7 @@ const Hello = createComponent(() => `<h1>Hello World</h1>`);
 Hello.mount("#app");
 ```
 
-[JS Bin](https://jsbin.com/socuzavojo/edit?js,output)
+[JS Bin](https://jsbin.com/zudomodira/1/edit?js,output)
 
 ---
 
@@ -185,7 +185,8 @@ Card.update({
   },
 });
 ```
-[JSBin](https://jsbin.com/bisafiyaga/edit?js,output)
+
+[JS Bin](https://jsbin.com/bisafiyaga/edit?js,output)
 
 ---
 
@@ -233,7 +234,9 @@ const Login = createComponent(
   }
 );
 ```
+
 [JSBin](https://jsbin.com/jimapayahu/edit?js,output)
+
 ---
 
 ## 🧩 API
