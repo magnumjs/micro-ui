@@ -15,7 +15,7 @@ A minimalist reactive component library with support for state, props, named slo
 - Declarative rendering using template strings or render functions
 - Named and default slots (`<slot name="...">` and `data-slot="..."` support)
 - Support for `this.refs` inside components
-- Lifecycle hooks: `onMount`, `onUnmount`, `onBeforeMount`, `onBeforeUnmount`
+- Lifecycle hooks: `onMount`, `onUnmount`, `onBeforeMount`, `onBeforeUnmount`, `onUpdate`
 - Diffing DOM updates for performance with `data-key="..."`
 - Keyed list rendering with `renderList()` for efficient updates
 - DOM caching when `render()` returns `null`
