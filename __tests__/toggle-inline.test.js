@@ -15,7 +15,7 @@ describe("ToggleWithNull: simple toggleable child with caching", () => {
     document.body.innerHTML = "";
   });
 
-  test("toggles visibility of child with DOM caching", () => {
+  test("toggles visibility of child with DOM caching", async () => {
     const Toggle = createComponent(function ({ state, setState }) {
       return `
         <div>
@@ -42,10 +42,12 @@ describe("ToggleWithNull: simple toggleable child with caching", () => {
 
     // Toggle off (should unmount)
     container.querySelector("[data-ref='toggle']").click();
+    await Promise.resolve(); // wait for async update
     expect(container.textContent).not.toContain("Hello!");
 
     // Toggle on (should reuse cached)
     container.querySelector("[data-ref='toggle']").click();
+      await Promise.resolve(); // wait for async update
     expect(container.textContent).toContain("Hello!");
   });
 });

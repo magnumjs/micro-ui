@@ -78,9 +78,9 @@ describe("Lifecycle Hooks: toggleable child with full lifecycle verification", (
 
     // Hide child
     container.querySelector("[data-ref='toggle']").click();
-    expect(container.textContent).not.toContain("Hello!");
-
     await Promise.resolve(); // Ensure all lifecycle hooks are processed
+
+    expect(screen.getByTestId("parent").textContent).not.toContain("Hello!");
 
     // Child lifecycle should fire unmount hooks
     expect(childHooks.onBeforeUnmount).not.toHaveBeenCalledTimes(1);
@@ -92,6 +92,7 @@ describe("Lifecycle Hooks: toggleable child with full lifecycle verification", (
 
     // Show child again
     container.querySelector("[data-ref='toggle']").click();
+    await Promise.resolve(); // Ensure all lifecycle hooks are processed
     expect(container.textContent).toContain("Hello!");
 
     // Child should remount and fire mount hooks again

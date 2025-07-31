@@ -71,6 +71,8 @@ describe("CounterWithToggle null return unmount/remount with DOM caching", () =>
     await Promise.resolve();
 
     expect(lifecycle.onBeforeUnmount).toHaveBeenCalledTimes(1);
+    await Promise.resolve();
+
     expect(lifecycle.onUnmount).toHaveBeenCalledTimes(1);
     expect(container.innerHTML).toBe("");
 

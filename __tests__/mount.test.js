@@ -28,7 +28,7 @@ describe("createComponent mount with cached DOM node", () => {
     container = null;
   });
 
-test("mount reuses cached DOM node after null render and unmount", () => {
+test("mount reuses cached DOM node after null render and unmount", async () => {
   const Comp = createComponent(
     ({ state }) => {
       return state.show ? "<div>Visible</div>" : null;
@@ -42,6 +42,7 @@ test("mount reuses cached DOM node after null render and unmount", () => {
 
   // Render null and unmount (cache)
   Comp.setState({ show: false });
+  await Promise.resolve(); // Ensure async rendering completes
   expect(container.firstChild).toBeNull();
 
   Comp.unmount();
@@ -50,13 +51,14 @@ test("mount reuses cached DOM node after null render and unmount", () => {
   // Remount and trigger render again
   Comp.setState({ show: true }); // ensure next render returns non-null
   Comp.mount(container);
+    await Promise.resolve(); // Ensure async rendering completes
 
   expect(container.firstChild).not.toBeNull();
   expect(container.firstChild.textContent).toBe("Visible");
 });
 
 
-  test("reuses cached DOM node on mount if previously rendered null", () => {
+  test("reuses cached DOM node on mount if previously rendered null", async () => {
     // Ensure initial state to show true on create
     const Comp = createComponent(
       function ({ state }) {
@@ -74,6 +76,7 @@ test("mount reuses cached DOM node after null render and unmount", () => {
 
     // Hide content → render null → cache node
     Comp.setState({ show: false });
+    await Promise.resolve(); // Ensure async rendering completes
     expect(container.innerHTML).toBe("");
 
     Comp.unmount();
@@ -84,6 +87,7 @@ test("mount reuses cached DOM node after null render and unmount", () => {
     Comp.setState({ show: true });
 
     Comp.mount(container);
+    await Promise.resolve(); // Ensure async rendering completes
 
     expect(container.firstChild).not.toBeNull();
     expect(lifecycle.onMount).toHaveBeenCalledTimes(1);

@@ -3,7 +3,14 @@
  */
 
 import { createComponent } from "../lib/reactive-core.js";
-import { jest, describe, test, expect, beforeEach, afterEach } from '@jest/globals';
+import {
+  jest,
+  describe,
+  test,
+  expect,
+  beforeEach,
+  afterEach,
+} from "@jest/globals";
 
 describe("createComponent DOM caching for null return and remount", () => {
   let container;
@@ -25,7 +32,7 @@ describe("createComponent DOM caching for null return and remount", () => {
     container = null;
   });
 
-  test("caches DOM when render returns null and re-attaches on remount", () => {
+  test("caches DOM when render returns null and re-attaches on remount", async () => {
     let show = true;
 
     const Comp = createComponent(
@@ -49,21 +56,21 @@ describe("createComponent DOM caching for null return and remount", () => {
     // Set state to hide content (render returns null)
     Comp.setState({ show: false });
     // Await any async lifecycle
-    return Promise.resolve().then(() => {
-      // Container should be empty (node cached)
-      expect(container.firstChild).toBeNull();
-      expect(lifecycle.onBeforeUnmount).toHaveBeenCalledTimes(1);
-      expect(lifecycle.onUnmount).toHaveBeenCalledTimes(1);
+    await Promise.resolve();
+    await Promise.resolve();
+    await Promise.resolve();
+    // Container should be empty (node cached)
+    expect(container.firstChild).toBeNull();
+    expect(lifecycle.onBeforeUnmount).toHaveBeenCalledTimes(1);
+    expect(lifecycle.onUnmount).toHaveBeenCalledTimes(1);
 
-      // Now set state to show content again
-      Comp.setState({ show: true });
-      return Promise.resolve().then(() => {
-        // The cached node should be re-attached
-        expect(container.firstChild?.textContent).toBe("Visible content");
+    // Now set state to show content again
+    Comp.setState({ show: true });
+    await Promise.resolve();
+    // The cached node should be re-attached
+    expect(container.firstChild?.textContent).toBe("Visible content");
 
-        // onMount called again on remount
-        expect(lifecycle.onMount).toHaveBeenCalledTimes(2);
-      });
-    });
+    // onMount called again on remount
+    expect(lifecycle.onMount).toHaveBeenCalledTimes(2);
   });
 });

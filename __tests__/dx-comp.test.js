@@ -18,7 +18,7 @@ describe("createComponent DX with state, setState, and event on map", () => {
     container = null;
   });
 
-  test("renders initial state and updates state on event", () => {
+  test("renders initial state and updates state on event", async () => {
     const Counter = createComponent(
       ({ state }) => `<button>Count: ${state.count}</button>`,
       {
@@ -38,6 +38,7 @@ describe("createComponent DX with state, setState, and event on map", () => {
     expect(button).not.toBeNull();
 
     button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    await Promise.resolve(); // Ensure async rendering completes
     expect(container.innerHTML).toContain("Count: 1");
 
     // Test mounting via element directly

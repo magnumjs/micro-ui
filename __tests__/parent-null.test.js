@@ -15,7 +15,7 @@ describe("ToggleWithNull: child component returns null with caching", () => {
     document.body.innerHTML = "";
   });
 
-  test("child component can return null and be remounted", () => {
+  test("child component can return null and be remounted", async () => {
     const Child = createComponent(function () {
       return `<div data-ref="child">Hello!</div>`;
     });
@@ -41,10 +41,12 @@ describe("ToggleWithNull: child component returns null with caching", () => {
 
     // Hide child (simulate null render)
     container.querySelector("[data-ref='toggle']").click();
+    await Promise.resolve(); // Wait for re-render
     expect(container.textContent).not.toContain("Hello!");
 
     // Show child again (should reuse cached DOM)
     container.querySelector("[data-ref='toggle']").click();
+    await Promise.resolve(); // Wait for re-render
     expect(container.textContent).toContain("Hello!");
   });
 });

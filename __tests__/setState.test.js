@@ -43,7 +43,7 @@ describe("setState usage: this.setState vs destructured setState", () => {
 
     expect(span.textContent).toBe("0");
     fireEvent.click(btn);
-    // await new Promise((r) => setTimeout(r, 70));
+    await new Promise((r) => setTimeout(r, 70));
     expect(screen.getByTestId("count").textContent).toBe("1");
   });
 
@@ -71,9 +71,10 @@ describe("setState usage: this.setState vs destructured setState", () => {
 
     const btn = screen.getByTestId("inc");
     const span = screen.getByTestId("count");
-
-    expect(span.textContent).toBe("6"); // after onMount
+    await Promise.resolve(); // Ensure async rendering completes
+    expect(screen.getByTestId("count").textContent).toBe("6"); // after click
     fireEvent.click(btn);
+    await Promise.resolve(); // Ensure async rendering completes
     expect(screen.getByTestId("count").textContent).toBe("7"); // after click
   });
 });

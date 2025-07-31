@@ -14,7 +14,7 @@ describe("createComponent with internal state", () => {
     container.remove();
   });
 
-  it("initializes with default state and updates DOM on setState", () => {
+  it("initializes with default state and updates DOM on setState",async  () => {
     const Box = createComponent(function ({state}) {
       const count = state.count ?? 0;
       return `<div><p>Count: ${count}</p></div>`;
@@ -24,10 +24,11 @@ describe("createComponent with internal state", () => {
     expect(container.innerHTML).toContain("Count: 0");
 
     Box.setState({ count: 5 });
+    await Promise.resolve(); // Ensure all lifecycle hooks are processed
     expect(container.innerHTML).toContain("Count: 5");
   });
 
-  it("supports functional setState updater", () => {
+  it("supports functional setState updater", async () => {
     const Counter = createComponent(function ({state}) {
       const count = state.count ?? 0;
       return `<div><button id="inc">+</button><p>${count}</p></div>`;
@@ -44,10 +45,11 @@ describe("createComponent with internal state", () => {
     const btn = container.querySelector("#inc");
     btn.click();
     btn.click();
+    await Promise.resolve(); // Ensure all lifecycle hooks are processed
     expect(container.innerHTML).toContain(">2<");
   });
 
-  it("does not rerender if setState is called with unchanged values", () => {
+  it("does not rerender if setState is called with unchanged values", async () => {
     const renderSpy = jest.fn();
 
     const Comp = createComponent(function ({state}) {
@@ -60,10 +62,11 @@ describe("createComponent with internal state", () => {
     expect(renderSpy).toHaveBeenCalledTimes(1);
 
     Comp.setState({ msg: "Hi" }); // same value
+    await Promise.resolve(); // Ensure all lifecycle hooks are processed
     expect(renderSpy).toHaveBeenCalledTimes(2); // Still renders, since it's a naive implementation
   });
 
-  it("updates when props change separately from state", () => {
+  it("updates when props change separately from state", async () => {
     const Comp = createComponent(function ({ props, state, setState }) {
       const count = state.count ?? 0;
       return `<h1>${props.title}</h1><p>${count}</p>`;
@@ -71,13 +74,15 @@ describe("createComponent with internal state", () => {
 
     Comp.mount(container);
     Comp.update({ title: "Welcome" });
+    await Promise.resolve(); // Ensure all lifecycle hooks are processed
     expect(container.innerHTML).toContain("Welcome");
 
     Comp.setState({ count: 10 });
+    await Promise.resolve(); // Ensure all lifecycle hooks are processed
     expect(container.innerHTML).toContain(">10<");
   });
 
-  it("has access to props/state/setState inside event handlers", () => {
+  it("has access to props/state/setState inside event handlers", async () => {
     const Comp = createComponent(function ({state}) {
       const visible = state.visible ?? false;
       return `
@@ -98,9 +103,11 @@ describe("createComponent with internal state", () => {
     expect(container.innerHTML).not.toContain("Now you see me");
 
     container.querySelector("#toggle").click();
+    await Promise.resolve(); // Ensure all lifecycle hooks are processed
     expect(container.innerHTML).toContain("Now you see me");
 
     container.querySelector("#toggle").click();
+    await Promise.resolve(); // Ensure all lifecycle hooks are processed
     expect(container.innerHTML).not.toContain("Now you see me");
   });
 });
