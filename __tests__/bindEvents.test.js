@@ -2,8 +2,21 @@
  * @jest-environment jsdom
  */
 
+import { createComponent } from "../lib/reactive-core.js";
+
 import bindEvents from "../lib/bindEvents";
 import { describe, test, expect, jest } from "@jest/globals";
+
+function waitUntil(predicate) {
+  return new Promise((resolve) => {
+    const interval = setInterval(() => {
+      if (predicate()) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, 10);
+  });
+}
 
 describe("bindEvents", () => {
   let root, el, api, boundEvents, handler;
@@ -176,45 +189,77 @@ describe("bindEvents", () => {
 
     expect(handler).toHaveBeenCalled();
   });
-
-
 });
 
 describe("bindEvents", () => {
-    
-test("supports custom DOM events", () => {
-  document.body.innerHTML = `
+  test("supports custom DOM events", () => {
+    document.body.innerHTML = `
     <div id="app">
       <button data-action="myEvent:arg1:arg2" data-args='["x","y"]'>Click</button>
     </div>
   `;
-  const el = document.querySelector("#app");
+    const el = document.querySelector("#app");
 
-  const api = {
-    state: {},
-    setState: jest.fn(),
-    props: {},
-    refs: {},
-  };
+    const api = {
+      state: {},
+      setState: jest.fn(),
+      props: {},
+      refs: {},
+    };
 
-  const boundEvents = [];
-  const handler = jest.fn();
+    const boundEvents = [];
+    const handler = jest.fn();
 
-  bindEvents(api, el, {
-    "myEvent:myEvent": handler,
-  }, boundEvents);
+    bindEvents(
+      api,
+      el,
+      {
+        "myEvent:myEvent": handler,
+      },
+      boundEvents
+    );
 
-  const button = el.querySelector("button");
-  const evt = new CustomEvent("myEvent", { bubbles: true });
-  button.dispatchEvent(evt);
+    const button = el.querySelector("button");
+    const evt = new CustomEvent("myEvent", { bubbles: true });
+    button.dispatchEvent(evt);
 
-  expect(handler).toHaveBeenCalledTimes(1);
+    expect(handler).toHaveBeenCalledTimes(1);
 
-  const ctx = handler.mock.calls[0][0];
-  expect(ctx.action).toBe("myEvent");
-  expect(ctx.args).toEqual(["x", "y"]);
-  expect(ctx.event).toBe(evt);
-});
+    const ctx = handler.mock.calls[0][0];
+    expect(ctx.action).toBe("myEvent");
+    expect(ctx.args).toEqual(["x", "y"]);
+    expect(ctx.event).toBe(evt);
+  });
 
+  test("data-action triggers handler with parsed data-args", async () => {
+    const spy = jest.fn();
 
+    const Demo = createComponent(
+      () => `
+    <button data-action="sayHello" data-args='{"name":"Tova"}'>Hi</button>
+  `,
+      {
+        on: {
+          "click:sayHello"({ args }) {
+            spy(args[0]); // args will be [{ name: "Tova" }]
+          },
+        },
+      }
+    );
+
+    document.body.innerHTML = "";
+    const root = document.createElement("div");
+    document.body.appendChild(root);
+    Demo.mount(root);
+
+    const button = root.querySelector("button");
+    button.click();
+
+    await waitUntil(() => spy.mock.calls.length > 0);
+
+    expect(spy).toHaveBeenCalledWith({ name: "Tova" });
+
+    Demo.unmount();
+    document.body.removeChild(root);
+  });
 });

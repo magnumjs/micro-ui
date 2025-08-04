@@ -78,8 +78,8 @@ const Demo = createComponent(() => `
   <button data-action="sayHello" data-args='{"name":"Tova"}'>Hi</button>
 `, {
   on: {
-    "sayHello"({ name }) {
-      alert(`Hello, ${name}!`);
+    "click:sayHello"({ args }) {
+      alert(`Hello, ${args[0]}!`);
     }
   }
 });
