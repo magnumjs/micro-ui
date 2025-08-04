@@ -1,4 +1,4 @@
-# 🧩 Micro UI - Reactive Component System
+# 📩 Micro UI - Reactive Component System
 [![npm version](https://img.shields.io/npm/v/@magnumjs/micro-ui.svg)](https://www.npmjs.com/package/@magnumjs/micro-ui)
 [![Build Status](https://github.com/magnumjs/micro-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/magnumjs/micro-ui/actions)
 ![npm package minimized gzipped size](https://img.shields.io/bundlejs/size/%40magnumjs%2Fmicro-ui)
@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Known Vulnerabilities](https://snyk.io/test/npm/@magnumjs/micro-ui/badge.svg)](https://snyk.io/test/npm/@magnumjs/micro-ui)
 
-A minimalist reactive component library with support for state, props, named slots, refs, and DOM diffing.
+A minimalist reactive component library with support for state, props, named slots, refs, DOM diffing, shared context, and declarative event bindings.
 
 ## ✨ Features
 
@@ -14,12 +14,14 @@ A minimalist reactive component library with support for state, props, named slo
 - Props are read-only (passed in by parent)
 - Declarative rendering using template strings or render functions
 - Named and default slots (`<slot name="...">` and `data-slot="..."` support)
-- Support for `this.refs` inside components
+- Support for `this.refs` and lazy `this.ref(name)` inside components
 - Lifecycle hooks: `onMount`, `onUnmount`, `onBeforeMount`, `onBeforeUnmount`, `onUpdate`
 - Diffing DOM updates for performance with `data-key="..."`
 - Keyed list rendering with `renderList()` for efficient updates
 - DOM caching when `render()` returns `null`
-- Event binding via `on` option (e.g. `"click .btn"`)
+- Declarative event binding via `on` option (e.g. `"click .btn"`) and `data-action`
+- Arguments support via `data-args` for cleaner templates
+- Built-in `context` pub/sub with `shared()` stores
 - Full unit test coverage
 
 ## 🚀 Getting Started
@@ -30,6 +32,57 @@ npm i @magnumjs/micro-ui
 
 ```js
 import { createComponent } from "@magnumjs/micro-ui";
+
+const Counter = createComponent(({ state }) => {
+  return `<button>Count: ${state.count}</button>`;
+}, {
+  state: { count: 0 },
+  on: {
+    "click button"(){
+      this.setState({ count: this.state.count + 1 });
+    }
+  }
+});
+
+Counter.mount("#app");
+```
+[JSBin](https://jsbin.com/qiwegidage/1/edit?js,output)
+
+## 📡 Global Shared State with `shared()`
+
+Create a shared state store with event-based updates:
+
+```js
+import { shared } from "@magnumjs/micro-ui";
+
+const auth = shared("auth", { user: null });
+
+auth.subscribe(console.log); // Logs current and future state
+
+auth.emit("login", { user: "Tova" }); // auto-merges into state
+```
+
+You can `on(event, fn)` to subscribe to specific events (e.g. `"login"`, `"logout"`).
+
+```js
+auth.on("logout", () => console.log("logged out"));
+auth.emit("logout", { user: null });
+```
+
+## ⚡ Inline Actions with `data-action` and `data-args`
+
+You can declaratively bind handlers in your template:
+
+```js
+const Demo = createComponent(() => `
+  <button data-action="sayHello" data-args='{"name":"Tova"}'>Hi</button>
+`, {
+  on: {
+    "sayHello"({ name }) {
+      alert(`Hello, ${name}!`);
+    }
+  }
+});
 ```
 
 ## 🧬 Component Example
@@ -90,6 +143,7 @@ const Card = createComponent(() => `
   </section>
 `);
 ```
+
 ## 🔁 Lifecycle Hooks
 
 ```js
@@ -112,6 +166,7 @@ createComponent(
   }
 );
 ```
+
 ## 📖 [Core API Docs](./README-API.md)
 
 ## 🧩 [MicroUI Client Example](https://github.com/magnumjs/micro-ui-client)
@@ -142,6 +197,13 @@ const Comp = createComponent(({ state, setState, props, refs }) => {
     console.log("Before unmount");
     cleanup();
   },
+  onUpdate(prevProps){
+    console.log("Updated!");
+  },
+  onBeforeUnmount(cleanup) {
+    console.log("Before Unmounted!");
+    cleanup();
+  },
   onUnmount() {
     console.log("Unmounted!");
   }
@@ -160,6 +222,8 @@ const Comp = createComponent(({ state, setState, props, refs }) => {
 Auto-populated with the Parent `Node` after mount.
 ### `Comp.refs`
 Auto-populated with `[data-ref="name"]` nodes after mount.
+### `Comp.ref(name)`
+Lazy accessor for a single ref. Returns null after unmount.
 ### `Comp.props`
 Auto-populated with `props` from `Comp.update(nextProps)` before each render.
 ### `Comp.state`
@@ -181,7 +245,6 @@ renderList(data, item => `<li>${item.label}</li>`, item => item.id);
 Auto-wraps each root tag with `data-key` for DOM diffing.
 
 ## 🧪 Testing
-
 
 ## ✅ Example Test Case
 

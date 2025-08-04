@@ -43,7 +43,7 @@ describe('this.refs support in createComponent', () => {
     Component.mount(root);
 
     expect(Component.refs.email).toBeInstanceOf(HTMLInputElement);
-    expect(Component.refs.extra).toBeUndefined();
+    expect(Component.refs.extra).toBeNull();
 
     Component.update({ showExtra: true });
 
@@ -62,7 +62,7 @@ describe('this.refs support in createComponent', () => {
     expect(Component.refs.foo?.textContent).toBe('Visible');
 
     Component.update({ show: false });
-    expect(Component.refs.foo).toBeUndefined();
+    expect(Component.refs.foo).toBeNull();
   });
 
   it('works inside nested elements', () => {
