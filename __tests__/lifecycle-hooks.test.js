@@ -114,7 +114,7 @@ describe("Lifecycle Hooks: onBeforeMount and onBeforeUnmount", () => {
         }),
     });
 
-    const spy = jest.spyOn(Comp, "render");
+    const spy = jest.spyOn(Comp, "_render");
 
     Comp.mount(container);
 

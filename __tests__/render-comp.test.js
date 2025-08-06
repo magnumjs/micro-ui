@@ -95,12 +95,14 @@ describe("child.update({ ... }) vs child.update({ props: ... })", () => {
       }
     );
 
+    console.log(Parent)
     // Initial mount
     Parent.mount(container);
     // await Promise.resolve(); // Ensure async rendering completes
 
     expect(container.innerHTML).toContain("Tova");
     expect(childRenderSpy).toHaveBeenCalledWith("Tova");
+    console.log(Parent)
 
     // Simulate parent state change
     Parent.setName("Aviva");

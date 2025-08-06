@@ -95,6 +95,7 @@ describe("createComponent", () => {
 
     const childHTML = Child.render({ text: "Child text" });
     Parent.mount(container);
+    console.log(childHTML)
     Parent.update({ children: childHTML });
     expect(container.innerHTML).toContain("Child text");
   });
