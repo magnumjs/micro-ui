@@ -15,6 +15,19 @@ describe("injectSlotContent line 20 coverage", () => {
     // If div was in the DOM, it should be removed
     expect(div.isConnected).toBe(false); // div should be replaced
   });
+
+  test("injectSlotContent: appends item.el in array", () => {
+    const ref = document.createElement("span");
+    const el = document.createElement("div");
+    el.textContent = "Injected via .el";
+
+    const parent = document.createElement("div");
+    parent.appendChild(ref);
+
+    injectSlotContent(ref, [{ el }]);
+
+    expect(parent.innerHTML).toContain("Injected via .el");
+  });
 });
 
 describe("Patch remaining uncovered branches", () => {
@@ -122,5 +135,59 @@ describe("diffHTML uncovered branches (fixed)", () => {
 
     expect(container.firstChild.tagName).toBe("SPAN");
     expect(container.firstChild.textContent).toBe("New");
+  });
+
+  test("diffHTML: removes attributes not present in newHTML (line 74)", () => {
+    const el = document.createElement("div");
+    el.innerHTML = `<div id="box" class="remove-me"></div>`;
+
+    const html = `<div id="box"></div>`; // no "class" attribute now
+
+    const result = diffHTML(el, html);
+
+    const updated = el.firstElementChild;
+    expect(result).toBe(true);
+    expect(updated.hasAttribute("class")).toBe(false); // class should be removed
+  });
+
+  test("diffHTML: replaces node when node types differ (line 112)", () => {
+    const el = document.createElement("div");
+    el.appendChild(document.createTextNode("Old Text"));
+
+    const html = `<span>New Element</span>`; // Element replacing text
+
+    const result = diffHTML(el, html);
+
+    expect(result).toBe(true);
+    expect(el.firstElementChild.tagName).toBe("SPAN");
+    expect(el.firstElementChild.textContent).toBe("New Element");
+  });
+
+  test("diffHTML: replaces node when tagNames differ (line 126)", () => {
+    const el = document.createElement("div");
+    el.innerHTML = `<p>Old Paragraph</p>`;
+
+    const html = `<span>New Span</span>`; // tag differs, triggers fallback replace
+
+    const result = diffHTML(el, html);
+
+    expect(result).toBe(true);
+    expect(el.firstElementChild.tagName).toBe("SPAN");
+    expect(el.firstElementChild.textContent).toBe("New Span");
+  });
+
+  test("syncAttributes: removes attribute from fromEl when not present on toEl", () => {
+    const el = document.createElement("div");
+    el.innerHTML = `<div id="test" class="to-remove"></div>`;
+
+    // class attribute is omitted in new HTML
+    const html = `<div id="test"></div>`;
+
+    const result = diffHTML(el, html);
+
+    const updated = el.firstElementChild;
+
+    expect(result).toBe(true);
+    expect(updated.hasAttribute("class")).toBe(false); // <-- This triggers the removal logic
   });
 });

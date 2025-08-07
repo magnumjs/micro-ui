@@ -45,11 +45,51 @@ describe("diffHTML", () => {
 
   test("updates attributes and text content", () => {
     const el = createEl('<div data-key="1" class="old">Old</div>');
-    const html = '<div data-key="1" class="new">New</div>';
+    const html = '<div data-key="1" class="new">Newish</div>';
     diffHTML(el, html);
     const updated = el.querySelector("[data-key='1']");
     expect(updated.className).toBe("new");
-    expect(updated.textContent).toBe("New");
+    expect(updated.textContent).toBe("Newish");
+  });
+
+  test("updates attributes and text content", () => {
+    const el = createEl('<div data-key="1" class="old">Old</div>');
+    const html = '<div data-key="1" class="new"><span>Newish</span></div>';
+    diffHTML(el, html);
+    const updated = el.querySelector("[data-key='1']");
+    expect(updated.className).toBe("new");
+    expect(updated.textContent).toBe("Newish");
+  });
+
+  test("patchNode: replaces keyed element when tagName differs", () => {
+    const el = createEl('<div data-key="x" class="old"><div data-key="y" class="old">Old</div></div>');
+
+    const html = `<span data-key="x" class="new"><span data-key="y" class="new">Hello</span></span>`;
+    diffHTML(el, html);
+
+    const updated = el.firstElementChild;
+    expect(updated.tagName).toBe("SPAN");
+    expect(updated.textContent).toBe("Hello");
+  });
+
+  test("patchNode: replaces keyed element when tagName differs", () => {
+    const el = createEl('<div data-key="x" class="old"><div data-key="y" class="old">Old</div></div>');
+
+    const html = `<div data-key="x" class="new"><span data-key="y" class="new">Hello</span></span>`;
+    diffHTML(el, html);
+
+    const updated = el.firstElementChild;
+    expect(updated.tagName).toBe("DIV");
+    expect(updated.textContent).toBe("Hello");
+  });
+
+  test("updates attributes and text content", () => {
+    const el = createEl('<div data-key="1" class="old">Old</div>');
+    const html = '<div data-key="1"><b>Newish</b></div>';
+    diffHTML(el, html);
+    const updated = el.querySelector("[data-key='1']");
+    expect(updated.className).toBe("");
+    expect(updated.textContent).toBe("Newish");
   });
 
   test("patches text node value", () => {
@@ -85,7 +125,15 @@ describe("diffHTML", () => {
 
   test("patches deeply nested children", () => {
     const el = createEl("<div><span>Old</span></div>");
-    const html = "<div><span>New</span></div>";
+    const html = "<div><span>New3434</span></div>";
+    diffHTML(el, html);
+    expect(el.innerHTML).toContain("New3434");
+  });
+
+  test("patches diff node types", () => {
+    const el = createEl("<div><span data-ref='test'>Old</span></div>");
+    const html =
+      "<div><span><b>New</b></span></div><div><span>New</span></div>";
     diffHTML(el, html);
     expect(el.innerHTML).toContain("New");
   });
