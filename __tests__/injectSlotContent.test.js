@@ -123,6 +123,69 @@ describe("injectSlotContent", () => {
     expect(container.innerHTML).toBe("<section>Hello World</section>");
   });
 
+  test("skips unsupported item types in array", () => {
+    const div = document.createElement("div");
+    document.body.appendChild(div);
+
+    // Array contains unsupported types: number, boolean, null, undefined
+    injectSlotContent(div, [123, null, undefined, true, {}]);
+
+    // The fragment should be empty, so div is replaced with an empty fragment
+    // If div was in the DOM, it should be removed
+    expect(document.body.contains(div)).toBe(false);
+  });
+
+  test("skips unsupported item types in array", () => {
+    const div = document.createElement("div");
+    document.body.appendChild(div);
+
+    // Array contains unsupported types: number, boolean, null, undefined
+    injectSlotContent(div, [123, null, undefined, true, {}]);
+
+    // The fragment should be empty, so div is replaced with an empty fragment
+    // If div was in the DOM, it should be removed
+    expect(document.body.contains(div)).toBe(false);
+  });
+
+  test("skips unsupported item types in array", () => {
+    const div = document.createElement("div");
+    document.body.appendChild(div);
+
+    // Array contains unsupported types: number, boolean, null, undefined
+    injectSlotContent(div, [123, null, undefined, true, {}]);
+
+    // The fragment should be empty, so div is replaced with an empty fragment
+    // If div was in the DOM, it should be removed
+    expect(document.body.contains(div)).toBe(false);
+  });
+
+  test("injects array with null and valid string", () => {
+    const ref = document.createElement("div");
+    const container = document.createElement("div");
+    container.appendChild(ref);
+
+    injectSlotContent(ref, [null, "<span>Hi</span>"]);
+    expect(container.innerHTML).toContain("Hi");
+  });
+
+  test("calls function that returns unsupported type", () => {
+    const ref = document.createElement("div");
+    const container = document.createElement("div");
+    container.appendChild(ref);
+
+    injectSlotContent(ref, () => 123);
+    expect(container.innerHTML).toBe("");
+  });
+
+  test("injects array with function item", () => {
+    const ref = document.createElement("div");
+    const container = document.createElement("div");
+    container.appendChild(ref);
+
+    injectSlotContent(ref, [() => "<span>Func</span>"]);
+    expect(container.innerHTML).toContain("Func");
+  });
+
   test("injects array of mounted components", () => {
     const comp1 = createFakeComponent("<li>Item 1</li>");
     comp1.mount(document.createElement("div"));
