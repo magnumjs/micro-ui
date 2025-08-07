@@ -33,8 +33,6 @@ test("Consumer receives context event emitted by Provider", async () => {
   }, {
     on: {
       "auth::get"(data) {
-          console.log("auth::get event fired", this.ref("output"));
-
         const el = this.ref("output");
         if (el) el.textContent = `Hello, ${data.user}`;
         received.push(data);
@@ -47,7 +45,6 @@ test("Consumer receives context event emitted by Provider", async () => {
   }, {
     on: {
       "click button"() {
-        console.log("button clicked");
         context.emit("auth::get", { user: "Tova" });
       }
     }

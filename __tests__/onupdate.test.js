@@ -34,7 +34,6 @@ describe("createComponent onupdate with prevProps", () => {
       {
         state: { count: 0 },
         onUpdate(prev) {
-          console.log("onUpdate", prev.label, this.props.label);
           updates.push([prev.label, this.props.label]);
         },
       }
@@ -67,7 +66,6 @@ describe("createComponent onupdate with prevProps", () => {
       },
       {
         onUpdate(prev) {
-          console.log("onUpdate", prev.text, this.props.text);
           updates.push([prev.text, this.props.text]);
         },
       }

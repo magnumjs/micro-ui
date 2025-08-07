@@ -81,13 +81,11 @@ describe("child.update({ ... }) vs child.update({ props: ... })", () => {
         state: { name: "Tova" },
 
         onMount() {
-          console.log("MOUNT refs.slot", this.refs.slot);
 
           this.child = Child;
           this.child.mount(this.refs.slot, { name: this.state.name });
 
           this.setName = (newName) => {
-            console.log("Updating parent name to", newName);
             this.setState({ name: newName });
             this.child.update({ props: { name: newName } });
           };
@@ -95,14 +93,12 @@ describe("child.update({ ... }) vs child.update({ props: ... })", () => {
       }
     );
 
-    console.log(Parent)
     // Initial mount
     Parent.mount(container);
     // await Promise.resolve(); // Ensure async rendering completes
 
     expect(container.innerHTML).toContain("Tova");
     expect(childRenderSpy).toHaveBeenCalledWith("Tova");
-    console.log(Parent)
 
     // Simulate parent state change
     Parent.setName("Aviva");

@@ -29,7 +29,6 @@ describe("onUpdate lifecycle", () => {
 
     const Comp = createComponent(
       ({ state, props }) => {
-        console.log("render", state.count);
         renderSpy(state.count);
         return `<div>${props.label}: ${state.count}</div>`;
       },
@@ -40,12 +39,7 @@ describe("onUpdate lifecycle", () => {
           this.update({ label: "Auto" });
         },
         onUpdate(prevProps) {
-          console.log(
-            "onUpdate state",
-            this.state.count,
-            prevProps.label,
-            this.props.label
-          );
+
           if (this.state.count === 0) {
             this.setState({ count: 1 });
           }
@@ -68,7 +62,6 @@ describe("onUpdate lifecycle", () => {
 
     const Comp = createComponent(
       function ({ state, setState }) {
-        console.log("render", state.count);
         return `<div>${state.count}</div>`;
       },
       {
@@ -79,7 +72,6 @@ describe("onUpdate lifecycle", () => {
         onUpdate() {
           logs.push("onUpdate");
 
-          console.log("onUpdate state", this.state.count);
           // Simulate one-time state update inside onUpdate
           if (this.state.count === 0) {
             this.setState({ count: 1 });

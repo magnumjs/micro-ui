@@ -21,7 +21,6 @@ describe("Counter component", () => {
   test("renders and increments count on click", async () => {
     const Counter = createComponent(
       ({ state, setState }) => {
-        console.log("Rendering Counter with state:", state);
         return `<button data-ref="btn">Count: ${state.count}</button>`;
       },
       {
