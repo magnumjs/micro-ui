@@ -82,12 +82,87 @@ describe("injectSlotContent", () => {
     expect(root.innerHTML).toContain("Bold");
   });
 
+  test("injects array of DOM nodes", () => {
+    const a = createFakeComponent("<li>Item 1</li>");
+    // a.textContent = "Link";
+    const b = createFakeComponent("<li>Item 2</li>");
+    b.textContent = "Bold";
+    injectSlotContent(slot(), [a, b]);
+    expect(root.innerHTML).toContain("<li>Item 1</li><li>Item 2</li>");
+    expect(root.innerHTML).toContain("<li>Item 1</li><li>Item 2</li>");
+  });
+
+  test("injectSlotContent: injects single item with .el HTMLElement", () => {
+    const ref = document.createElement("div");
+    ref.setAttribute("data-ref", "slot");
+
+    const el = document.createElement("section");
+    el.textContent = "Single .el content";
+
+    const wrapper = { el };
+
+    const container = document.createElement("div");
+    container.appendChild(ref);
+
+    injectSlotContent(ref, wrapper);
+
+    expect(container.innerHTML).toBe("<section>Single .el content</section>");
+  });
+
+  test("injectSlotContent: injects single string HTML into refNode", () => {
+    const ref = document.createElement("div");
+    ref.setAttribute("data-ref", "slot");
+
+    const container = document.createElement("div");
+    container.appendChild(ref);
+
+    const htmlString = `<section>Hello World</section>`;
+
+    injectSlotContent(ref, htmlString);
+
+    expect(container.innerHTML).toBe("<section>Hello World</section>");
+  });
+
   test("injects array of mounted components", () => {
     const comp1 = createFakeComponent("<li>Item 1</li>");
     comp1.mount(document.createElement("div"));
 
     const comp2 = createFakeComponent("<li>Item 2</li>");
     comp2.mount(document.createElement("div"));
+
+    injectSlotContent(slot(), [comp1, comp2]);
+    expect(root.innerHTML).toContain("Item 1");
+    expect(root.innerHTML).toContain("Item 2");
+  });
+
+  test("injectSlotContent: injects item with .el HTMLElement", () => {
+    const ref = document.createElement("span");
+    ref.setAttribute("data-ref", "slot");
+
+    const el = document.createElement("div");
+    el.textContent = "Hello from .el";
+
+    const wrapper = { el };
+
+    // Add to DOM so we can observe changes
+    const container = document.createElement("div");
+    container.appendChild(ref);
+
+    // Inject using wrapper with `.el`
+    injectSlotContent(ref, [wrapper]);
+
+    expect(container.innerHTML).toBe("<div>Hello from .el</div>");
+  });
+
+  test("injects array of mounted components", () => {
+    const comp1 = createFakeComponent("<li>Item 1</li>");
+    comp1.mount(document.createElement("div"));
+
+    // const comp2 = createFakeComponent("<b>Item 2222</b>");
+    // comp2.mount(document.createElement("div"));
+
+    const comp2 = document.createElement("b");
+    comp2.textContent = "Item 2222";
 
     injectSlotContent(slot(), [comp1, comp2]);
     expect(root.innerHTML).toContain("Item 1");
