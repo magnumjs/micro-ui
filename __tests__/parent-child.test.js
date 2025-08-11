@@ -4,6 +4,7 @@ describe("Nested Component with Slot", () => {
   let root;
   let Child;
   let Parent;
+  let log = [];
   beforeEach(() => {
     root = document.createElement("div");
     document.body.appendChild(root);
@@ -14,10 +15,10 @@ describe("Nested Component with Slot", () => {
       },
       {
         onMount() {
-          console.log("Child mounted");
+          log.push("Child mounted");
         },
         onUnmount() {
-          console.log("Child unmounted");
+          log.push("Child unmounted");
         },
       }
     );
@@ -137,8 +138,6 @@ describe("Nested Component with Slot", () => {
     Parent.unmount();
     expect(document.body.innerHTML).not.toContain("<p>Hello</p>");
 
-    console.log("document.body.innerHTML", document.body.innerHTML);
-
     Parent.mount(document.body, { children: Child });
     expect(document.body.innerHTML).toContain("<p>Hello</p>");
 
@@ -163,7 +162,7 @@ describe("Nested Component with Slot", () => {
     });
 
     const btn = root.querySelector("[data-ref='btn']");
-    console.log("root", root.innerHTML);
+
     expect(btn).not.toBeNull();
     expect(btn.textContent).toBe("Click Me");
   });
@@ -233,7 +232,7 @@ describe("Nested Component with Slot", () => {
     });
 
     const nestedEl = root.querySelector("[data-ref='nested']");
-    console.log("nestedEl", root.innerHTML);
+
     expect(nestedEl).not.toBeNull();
     expect(nestedEl.textContent).toBe("Nested Child");
   });
