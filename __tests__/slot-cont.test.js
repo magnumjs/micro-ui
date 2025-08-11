@@ -4,6 +4,11 @@
 
 import injectSlotContent from "../lib/injectSlotContent.js";
 
+const api = {
+  _mountedChildren: [],
+  refs: {},
+};
+
 function createRef() {
   const container = document.createElement("div");
   const placeholder = document.createElement("span");
@@ -74,7 +79,7 @@ test("injects component instance with .mount()", () => {
       target.appendChild(el);
     }
   };
-  injectSlotContent(ref, comp);
+  injectSlotContent(ref, comp, api);
   expect(document.body.innerHTML).toContain("Mounted");
 });
 
@@ -89,7 +94,7 @@ test("injects array of mixed types", () => {
   };
   const span = document.createElement("span");
   span.textContent = "Inline";
-  injectSlotContent(ref, ["<b>One</b>", span, comp]);
+  injectSlotContent(ref, ["<b>One</b>", span, comp], api);
   expect(document.body.innerHTML).toContain("One");
   expect(document.body.innerHTML).toContain("Inline");
   expect(document.body.innerHTML).toContain("ArrayMount");

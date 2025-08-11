@@ -48,6 +48,22 @@ Counter.mount("#app");
 ```
 [JSBin](https://jsbin.com/qiwegidage/1/edit?js,output)
 
+## 🧩 Composability for Components
+
+```js
+const Parent = createComponent(({ props }) => `
+  <div>
+    <slot></slot> <!-- Will auto-map to props.children.default -->
+  </div>
+`);
+
+const Child = createComponent(() => `<p>Hello</p>`);
+
+Parent.mount({ children: Child });
+```
+[JSBin](https://jsbin.com/quyelovezo/edit?js,output)
+
+
 ## 📡 Global Shared State with `shared()`
 
 Create a shared state store with event-based updates:
@@ -155,6 +171,9 @@ createComponent(
     },
     onMount() {
       // Called after initial mount
+    },
+    onUpdate(prevProps) {
+      // Called after update render
     },
     onBeforeUnmount(next) {
       // Delay unmount with callback or Promise or just sync

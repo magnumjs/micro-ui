@@ -4,6 +4,11 @@
 
 import injectSlotContent from "../lib/injectSlotContent";
 
+const api = {
+  _mountedChildren: [],
+  refs: {},
+};
+
 const createFakeComponent = (html = "<div>Comp</div>") => {
   let mounted = false;
   const instance = {
@@ -30,19 +35,19 @@ describe("injectSlotContent", () => {
   const slot = () => root.querySelector("[data-slot]");
 
   test("does nothing if value is null", () => {
-    injectSlotContent(slot(), null);
+    injectSlotContent(slot(), null, api);
     expect(root.innerHTML).toContain(`data-slot`);
   });
 
   test("resolves and injects string HTML", () => {
-    injectSlotContent(slot(), "<p>Hello</p>");
+    injectSlotContent(slot(), "<p>Hello</p>", api);
     expect(root.innerHTML).toContain("<p>Hello</p>");
   });
 
   test("injects DOM Node directly", () => {
     const span = document.createElement("span");
     span.textContent = "Text";
-    injectSlotContent(slot(), span);
+    injectSlotContent(slot(), span, api);
     expect(root.querySelector("span").textContent).toBe("Text");
   });
 
@@ -50,19 +55,19 @@ describe("injectSlotContent", () => {
     const comp = createFakeComponent();
     const mountTarget = document.createElement("div");
     comp.mount(mountTarget);
-    injectSlotContent(slot(), comp);
+    injectSlotContent(slot(), comp, api);
     expect(root.innerHTML).toContain("Comp");
   });
 
   test("auto-mounts unmounted component instance", () => {
     const comp = createFakeComponent("<h1>Auto</h1>");
-    injectSlotContent(slot(), comp);
+    injectSlotContent(slot(), comp, api);
     expect(root.innerHTML).toContain("<h1>Auto</h1>");
     expect(comp.el).toBeInstanceOf(HTMLElement);
   });
 
   test("calls function to resolve dynamic value", () => {
-    injectSlotContent(slot(), () => "<i>Dynamic</i>");
+    injectSlotContent(slot(), () => "<i>Dynamic</i>", api);
     expect(root.innerHTML).toContain("Dynamic");
   });
 
@@ -77,7 +82,7 @@ describe("injectSlotContent", () => {
     a.textContent = "Link";
     const b = document.createElement("b");
     b.textContent = "Bold";
-    injectSlotContent(slot(), [a, b]);
+    injectSlotContent(slot(), [a, b], api);
     expect(root.innerHTML).toContain("Link");
     expect(root.innerHTML).toContain("Bold");
   });
@@ -87,7 +92,7 @@ describe("injectSlotContent", () => {
     // a.textContent = "Link";
     const b = createFakeComponent("<li>Item 2</li>");
     b.textContent = "Bold";
-    injectSlotContent(slot(), [a, b]);
+    injectSlotContent(slot(), [a, b], api);
     expect(root.innerHTML).toContain("<li>Item 1</li><li>Item 2</li>");
     expect(root.innerHTML).toContain("<li>Item 1</li><li>Item 2</li>");
   });
@@ -193,7 +198,7 @@ describe("injectSlotContent", () => {
     const comp2 = createFakeComponent("<li>Item 2</li>");
     comp2.mount(document.createElement("div"));
 
-    injectSlotContent(slot(), [comp1, comp2]);
+    injectSlotContent(slot(), [comp1, comp2], api);
     expect(root.innerHTML).toContain("Item 1");
     expect(root.innerHTML).toContain("Item 2");
   });
@@ -212,7 +217,7 @@ describe("injectSlotContent", () => {
     container.appendChild(ref);
 
     // Inject using wrapper with `.el`
-    injectSlotContent(ref, [wrapper]);
+    injectSlotContent(ref, [wrapper], api);
 
     expect(container.innerHTML).toBe("<div>Hello from .el</div>");
   });
@@ -227,7 +232,7 @@ describe("injectSlotContent", () => {
     const comp2 = document.createElement("b");
     comp2.textContent = "Item 2222";
 
-    injectSlotContent(slot(), [comp1, comp2]);
+    injectSlotContent(slot(), [comp1, comp2], api);
     expect(root.innerHTML).toContain("Item 1");
     expect(root.innerHTML).toContain("Item 2");
   });
@@ -235,7 +240,7 @@ describe("injectSlotContent", () => {
   test("auto-mounts array of unmounted components", () => {
     const comp1 = createFakeComponent("<li>Item A</li>");
     const comp2 = createFakeComponent("<li>Item B</li>");
-    injectSlotContent(slot(), [comp1, comp2]);
+    injectSlotContent(slot(), [comp1, comp2], api);
     expect(root.innerHTML).toContain("Item A");
     expect(root.innerHTML).toContain("Item B");
     expect(comp1.el).not.toBeNull();
@@ -249,7 +254,7 @@ describe("injectSlotContent", () => {
     const comp = createFakeComponent("<em>Italic</em>");
     comp.mount(document.createElement("div"));
 
-    injectSlotContent(slot(), ["<b>Bold</b>", node, comp]);
+    injectSlotContent(slot(), ["<b>Bold</b>", node, comp], api);
 
     expect(root.innerHTML).toContain("Bold");
     expect(root.innerHTML).toContain("Underline");
