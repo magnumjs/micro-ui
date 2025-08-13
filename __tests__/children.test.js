@@ -27,9 +27,7 @@ describe("Component children as slot content", () => {
   it("renders child component output in default slot", () => {
     Parent.mount(root);
     Parent.update({
-      children: {
-        default: Child.render({ msg: "Hello!" }),
-      },
+      children:  Child({ msg: "Hello!" }),
     });
     expect(root.innerHTML).toContain("<p>Hello!</p>");
   });

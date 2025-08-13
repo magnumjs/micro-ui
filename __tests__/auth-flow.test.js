@@ -52,13 +52,13 @@ describe("App login/logout flow", () => {
 
     // Mount all
     root.innerHTML = `
-      <div id="login"></div>
-      <div id="logout"></div>
-      <div id="user"></div>
+      <div id="login-app"></div>
+      <div id="logout-app"></div>
+      <div id="user-app"></div>
     `;
-    LoginButton.mount("#login");
-    LogoutButton.mount("#logout");
-    UserPanel.mount("#user");
+    LoginButton.mount("#login-app");
+    LogoutButton.mount("#logout-app");
+    UserPanel.mount("#user-app");
   });
 
   test("Login emits user, UserPanel shows name, Logout clears state", async () => {

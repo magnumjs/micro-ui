@@ -21,8 +21,8 @@ describe("Login flow using context pub/sub", () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <div id="status"></div>
-      <div id="form"></div>
+      <div id="status-app"></div>
+      <div id="form-app"></div>
     `;
     context.clear();
   });
@@ -67,8 +67,8 @@ describe("Login flow using context pub/sub", () => {
     });
 
     // Mount both
-    AuthStatus.mount("#status");
-    LoginForm.mount("#form");
+    AuthStatus.mount("#status-app");
+    LoginForm.mount("#form-app");
 
     await waitUntil(() => loginComponent.ref("username") && statusComponent.ref("status"));
 

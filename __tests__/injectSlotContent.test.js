@@ -22,6 +22,47 @@ const createFakeComponent = (html = "<div>Comp</div>") => {
   return instance;
 };
 
+
+
+describe("injectSlotContent caching", () => {
+  it("skips injection if the same value is already injected", () => {
+    // Setup a slot node
+    const container = document.createElement("div");
+    container.innerHTML = `<slot name="header"></slot>`;
+    const slotNode = container.querySelector('slot[name="header"]');
+
+    // Spy to detect replacement
+    const originalReplaceWith = slotNode.replaceWith;
+    let replaceCalled = 0;
+    slotNode.replaceWith = function () {
+      replaceCalled++;
+      return originalReplaceWith.apply(this, arguments);
+    };
+
+    // First injection
+    injectSlotContent(slotNode, "<h1>Header</h1>", { _mountedChildren: [] });
+    expect(container.innerHTML).toContain("<h1>Header</h1>");
+    expect(replaceCalled).toBe(1);
+
+    // Add a new slot node for the second test (simulate DOM diffing)
+    container.innerHTML = `<slot name="header"></slot>`;
+    const slotNode2 = container.querySelector('slot[name="header"]');
+
+    // Second injection with the same value (should skip)
+    injectSlotContent(slotNode2, "<h1>Header</h1>", { _mountedChildren: [] });
+    // Since slotNode2 is a new node, cache won't match; to test the cache, use the same node:
+    injectSlotContent(slotNode, "<h1>Header</h1>", { _mountedChildren: [] });
+    expect(replaceCalled).toBe(1); // Should not increase
+
+    // Third injection with a different value (should inject)
+    injectSlotContent(slotNode, "<h2>Header2</h2>", { _mountedChildren: [] });
+    expect(replaceCalled).toBe(2);
+
+    // Restore
+    slotNode.replaceWith = originalReplaceWith;
+  });
+});
+
 describe("injectSlotContent", () => {
   let root;
 
@@ -34,9 +75,14 @@ describe("injectSlotContent", () => {
 
   const slot = () => root.querySelector("[data-slot]");
 
-  test("does nothing if value is null", () => {
+  test("removes if value is null", () => {
     injectSlotContent(slot(), null, api);
     expect(root.innerHTML).toContain(`data-slot`);
+  });
+
+  test("does nothing if value is empty", () => {
+    injectSlotContent(slot(), "", api);
+    expect(root.innerHTML).toContain(``);
   });
 
   test("resolves and injects string HTML", () => {

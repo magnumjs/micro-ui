@@ -46,7 +46,7 @@ describe('Named Slot Support', () => {
     Component = createComponent(() => `<div><slot name="header">Default Header</slot></div>`);
     Component.mount(root);
     Component.update({
-      children: { header: '<h1>Custom Header</h1>' },
+      slots: { header: '<h1>Custom Header</h1>' },
     });
 
     expect(root.innerHTML).toContain('<h1>Custom Header</h1>');
@@ -61,7 +61,7 @@ describe('Named Slot Support', () => {
     `);
     Component.mount(root);
     Component.update({
-      children: {
+      slots: {
         default: '<p>Main content</p>',
         header: '<h1>My App</h1>',
         footer: '<small>© 2025</small>',

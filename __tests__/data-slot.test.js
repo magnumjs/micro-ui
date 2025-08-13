@@ -23,7 +23,7 @@ describe("data-slot attribute support", () => {
 
     Card.mount(root);
     Card.update({
-      children: {
+      slots: {
         title: "<h1>Hello World</h1>",
         footer: "<p>Goodbye</p>",
         default: "<p>Body</p>",
