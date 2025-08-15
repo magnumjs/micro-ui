@@ -73,6 +73,8 @@ test("injects component instance with .el", () => {
 test("injects component instance with .mount()", () => {
   const ref = createRef();
   const comp = {
+    isMounted: () => false,
+    unMount: () => {},
     mount(target) {
       const el = document.createElement("h1");
       el.textContent = "Mounted";
@@ -86,6 +88,8 @@ test("injects component instance with .mount()", () => {
 test("injects array of mixed types", () => {
   const ref = createRef();
   const comp = {
+    isMounted: () => false,
+    unMount: () => {},
     mount(target) {
       const el = document.createElement("h2");
       el.textContent = "ArrayMount";

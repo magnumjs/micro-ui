@@ -13,6 +13,10 @@ const createFakeComponent = (html = "<div>Comp</div>") => {
   let mounted = false;
   const instance = {
     el: null,
+    isMounted: () => mounted,
+    unmount: () => {
+      mounted = false;
+    },
     mount(target) {
       mounted = true;
       target.innerHTML = html;

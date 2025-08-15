@@ -2,7 +2,7 @@ import { createComponent } from "../lib/reactive-core.js";
 import { jest } from "@jest/globals";
 
 describe("data-slot attribute support", () => {
-  it("replaces data-slot with named content", () => {
+  it("replaces data-slot with named content", async () => {
     const root = document.createElement("div");
 
     // Parent component with data-slot attributes
