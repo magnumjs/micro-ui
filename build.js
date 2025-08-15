@@ -15,6 +15,9 @@ build({
   format: 'iife',              // ✅ Output as IIFE for browser use
   globalName: 'MicroUI',       // ✅ Accessible as window.MicroUI
   outfile: 'dist/magnumjs-micro-ui.js',
+  define: {
+    'process.env.APP_VERSION': JSON.stringify(pkg.version),
+  },
   banner: {
     js: banner,
   },
