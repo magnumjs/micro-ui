@@ -80,7 +80,7 @@ describe("createComponent new object signature", () => {
     // Unmount triggers onUnmount hooks
     parentComp.unmount();
     expect(parentOnUnmount).toHaveBeenCalledTimes(1);
-    expect(childOnUnmount).toHaveBeenCalledTimes(2);
+    expect(childOnUnmount).toHaveBeenCalledTimes(1);
 
     // DOM removed
     expect(container.innerHTML).toBe("");

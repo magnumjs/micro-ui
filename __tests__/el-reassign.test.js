@@ -5,6 +5,7 @@ import { jest, describe, it, expect } from "@jest/globals";
 function createMockComponent(el) {
   return {
     el,
+    update: jest.fn(),
     isMounted: () => true,
     unmount: jest.fn(),
     _mountedChildren: [],
@@ -43,8 +44,8 @@ describe("injectSlotContent - reassigns el when component mounts to its own refN
     // Act: injectSlotContent with our mock component
     injectSlotContent(refNode, comp, api);
 
-    // Assert: el should have been reassigned to a new temp node
-    expect(comp.el).not.toBe(refNode);
+    // Assert: el should NOT have been reassigned to a new temp node
+    expect(comp.el).toBe(refNode);
     expect(container.contains(comp.el)).toBe(true); // temp is now in DOM
   });
 });

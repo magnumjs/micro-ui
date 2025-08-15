@@ -13,6 +13,7 @@ const createFakeComponent = (html = "<div>Comp</div>") => {
   let mounted = false;
   const instance = {
     el: null,
+    update: () => {},
     isMounted: () => mounted,
     unmount: () => {
       mounted = false;
