@@ -1,4 +1,4 @@
-import { createComponent } from '../../lib/reactive-core.js';
+import { createComponent } from '@magnumjs/micro-ui';
 // example/components/NamedSlotsCard.js
 const NamedSlotsCard = createComponent(({ props : {title, slots = {}, children } }) => `
   <div class="card">

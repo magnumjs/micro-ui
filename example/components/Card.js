@@ -1,6 +1,6 @@
 // example/components/Card.js
 
-import { createComponent } from '../../lib/reactive-core.js';
+import { createComponent } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js";
 
 export const Card = createComponent(({ props : { title, children } }) => {
   return `

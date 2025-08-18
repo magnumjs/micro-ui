@@ -1,4 +1,4 @@
-import { createComponent } from "../lib/reactive-core";
+import { createComponent } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js";
 
 const Layout = createComponent(() => `
   <div>
