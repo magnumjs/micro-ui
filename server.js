@@ -10,7 +10,7 @@ const exampleDir = path.join(__dirname, 'example');
 const libDir = path.join(__dirname, 'lib');
 
 app.use(express.static(exampleDir));
-app.use('/lib', express.static(libDir)); // ← This line exposes /lib
+// app.use('/lib', express.static(libDir)); // ← This line exposes /lib
 
 app.listen(PORT, () => {
   console.log(`Demo running at http://localhost:${PORT}`);
