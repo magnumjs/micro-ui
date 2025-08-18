@@ -1,4 +1,4 @@
-import { createComponent } from "../lib/reactive-core.js";
+import { createComponent, useCurrentComponent } from "../lib/reactive-core.js";
 import { jest, describe, test, expect } from "@jest/globals";
 import injectSlotContent from "../lib/injectSlotContent.js";
 test("reuses mounted child and updates DOM correctly after parent update", async () => {
@@ -117,4 +117,220 @@ test("syncInstanceToAPI getter returns instance property", () => {
   Component.mount(document.body);
   // The getter should return the instance property
   expect(Component.foo).toBe(123);
+});
+
+test("captures currentComponent as componentFn during render for composables", () => {
+  // Import the module and patch currentComponent
+  let captured = null;
+  // Patch global for test
+  // Create a component that reads currentComponent during render
+  const Comp = createComponent(function () {
+    captured = useCurrentComponent();
+    return `<div>Test</div>`;
+  });
+  Comp.mount(document.body);
+  // The captured value should be the component function itself
+  expect(captured).toBe(Comp);
+});
+
+
+
+
+describe('Parent/Child with slot reuse', () => {
+  it('reuses child component and preserves state on parent re-render', async () => {
+    const logs = [];
+
+    const Child = createComponent(({ state }) => `<div>Child state: ${state.count || 0}</div>`, {
+      state: { count: 1 },
+      onMount() { logs.push('Child mounted'); },
+      onUpdate() { logs.push('Child updated'); },
+      onUnmount() { logs.push('Child unmounted'); },
+    });
+
+    const Button = createComponent(() => `<button>Say Hello!</button>`);
+
+    const Parent = createComponent(({ state }) => `
+      <div>
+        <slot name="button">defaults...</slot>
+        ${state.show ? `<slot>defaults</slot>` : `Loaded`}
+      </div>
+    `, {
+      state: { show: true },
+      on: {
+        "click button"() {
+          this.setState({ show: !this.state.show });
+        }
+      }
+    });
+
+    // Mount parent with slot children
+    Parent.mount(document.body, {
+      slots: {
+        button: Button,
+        default: Child,
+      }
+    });
+
+    // Initial mount
+    expect(logs).toContain('Child mounted');
+    expect(logs).not.toContain('Child unmounted');
+
+    const childEl = Child.el;
+    expect(childEl.textContent).toBe('Child state: 1');
+
+    // Click button to toggle show -> parent re-render
+    document.querySelector('button').click();
+
+    // Child should NOT unmount
+    expect(logs).not.toContain('Child unmounted');
+    expect(Child.el).toBe(childEl); // DOM element reused
+
+    await Promise.resolve(); // wait for microtask queue
+    // Parent template updated
+    expect(document.body.innerHTML).toContain('Loaded');
+
+    // Click button again to toggle back
+    document.querySelector('button').click();
+
+    // Child still reused
+    expect(Child.el).toBe(childEl);
+    expect(logs.filter(l => l === 'Child mounted').length).toBe(1);
+
+    await Promise.resolve();
+    // Parent template shows the slot content again
+    expect(document.body.innerHTML).toContain('Child state: 1');
+  });
+});
+
+// Event boundary tests … what other effects to boundaries besides events?
+
+/**
+ * @jest-environment jsdom
+ */
+
+
+describe("MicroUI component boundaries with on-event delegation", () => {
+  let parentComp;
+  let childComp;
+  let parentHandler;
+  let childHandler;
+  let container;
+
+  beforeEach(() => {
+    container = document.createElement("div");
+    document.body.appendChild(container);
+
+    parentHandler = jest.fn();
+    childHandler = jest.fn();
+
+    // Child component
+    childComp = createComponent({
+      render() {
+        return `<div data-component-root="true">
+          <button data-action="childAction">Child</button>
+        </div>`;
+      },
+      on: {
+        "click [data-action='childAction']": childHandler,
+      },
+    });
+
+    // Parent component
+    parentComp = createComponent({
+      render() {
+        return `<div data-component-root="true">
+          <button data-action="parentAction">Parent</button>
+          <div id="child-slot"></div>
+        </div>`;
+      },
+      on: {
+        "click [data-action='parentAction']": parentHandler,
+      },
+      slots: {
+        "child-slot": childComp,
+      },
+    });
+
+    parentComp.mount(container);
+  });
+
+  afterEach(() => {
+    parentComp.unmount();
+    container.remove();
+  });
+
+  test("Parent button click triggers parent handler only", () => {
+    const parentButton = container.querySelector("[data-action='parentAction']");
+    parentButton.click();
+    expect(parentHandler).toHaveBeenCalledTimes(1);
+    expect(childHandler).not.toHaveBeenCalled();
+  });
+
+  test("Child button click triggers child handler only", () => {
+    const childButton = container.querySelector("[data-action='childAction']");
+    childButton.click();
+    expect(childHandler).toHaveBeenCalledTimes(1);
+    expect(parentHandler).not.toHaveBeenCalled();
+  });
+});
+
+/**
+ * @jest-environment jsdom
+ */
+
+describe("Component boundaries and event delegation", () => {
+  let parentRoot;
+  let childRoot;
+  let parentHandler;
+  let childHandler;
+
+  beforeEach(() => {
+    // Set up DOM
+    document.body.innerHTML = `
+      <div data-component-root="true" id="parent">
+        <button data-action="parentAction">Parent</button>
+        <div data-component-root="true" id="child">
+          <button data-action="childAction">Child</button>
+        </div>
+      </div>
+    `;
+
+    parentRoot = document.getElementById("parent");
+    childRoot = document.getElementById("child");
+
+    // Mock handlers
+    parentHandler = jest.fn();
+    childHandler = jest.fn();
+
+    // Event delegation for parent
+    parentRoot.addEventListener("click", (event) => {
+      const action = event.target.closest("[data-action]");
+      if (!action) return;
+      // Only handle if inside parent's boundary but not inside a child component
+      if (!action.closest("[data-component-root]") || action.closest("#parent") === parentRoot) {
+        if (action.dataset.action === "parentAction") parentHandler();
+      }
+    });
+
+    // Event delegation for child
+    childRoot.addEventListener("click", (event) => {
+      const action = event.target.closest("[data-action]");
+      if (!action) return;
+      if (action.dataset.action === "childAction") childHandler();
+    });
+  });
+
+  test("Parent button click triggers parent handler only", () => {
+    const parentButton = parentRoot.querySelector("[data-action='parentAction']");
+    parentButton.click();
+    expect(parentHandler).toHaveBeenCalledTimes(1);
+    expect(childHandler).not.toHaveBeenCalled();
+  });
+
+  test("Child button click triggers child handler only", () => {
+    const childButton = childRoot.querySelector("[data-action='childAction']");
+    childButton.click();
+    expect(childHandler).toHaveBeenCalledTimes(1);
+    expect(parentHandler).not.toHaveBeenCalled();
+  });
 });
