@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/magnumjs/micro-ui/compare/v1.1.0...v1.1.1) (2025-08-18)
+
+
+### Bug Fixes
+
+* added esm support for browser modules ([4ac9df6](https://github.com/magnumjs/micro-ui/commit/4ac9df68e9f0c8747045c0f926e83c48946b4128))
+
 ## 1.1.0 (2025-08-18)
 
 
