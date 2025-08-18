@@ -1,4 +1,4 @@
-import { Counter } from '../../components/Counter.js';
+import { Counter } from '../../components/Counter.browser.js';
 import { escapeCode } from '../utils/escapeCode.js';
 
 
