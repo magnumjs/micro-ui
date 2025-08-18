@@ -1,4 +1,4 @@
-import { createComponent } from '@magnumjs/micro-ui';
+import { createComponent } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js";
 // example/components/NamedSlotsCard.js
 const NamedSlotsCard = createComponent(({ props : {title, slots = {}, children } }) => `
   <div class="card">

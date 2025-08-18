@@ -1,5 +1,5 @@
 import { WelcomeCard } from "./components/WelcomeCard.js";
-import { Counter } from "./components/Counter.js";
+import { Counter } from "./components/Counter.browser.js";
 import { AuthCard } from "./components/AuthCard.js";
 import { appState } from "./state.js";
 import { fetchUser, loginUser, logoutUser } from "./logic.js";

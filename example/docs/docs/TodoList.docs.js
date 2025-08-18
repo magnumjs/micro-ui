@@ -1,5 +1,5 @@
 import { TodoList } from '../../components/TodoList.js';
-import { createState } from '@magnumjs/micro-ui';
+import { createState } from 'https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js';
 import { escapeCode } from '../utils/escapeCode.js';
 
 export function renderTodoListDocs() {
