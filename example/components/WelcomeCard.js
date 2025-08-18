@@ -1,4 +1,4 @@
-import { createComponent } from '/lib/reactive-core.js';
+import { createComponent } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js";
 
 export const WelcomeCard = createComponent(({ props : { user } }) => {
   console.log(`[reactive-core] Rendering WelcomeCard with user:`, user);

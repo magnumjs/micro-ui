@@ -4,7 +4,11 @@ export default {
   transform: {},
   "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
   testEnvironment: 'jsdom',
-  collectCoverage: true,
+    collectCoverage: true,
+    collectCoverageFrom: [
+      "lib/**/*.js",
+      "!dist/**"
+    ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'html'],
   coverageThreshold: {

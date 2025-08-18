@@ -1,5 +1,5 @@
 import { TodoList } from '../../components/TodoList.js';
-import { createState } from '../../lib/reactive-core.js';
+import { createState } from '@magnumjs/micro-ui';
 import { escapeCode } from '../utils/escapeCode.js';
 
 export function renderTodoListDocs() {

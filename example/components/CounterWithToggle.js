@@ -1,4 +1,4 @@
-import { createComponent } from "../../lib/reactive-core.js";
+import { createComponent } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js";
 
 const CounterWithToggle = createComponent(function () {
   const { show } = this.state;

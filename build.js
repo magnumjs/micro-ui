@@ -7,7 +7,23 @@ const banner = `/*!
  * Website: ${pkg.homepage}
  */`;
 
-build({
+
+await build({
+  entryPoints: ['lib/reactive-core.js'],
+  bundle: true,
+  minify: true,
+  sourcemap: true,
+  format: 'esm', // <-- ESM output
+  outfile: 'dist/magnumjs-micro-ui.esm.js',
+  define: {
+    'process.env.APP_VERSION': JSON.stringify(pkg.version),
+  },
+  banner: {
+    js: banner,
+  },
+});
+
+await build({
   entryPoints: ['lib/reactive-core.js'],
   bundle: true,
   minify: true,
