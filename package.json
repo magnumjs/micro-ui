@@ -3,8 +3,8 @@
   "version": "1.1.1",
   "description": "A tiny reactive component system with declarative slots, keyed lists, reactive props, and DOM diffing.",
   "type": "module",
-  "main": "dist/magnumjs-micro-ui.esm.js",
-  "module": "dist/magnumjs-micro-ui.js",
+  "main": "dist/magnumjs-micro-ui.js",
+  "module": "dist/magnumjs-micro-ui.esm.js",
   "exports": {
     "import": "./dist/magnumjs-micro-ui.esm.js",
     "require": "./dist/magnumjs-micro-ui.js"
