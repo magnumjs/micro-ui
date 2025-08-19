@@ -18,16 +18,19 @@ describe("this.ref() behavior", () => {
   beforeEach(() => {
     document.body.innerHTML = `<div id="app"></div>`;
 
-    const Demo = createComponent(() => {
-      return `
+    const Demo = createComponent(
+      () => {
+        return `
         <input type="text" data-ref="input" class="input-field" name="email" />
         <button id="submitBtn">Submit</button>
       `;
-    }, {
-      onMount() {
-        component = this;
+      },
+      {
+        onMount() {
+          component = this;
+        },
       }
-    });
+    );
 
     Demo.mount("#app");
   });
@@ -57,7 +60,9 @@ describe("this.ref() behavior", () => {
   });
 
   test("returns null for missing element", () => {
-    expect(component.ref("missingRef")).toBeNull();
-    expect(component.ref(".nope")).toBeNull();
+    expect(component.ref("missingRef")).toBeNull(); // valid ref name, not present
+    expect(() => component.ref(".input-not-exist")).toThrow(/ref\(\) invalid selector/); // invalid selector, should throw
+    expect(() => component.ref("#input-not-exist")).toThrow(/ref\(\) invalid selector/); // invalid selector, should throw
+    expect(() => component.ref("#.input-not-exist")).toThrow(/ref\(\) invalid selector/); // invalid selector, should throw
   });
 });

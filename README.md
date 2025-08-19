@@ -1,4 +1,5 @@
 # 📩 Micro UI - Reactive Component System
+[![Docs: GitHub Pages](https://img.shields.io/badge/docs-github%20pages-blue)](https://magnumjs.github.io/micro-ui/)
 [![npm version](https://img.shields.io/npm/v/@magnumjs/micro-ui.svg)](https://www.npmjs.com/package/@magnumjs/micro-ui)
 [![Build Status](https://github.com/magnumjs/micro-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/magnumjs/micro-ui/actions)
 ![npm package minimized gzipped size](https://img.shields.io/bundlejs/size/%40magnumjs%2Fmicro-ui)
