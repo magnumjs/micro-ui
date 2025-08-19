@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { screen, fireEvent } from "@testing-library/dom";
-import { Counter } from "../example/components/Counter.js";
+import { Counter } from "../docs/components/Counter.js";
 
 document.body.innerHTML = '<div id="test-root"></div>';
 

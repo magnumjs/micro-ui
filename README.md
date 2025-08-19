@@ -22,7 +22,7 @@ A minimalist reactive component library with support for state, props, named slo
 - Declarative event binding via `on` option (e.g. `"click .btn"`) and `data-action`
 - Arguments support via `data-args` for cleaner templates
 - Built-in `context` pub/sub with `shared()` stores
-- Full unit test coverage
+- Full unit test coverage 
 
 ## 🚀 Getting Started
 

@@ -15,7 +15,7 @@ body {
   border-radius: 6px;
   padding: 1rem;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .story h2 {
@@ -27,7 +27,6 @@ body {
   padding: 0.5rem;
   overflow-x: auto;
 }
-
 
 /* docs.css */
 .controls {
@@ -47,3 +46,38 @@ body {
   margin-top: 0.5rem;
 }
 
+.docs-layout {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+}
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 1rem;
+  background: #f4f4f4;
+  border-right: 1px solid #ccc;
+  padding: 1rem;
+  height: fit-content;
+}
+.sidebar h3 {
+  margin-top: 0;
+}
+.sidebar ul {
+  list-style: none;
+  padding-left: 0;
+}
+.sidebar li {
+  margin-bottom: 0.5rem;
+}
+.sidebar a {
+  color: #0077cc;
+  text-decoration: none;
+}
+.sidebar a:hover {
+  text-decoration: underline;
+}
+html {
+  scroll-behavior: smooth;
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reactive Component Library Docs</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        display: flex;
+        height: 100vh;
+      }
+      aside {
+        width: 220px;
+        background: #f4f4f4;
+        padding: 1rem;
+        border-right: 1px solid #ccc;
+      }
+      main {
+        flex: 1;
+        padding: 2rem;
+        overflow-y: auto;
+      }
+      .demo-box {
+        border: 1px solid #ccc;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background: #fff;
+      }
+      pre {
+        background: #111;
+        color: #fff;
+        padding: 1rem;
+        overflow-x: auto;
+      }
+      .step {
+        margin-bottom: 1.5rem;
+      }
+      .step h4 {
+        margin: 0 0 0.5rem;
+        font-size: 1.1rem;
+        color: #333;
+      }
+
+      .docs-layout {
+        display: flex;
+        gap: 2rem;
+        padding: 1rem;
+      }
+
+      .sidebar {
+        width: 200px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 1rem;
+        background: #f9f9f9;
+        border-right: 1px solid #eee;
+        padding: 1rem;
+        height: fit-content;
+      }
+
+      .sidebar h3 {
+        margin-top: 0;
+      }
+
+      .sidebar ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .sidebar li {
+        margin-bottom: 0.5rem;
+      }
+
+      .sidebar a {
+        color: #0077cc;
+        text-decoration: none;
+      }
+
+      .sidebar a:hover {
+        text-decoration: underline;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      .card {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 1rem;
+        margin: 1rem 0;
+        background: #f9f9f9;
+      }
+      .card-body {
+        margin: 1rem 0;
+      }
+      .card-footer {
+        font-size: 0.8rem;
+        color: #777;
+      }
+    </style>
+    <link href="prism.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="docs-layout">
+      <aside class="sidebar">
+        <h3>📚 Components</h3>
+        <ul>
+          <li><a href="#counter">🧮 Counter</a></li>
+          <li><a href="#todo">✅ TodoList</a></li>
+          <li><a href="#auth-card">🔐 AuthCard</a></li>
+          <li><a href="#welcome-card">👋 WelcomeCard</a></li>
+          <li><a href="#refs-demo">🔍 Refs Demo</a></li>
+          <li><a href="#card-demo">🎉 Cards Demo</a></li>
+          <li><a href="#fallback-card-demo">🧩 Fallback Cards Demo</a></li>
+        </ul>
+      </aside>
+
+      <main id="docs-root">
+        <!-- Dynamic docs injected here -->
+      </main>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+    <script src="prism.js"></script>
+  </body>
+</html>
