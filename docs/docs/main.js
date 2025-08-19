@@ -5,6 +5,7 @@ import { renderTodoListDocs } from './docs/TodoList.docs.js';
 import { renderRefsDocs } from './docs/renderRefsDocs.js';
 import { renderCardDocs } from './docs/renderCardDocs.js';
 import { renderCardWithFallbackDocs } from './docs/CardWithFallbacks.docs.js';
+import { showCounterDemo, showTodoDemo } from '../examples.js';
 
 renderCounterDocs();
 renderAuthCardDocs();
@@ -13,3 +14,16 @@ renderTodoListDocs();
 renderRefsDocs();
 renderCardDocs();
 renderCardWithFallbackDocs();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('docs-root');
+  document.getElementById('nav-counter')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    showCounterDemo(root);
+  });
+  document.getElementById('nav-todo')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    showTodoDemo(root);
+  });
+  // Add more listeners for other examples as needed
+});
