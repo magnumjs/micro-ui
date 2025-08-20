@@ -1,4 +1,5 @@
-import { createComponent, context } from "../lib/reactive-core";
+import { createComponent } from "../lib/reactive-core";
+import { context } from "../lib/compose/context.js";
 import { jest, describe, test, expect } from "@jest/globals";
 
 describe("Unmount logic and event/context cleanup", () => {

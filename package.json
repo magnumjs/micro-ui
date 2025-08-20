@@ -6,13 +6,31 @@
   "main": "dist/magnumjs-micro-ui.js",
   "module": "dist/magnumjs-micro-ui.esm.js",
   "exports": {
-    "import": "./dist/magnumjs-micro-ui.esm.js",
-    "require": "./dist/magnumjs-micro-ui.js"
+    ".": {
+      "import": "./dist/magnumjs-micro-ui.esm.js",
+      "require": "./dist/magnumjs-micro-ui.js"
+    },
+    "./esm": {
+      "import": "./dist/magnumjs-micro-ui.esm.js",
+      "require": "./dist/magnumjs-micro-ui.js"
+    },
+    "./context": {
+      "import": "./dist/magnumjs-micro-ui-context.esm.js",
+      "require": "./dist/magnumjs-micro-ui-context.js"
+    },
+    "./hooks": {
+      "import": "./dist/magnumjs-micro-ui-hooks.esm.js",
+      "require": "./dist/magnumjs-micro-ui-hooks.js"
+    },
+    "./compose": {
+      "import": "./dist/magnumjs-micro-ui-compose.esm.js",
+      "require": "./dist/magnumjs-micro-ui-compose.js"
+    }
   },
   "browser": "dist/magnumjs-micro-ui.js",
+  "sideEffects": false,
   "files": [
     "dist",
-    "lib",
     "README.md"
   ],
   "scripts": {

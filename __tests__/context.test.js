@@ -1,4 +1,4 @@
-import { context } from '../lib/reactive-core';
+import { context } from '../lib/compose/context';
 import {
   jest,
   describe,

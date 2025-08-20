@@ -3,7 +3,7 @@
  */
 
 import { screen } from '@testing-library/dom';
-import { createState } from '../lib/reactive-core.js';
+import { createState } from '../lib/compose/context.js';
 import { createComponent } from '../lib/reactive-core.js';
 
 describe('Reactive createState and createComponent', () => {

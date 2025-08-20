@@ -1,5 +1,5 @@
-import { build } from 'esbuild';
-import pkg from './package.json' with { type: 'json' };
+import { build } from "esbuild";
+import pkg from "./package.json" with { type: "json" };
 
 const banner = `/*!
  * ${pkg.name} v${pkg.version}
@@ -7,36 +7,54 @@ const banner = `/*!
  * Website: ${pkg.homepage}
  */`;
 
+const builds = [
+  {
+    entry: "lib/reactive-core.js",
+    formats: [
+      { format: "esm", outfile: "dist/magnumjs-micro-ui.esm.js" },
+      { format: "iife", outfile: "dist/magnumjs-micro-ui.js", globalName: "MicroUI" },
+    ],
+  },
+  {
+    entry: "lib/compose/context.js",
+    formats: [
+      { format: "esm", outfile: "dist/magnumjs-micro-ui-context.esm.js" },
+      { format: "iife", outfile: "dist/magnumjs-micro-ui-context.js", globalName: "MicroUIContext" },
+    ],
+  },
+  {
+    entry: "lib/compose/reactive-composables.js",
+    formats: [
+      { format: "esm", outfile: "dist/magnumjs-micro-ui-compose.esm.js" },
+      { format: "iife", outfile: "dist/magnumjs-micro-ui-compose.js", globalName: "MicroUICompose" },
+    ],
+  },
+  {
+    entry: "lib/hooks/index.js",
+    formats: [
+      { format: "esm", outfile: "dist/magnumjs-micro-ui-hooks.esm.js" },
+      { format: "iife", outfile: "dist/magnumjs-micro-ui-hooks.js", globalName: "MicroUIHooks" },
+    ],
+  },
+];
 
-await build({
-  entryPoints: ['lib/reactive-core.js'],
-  bundle: true,
-  minify: true,
-  sourcemap: true,
-  format: 'esm', // <-- ESM output
-  outfile: 'dist/magnumjs-micro-ui.esm.js',
-  define: {
-    'process.env.APP_VERSION': JSON.stringify(pkg.version),
-  },
-  banner: {
-    js: banner,
-  },
-});
+async function runBuild() {
+  for (const { entry, formats } of builds) {
+    for (const opts of formats) {
+      await build({
+        entryPoints: [entry],
+        bundle: true,
+        minify: true,
+        sourcemap: true,
+        format: opts.format,
+        outfile: opts.outfile,
+        globalName: opts.globalName,
+        define: { "process.env.APP_VERSION": JSON.stringify(pkg.version) },
+        banner: { js: banner },
+      });
+    }
+  }
+  console.log("✅ Build completed: core + context");
+}
 
-await build({
-  entryPoints: ['lib/reactive-core.js'],
-  bundle: true,
-  minify: true,
-  sourcemap: true,
-  format: 'iife',              // ✅ Output as IIFE for browser use
-  globalName: 'MicroUI',       // ✅ Accessible as window.MicroUI
-  outfile: 'dist/magnumjs-micro-ui.js',
-  define: {
-    'process.env.APP_VERSION': JSON.stringify(pkg.version),
-  },
-  banner: {
-    js: banner,
-  },
-}).then(() => {
-  console.log('Build completed with banner and exposed to window.MicroUI.');
-}).catch(() => process.exit(1));
+runBuild().catch(() => process.exit(1));
