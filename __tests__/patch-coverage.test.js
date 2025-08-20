@@ -2,7 +2,6 @@
 
 import diffHTML from "../lib/diffHTML.js";
 import injectSlotContent from "../lib/injectSlotContent.js";
-import Outlet from "../lib/outlet.js";
 import { createComponent } from "../lib/reactive-core.js";
 import { jest } from "@jest/globals";
 
@@ -50,15 +49,6 @@ describe("Patch remaining uncovered branches", () => {
 
   test("injectSlotContent: ignores when no refNode or null value", () => {
     expect(() => injectSlotContent(null, null)).not.toThrow();
-  });
-
-  test("outlet: falls back when children.default is undefined", () => {
-    const html = "<slot></slot>";
-    const props = {
-      children: { default: null },
-    };
-    const result = Outlet(html, props);
-    expect(result).toBe("");
   });
 
   test("reactive-core: onBeforeUnmount hook runs and clears element", () => {

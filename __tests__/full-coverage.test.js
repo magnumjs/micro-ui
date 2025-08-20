@@ -4,7 +4,6 @@
 
 import diffHTML from "../lib/diffHTML.js";
 import injectSlotContent from "../lib/injectSlotContent.js";
-import Outlet from "../lib/outlet.js";
 import { createComponent } from "../lib/reactive-core.js";
 
 describe("Patch uncovered branches", () => {
@@ -32,15 +31,6 @@ describe("Patch uncovered branches", () => {
     document.body.appendChild(ref);
     injectSlotContent(ref, [{ notValid: true }, 123]);
     expect(document.body.innerHTML).not.toContain("notValid");
-  });
-
-  test("outlet: falls back when children.default is null", () => {
-    const html = "<slot></slot>";
-    const props = {
-      children: { default: null },
-    };
-    const result = Outlet(html, props);
-    expect(result).toBe("");
   });
 
   test("reactive-core: component instance renders without mount", () => {

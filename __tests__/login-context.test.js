@@ -2,7 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { createComponent, context } from "../lib/reactive-core.js";
+import { createComponent } from "../lib/reactive-core.js";
+import { context } from "../lib/compose/context.js";
 import { describe, test, expect, beforeEach } from "@jest/globals";
 
 function waitUntil(fn, timeout = 1000) {

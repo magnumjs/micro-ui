@@ -2,7 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { createComponent, shared, context } from "../lib/reactive-core";
+import { createComponent } from "../lib/reactive-core";
+import { shared, context } from "../lib/compose/context.js"; // context management
 import { describe, beforeEach, test, expect } from "@jest/globals";
 
 describe("App login/logout flow", () => {
@@ -16,39 +17,50 @@ describe("App login/logout flow", () => {
 
     const auth = shared("auth", { user: null });
 
-    LoginButton = createComponent(() => {
-      return `<button data-ref="login">Login</button>`;
-    }, {
-      on: {
-        "click [data-ref='login']": () => {
-          auth.emit("login", { user: "Tova" });
-        }
-      }
-    });
-
-    LogoutButton = createComponent(() => {
-      return `<button data-ref="logout">Logout</button>`;
-    }, {
-      on: {
-        "click [data-ref='logout']": () => {
-          auth.emit("logout", { user: null });
-        }
-      }
-    });
-
-    UserPanel = createComponent(() => {
-      const { user } = auth.get();
-      return `<div><span data-ref="user">${user ? `Welcome, ${user}` : "Not logged in"}</span></div>`;
-    }, {
-      onMount() {
-        this._login = auth.on("login", () => this.update());
-        this._logout = auth.on("logout", () => this.update());
+    LoginButton = createComponent(
+      () => {
+        return `<button data-ref="login">Login</button>`;
       },
-      onUnmount() {
-        this._login?.();
-        this._logout?.();
+      {
+        on: {
+          "click [data-ref='login']": () => {
+            auth.emit("login", { user: "Tova" });
+          },
+        },
       }
-    });
+    );
+
+    LogoutButton = createComponent(
+      () => {
+        return `<button data-ref="logout">Logout</button>`;
+      },
+      {
+        on: {
+          "click [data-ref='logout']": () => {
+            auth.emit("logout", { user: null });
+          },
+        },
+      }
+    );
+
+    UserPanel = createComponent(
+      () => {
+        const { user } = auth.get();
+        return `<div><span data-ref="user">${
+          user ? `Welcome, ${user}` : "Not logged in"
+        }</span></div>`;
+      },
+      {
+        onMount() {
+          this._login = auth.on("login", () => this.update());
+          this._logout = auth.on("logout", () => this.update());
+        },
+        onUnmount() {
+          this._login?.();
+          this._logout?.();
+        },
+      }
+    );
 
     // Mount all
     root.innerHTML = `

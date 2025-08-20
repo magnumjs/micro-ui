@@ -1,0 +1,7 @@
+/*!
+ * @magnumjs/micro-ui v1.1.2
+ * Author: Michael Glazer
+ * Website: https://github.com/magnumjs/micro-ui#readme
+ */
+var MicroUIContext=(()=>{var i=Object.defineProperty;var d=Object.getOwnPropertyDescriptor;var S=Object.getOwnPropertyNames;var g=Object.prototype.hasOwnProperty;var h=(e,t)=>{for(var r in t)i(e,r,{get:t[r],enumerable:!0})},w=(e,t,r,o)=>{if(t&&typeof t=="object"||typeof t=="function")for(let s of S(t))!g.call(e,s)&&s!==r&&i(e,s,{get:()=>t[s],enumerable:!(o=d(t,s))||o.enumerable});return e};var A=e=>w(i({},"__esModule",{value:!0}),e);var $={};h($,{context:()=>u,createChannelMap:()=>f,createState:()=>l,shared:()=>p});function f(){let e=new Map;return{subscribe(t,r){e.has(t)||e.set(t,new Set);let o=e.get(t);return o.add(r),()=>o.delete(r)},emit(t,r){let o=e.get(t);if(o)for(let s of o)s(r)},clear(){e.clear()}}}function l(e){let t=e,r=new Set;function o(n){typeof t=="object"&&t!==null&&typeof n=="object"&&n!==null&&!Array.isArray(t)&&!Array.isArray(n)?t={...t,...n}:t=typeof n=="function"?n(t):n,r.forEach(b=>b(t))}function s(n){return r.add(n),n(t),()=>r.delete(n)}function c(){return t}return{get:c,setState:o,getState:c,subscribe:s}}var u=f(),a=new Map;function p(e,t={}){if(!a.has(e)){let r=l(t),o={...r,emit(s,c){r.setState(c),u.emit(`${e}::${s}`,r.getState())},on(s,c){return u.subscribe(`${e}::${s}`,c)}};a.set(e,o)}return a.get(e)}p.clear=()=>a.clear();return A($);})();
+//# sourceMappingURL=magnumjs-micro-ui-context.js.map
