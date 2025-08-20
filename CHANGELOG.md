@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/magnumjs/micro-ui/compare/v1.1.2...v1.2.0) (2025-08-20)
+
+
+### Features
+
+* add better get ref support and per module cache with boundaries ([00eb557](https://github.com/magnumjs/micro-ui/commit/00eb557189e932db6b1c51d0656372d8f0c596f4))
+* added composables and hooks within core lib as separate imports ([bc30a40](https://github.com/magnumjs/micro-ui/commit/bc30a40cb324ce08fa98acb4a7f4a3a6d7971b7d))
+* added gh-pages docs static site ([247044c](https://github.com/magnumjs/micro-ui/commit/247044c8619941e8b209a1866ee9c0ac48f60e82))
+
 ### [1.1.2](https://github.com/magnumjs/micro-ui/compare/v1.1.1...v1.1.2) (2025-08-18)
 
 ### [1.1.1](https://github.com/magnumjs/micro-ui/compare/v1.1.0...v1.1.1) (2025-08-18)
