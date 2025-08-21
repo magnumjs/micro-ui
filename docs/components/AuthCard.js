@@ -1,4 +1,4 @@
-import { createComponent } from "https://unpkg.com/@magnumjs/micro-ui";
+import { createComponent } from "https://unpkg.com/@magnumjs/micro-ui/esm";
 import { Card } from "./Card.js";
 import { LoginForm } from "./LoginForm.js";
 import { LoggedIn } from "./LoggedIn.js";
