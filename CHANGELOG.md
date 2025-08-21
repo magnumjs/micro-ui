@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/magnumjs/micro-ui/compare/v1.2.0...v1.3.0) (2025-08-21)
+
+
+### Features
+
+* added compose effect and value and ui all for browser global ([179004b](https://github.com/magnumjs/micro-ui/commit/179004bb6fa06497d6edda68dcaec927c46f29ba))
+
 ## [1.2.0](https://github.com/magnumjs/micro-ui/compare/v1.1.2...v1.2.0) (2025-08-20)
 
 
