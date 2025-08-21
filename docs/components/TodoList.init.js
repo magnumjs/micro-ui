@@ -1,5 +1,5 @@
 import { TodoList } from "./TodoList.js";
-import { createState } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js";
+import { createState } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui-context.esm.js";
 
 const state = createState({
   todos: [
