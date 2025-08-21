@@ -4,7 +4,7 @@
   "description": "A tiny reactive component system with declarative slots, keyed lists, reactive props, and DOM diffing.",
   "type": "module",
   "main": "dist/magnumjs-micro-ui.js",
-  "unpkg": "dist/magnumjs-micro-ui-l.all.js",
+  "unpkg": "dist/magnumjs-micro-ui.all.js",
   "module": "dist/magnumjs-micro-ui.esm.js",
   "exports": {
     ".": {
