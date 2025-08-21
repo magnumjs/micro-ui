@@ -1,4 +1,4 @@
-import { createState } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js";
+import { createState } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui-context.esm.js";
 
 export const appState = createState({
     user: null,
