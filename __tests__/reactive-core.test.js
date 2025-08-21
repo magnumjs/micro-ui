@@ -284,4 +284,38 @@ it('this.props = props; // ✅ Keep api.props up-to-date for event handlers', ()
       expect(container.innerHTML).toContain("Count: 2");
     }, 100);
   });
+  test("onBeforeMount: executes callbacks before mounting", () => {
+    const mockCallback = jest.fn();
+
+    const Comp = createComponent(() => {
+      return `<div>Test Component</div>`;
+    });
+
+    Comp.onBeforeMount(mockCallback);
+    Comp.mount(container);
+
+    expect(mockCallback).toHaveBeenCalled();
+  });
+  test("onBeforeMount: executes all callbacks and handles errors", () => {
+    const mockCallback1 = jest.fn();
+    const mockCallback2 = jest.fn(() => {
+      throw new Error("Test error");
+    });
+    const mockCallback3 = jest.fn();
+
+    const Comp = createComponent(() => {
+      return `<div>Test Component</div>`;
+    });
+
+    Comp.onBeforeMount(mockCallback1);
+    Comp.onBeforeMount(mockCallback2);
+    Comp.onBeforeMount(mockCallback3);
+
+    Comp.mount(container);
+
+    expect(mockCallback1).toHaveBeenCalled();
+    expect(mockCallback2).toHaveBeenCalled();
+    expect(mockCallback3).toHaveBeenCalled();
+    // Ensure the error from mockCallback2 does not stop execution
+  });
 });

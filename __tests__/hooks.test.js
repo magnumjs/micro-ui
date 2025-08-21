@@ -1,5 +1,5 @@
 import { createComponent } from "../lib/reactive-core.js";
-import { useEffect } from "../lib/hooks/useEffect.js";
+import { effect as useEffect } from "../lib/compose/effect.js";
 import { useFetch } from "../lib/hooks/useFetch.js";
 import { jest } from "@jest/globals";
 

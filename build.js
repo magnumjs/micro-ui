@@ -36,6 +36,13 @@ const builds = [
       { format: "iife", outfile: "dist/magnumjs-micro-ui-hooks.js", globalName: "MicroUIHooks" },
     ],
   },
+  {
+    entry: "lib/micro-ui-all.js",
+    formats: [
+      { format: "esm", outfile: "dist/magnumjs-micro-ui.all.esm.js" },
+      { format: "iife", outfile: "dist/magnumjs-micro-ui.all.js", globalName: "MicroUI" },
+    ],
+  },
 ];
 
 async function runBuild() {
