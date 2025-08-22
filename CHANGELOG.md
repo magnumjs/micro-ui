@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/magnumjs/micro-ui/compare/v1.3.1...v1.4.0) (2025-08-22)
+
+
+### Features
+
+* new event composable ([7087d2b](https://github.com/magnumjs/micro-ui/commit/7087d2b057dc86822a56b887228cb9b13d5300ba))
+
 ### [1.3.1](https://github.com/magnumjs/micro-ui/compare/v1.3.0...v1.3.1) (2025-08-21)
 
 ## [1.3.0](https://github.com/magnumjs/micro-ui/compare/v1.2.0...v1.3.0) (2025-08-21)
