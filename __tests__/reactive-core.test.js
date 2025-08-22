@@ -303,6 +303,10 @@ it('this.props = props; // ✅ Keep api.props up-to-date for event handlers', ()
     });
     const mockCallback3 = jest.fn();
 
+    // Mock console.error to suppress error output during test
+    const originalConsoleError = console.error;
+    console.error = jest.fn();
+
     const Comp = createComponent(() => {
       return `<div>Test Component</div>`;
     });
@@ -317,5 +321,8 @@ it('this.props = props; // ✅ Keep api.props up-to-date for event handlers', ()
     expect(mockCallback2).toHaveBeenCalled();
     expect(mockCallback3).toHaveBeenCalled();
     // Ensure the error from mockCallback2 does not stop execution
+
+    // Restore original console.error
+    console.error = originalConsoleError;
   });
 });
