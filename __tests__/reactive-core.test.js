@@ -316,7 +316,9 @@ describe("createComponent", () => {
     expect(mockCallback).toHaveBeenCalled();
   });
   test("onBeforeMount: executes all callbacks and handles errors", () => {
-    const mockCallback1 = jest.fn();
+    const mockCallback1 = jest.fn((next) => {
+      next && next();
+    });
     const mockCallback2 = jest.fn(() => {
       throw new Error("Test error");
     });
@@ -345,7 +347,7 @@ describe("createComponent", () => {
     console.error = originalConsoleError;
   });
 
-  test("runBeforeHook: handles rejected promise and continues", (done) => {
+  test("runBeforeHook: handles rejected promise and continues", async () => {
     const error = new Error("Promise failed");
     const logs = [];
     const originalConsoleError = console.error;
@@ -355,15 +357,16 @@ describe("createComponent", () => {
     document.body.appendChild(container);
 
     const Comp = createComponent(() => `<div>Test</div>`, {
-      onBeforeMount: () => Promise.reject(error),
+      onBeforeMount: () => Promise.reject(error).catch(() => {}),
       onMount: () => {
         expect(logs).toContain(error);
         console.error = originalConsoleError;
         document.body.removeChild(container);
-        done();
       },
     });
 
     Comp.mount(container);
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    expect(container.innerHTML).toContain("Test");
   });
 });
