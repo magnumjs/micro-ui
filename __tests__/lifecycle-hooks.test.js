@@ -158,7 +158,7 @@ describe("Lifecycle Hooks: onBeforeMount and onBeforeUnmount", () => {
 
   test("skips mount if onBeforeMount does not call proceed", () => {
     const Comp = createComponent(() => `<div>Should not render</div>`, {
-      onBeforeMount() {
+      onBeforeMount(next) {
         // no proceed
       },
     });
@@ -167,4 +167,26 @@ describe("Lifecycle Hooks: onBeforeMount and onBeforeUnmount", () => {
 
     expect(document.body.innerHTML).not.toContain("Should not render");
   });
+
+
+test("onUnmount error is caught and logged", () => {
+  const logs = [];
+  const error = new Error("Unmount error");
+  const originalConsoleError = console.error;
+  console.error = (e) => logs.push(e);
+
+  const Comp = createComponent(() => `<div>Unmount error</div>`, {
+    onUnmount() {
+      throw error;
+    },
+  });
+
+  Comp.mount(document.body);
+  Comp.unmount();
+
+  expect(logs).toContain(error);
+
+  console.error = originalConsoleError; // restore
+});
+
 });
