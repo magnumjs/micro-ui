@@ -1,3 +1,45 @@
+/* Unified grid layout for docs site */
+.docs-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header header"
+    "sidebar content";
+  min-height: 100vh;
+}
+.docs-header {
+  grid-area: header;
+  padding: 1.5em 2em 1em 2em;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 2;
+}
+.sidebar {
+  grid-area: sidebar;
+  background: #fafbfc;
+  border-right: 1px solid #eee;
+  padding: 2em 1em 2em 2em;
+  min-width: 200px;
+  max-width: 260px;
+  height: 100%;
+}
+#docs-root {
+  grid-area: content;
+  padding: 2em 2em 2em 2em;
+  background: #fff;
+  min-width: 0;
+  min-height: 0;
+}
+#content-area {
+  width: 100%;
+  min-height: 400px;
+  background: none;
+  position: relative;
+  z-index: 1;
+  padding-right: 0;
+  padding-top: 6rem;
+}
 body {
   font-family: system-ui, sans-serif;
   background: #f9f9f9;
@@ -75,7 +117,7 @@ pre {
 }
 .docs-header h1 {
   margin: 0;
-  font-size: 2.2rem;
+  font-size: 1.4rem;
   font-weight: bold;
   letter-spacing: 1px;
   color: #ffd700;
@@ -146,5 +188,4 @@ main#docs-root {
   height: 100%;
   overflow-y: auto;
   padding-right: 2rem;
-}
 }

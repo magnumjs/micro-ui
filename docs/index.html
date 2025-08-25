@@ -56,80 +56,8 @@
         </ul>
       </aside>
       <main id="docs-root">
-        <section id="getting-started">
-          <h2>🚀 Getting Started</h2>
-          <p>
-            This is a minimal JavaScript library to create reactive, functional
-            UI components with native JS and HTML. It separates your app into
-            <span class="tag state">state</span>,
-            <span class="tag logic">logic</span>, and
-            <span class="tag view">view</span>.
-          </p>
-        </section>
-        <section id="docs">
-          <h2>📚 Docs</h2>
-          <h3>
-            <code>createState(initialState)</code>
-            <span class="tag state">State</span>
-          </h3>
-          <p>Creates a reactive state container.</p>
-          <pre
-            class="line-numbers"
-          ><code class="language-js">const state = createState({ count: 0 });
-
-state.subscribe(newState => {
-  console.log(newState.count);
-});
-
-state.setState({ count: 1 });</code></pre>
-          <h3>
-            <code>createComponent(renderFn)</code>
-            <span class="tag view">View</span>
-          </h3>
-          <p>
-            Declares a UI component from a render function that receives props.
-          </p>
-          <pre
-            class="line-numbers"
-          ><code class="language-js">const Counter = createComponent(({ count }) => `
-  &lt;h1&gt;Count: ${count}&lt;/h1&gt;
-  &lt;button id="inc"&gt;+&lt;/button&gt;
-`);</code></pre>
-        </section>
-        <section id="api" style="display: none">
-          <h2>⚡ API Documentation</h2>
-          <p>
-            This is a placeholder for the API documentation. Here you'll find
-            detailed information about all public methods, components, and usage
-            examples for the Micro UI library.
-          </p>
-          <h3>Coming Soon</h3>
-          <ul>
-            <li>Full API reference for all core functions</li>
-            <li>Usage examples and best practices</li>
-            <li>Component lifecycle and advanced patterns</li>
-          </ul>
-          <p>
-            For now, please refer to the main README or explore the docs
-            sections for basic usage.
-          </p>
-        </section>
-        <!-- Other sections/components can be added below -->
-        <div id="examples">
-          <!-- Components will mount here -->
-        </div>
-        <div id="counter">
-          <!-- Components will mount here -->
-        </div>
-        <div id="auth">
-          <!-- Components will mount here -->
-        </div>
-        <div id="todo-demo">
-          <!-- Components will mount here -->
-        </div>
-        <div id="message">
-          <!-- Components will mount here -->
-        </div>
+  <!-- Central content area for dynamic section rendering -->
+  <div id="content-area"></div>
       </main>
     </div>
     <script type="module" src="./main.js"></script>
