@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/magnumjs/micro-ui/compare/v1.4.0...v1.5.0) (2025-08-25)
+
+
+### Features
+
+* add shared context composable ([09d27ac](https://github.com/magnumjs/micro-ui/commit/09d27ac03824338cdb048e8ef1f5b41e5d1890fe))
+* added hydrate actions ([74efcef](https://github.com/magnumjs/micro-ui/commit/74efcef5017e9ee9cd5b75619f8471b0704ddadd))
+* hydrate action from element data-action-event ([d08ac7a](https://github.com/magnumjs/micro-ui/commit/d08ac7a2c40815c1321703d075560f130c33ac77))
+
 ## [1.4.0](https://github.com/magnumjs/micro-ui/compare/v1.3.1...v1.4.0) (2025-08-22)
 
 
