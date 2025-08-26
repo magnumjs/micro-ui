@@ -31,6 +31,10 @@ A minimalist reactive component library with support for state, props, named slo
 npm i @magnumjs/micro-ui
 ```
 
+### 📄 PDF Guides
+- [MicroUI Quick Start PDF](docs/pdf/MagnumJS_MicroUI_QuickStart.pdf)
+- [MicroUI Dev Guide PDF](docs/pdf/MagnumJS_MicroUI_DevGuide.pdf)
+
 ```js
 import { createComponent } from "@magnumjs/micro-ui";
 
@@ -196,38 +200,58 @@ createComponent(
 ### `createComponent(renderFn, options)`
 
 ```js
-const Comp = createComponent(({ state, setState, props, refs }) => {
-  return state.show ? `
-    <div data-ref="container">
-      <span>${state.count}</span>
-      <button data-ref="inc">+</button>
-    </div>
-  ` : null;
-}, {
+// Object instance style: createComponent returns a component instance
+const Comp = createComponent({
+  render({ state }) {
+    return state.show ? `
+      <div data-ref="container">
+        <span>${state.count}</span>
+        <button data-ref="inc">+</button>
+      </div>
+    ` : null;
+  },
   state: { count: 0, show: true },
   on: {
     "click [data-ref='inc']": ({ setState, state }) => {
       setState({ count: state.count + 1 });
     }
   },
+  // Add lifecycle handlers directly on the instance
   onMount() {
     console.log("Mounted!");
   },
-  onBeforeUnmount(cleanup) {
-    console.log("Before unmount");
-    cleanup();
-  },
-  onUpdate(prevProps){
+  onUpdate(prevProps) {
     console.log("Updated!");
-  },
-  onBeforeUnmount(cleanup) {
-    console.log("Before Unmounted!");
-    cleanup();
   },
   onUnmount() {
     console.log("Unmounted!");
   }
 });
+
+// Instance can be called in literals, with toString override:
+const html = `<section>${Comp({ show: true })}</section>`;
+
+// Inline actions with data-action-event:
+const Demo = createComponent({
+  render() {
+    return `<button data-action-click="sayHello" data-name="${}">Say Hi</button>`;
+  },
+  sayHello() {
+    alert("Hello!");
+  }
+});
+
+// Hooks: event, effect, value, shared
+// Compose your own hooks, e.g. useFetch
+import { event, effect, value, shared } from "@magnumjs/micro-ui/compose";
+
+function useFetch(url) {
+  const data = value(null);
+  effect(() => {
+    fetch(url).then(res => res.json()).then(data.set);
+  }, [url]);
+  return data;
+}
 ```
 
 ### Instance Methods
