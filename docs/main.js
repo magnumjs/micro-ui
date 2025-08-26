@@ -71,7 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Top navigation (no duplicate links)
   const TopNav = createComponent(() => `
-  <h1>🧩 Micro Reactive UI Library Docs</h1>
+    <a href="./" style="text-decoration:none;color:inherit;">
+      <h1>🧩 Micro Reactive UI Library Docs</h1>
+    </a>
     <nav>
       <ul class="docs-nav">
         <li><a href="#getting-started" data-section="getting-started">Getting Started</a></li>

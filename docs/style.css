@@ -116,7 +116,7 @@ pre {
 }
 .docs-header h1 {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.9rem;
   font-weight: bold;
   letter-spacing: 1px;
   color: #ffd700;
@@ -177,9 +177,7 @@ pre {
 .sidebar a:hover {
   text-decoration: underline;
 }
-html {
-  scroll-behavior: smooth;
-}
+
 
 main#docs-root {
   flex: 1;
