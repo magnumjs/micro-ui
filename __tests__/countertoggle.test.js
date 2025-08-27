@@ -10,7 +10,6 @@ test("CounterWithToggle handles refs, events, and lifecycle", async () => {
 
       const setVisible = this.props.setVisible;
       const visible = this.props.visible;
-      console.log("visible", visible);
       // Events
       event("click button[ref=btn]", () => {
         logs.push("button clicked");
@@ -23,7 +22,6 @@ test("CounterWithToggle handles refs, events, and lifecycle", async () => {
         logs.push(`count=${count()}`);
       }, [count]);
 
-      console.log("render", count());
       return visible?.()
         ? `<div>
             <button ref="btn">${count()}</button>
@@ -68,7 +66,6 @@ test("CounterWithToggle handles refs, events, and lifecycle", async () => {
   //CounterWithToggle.mount(container);
   //await Promise.resolve();
 
-  console.log(document.body.innerHTML);
   // Initial checks
   expect(document.body.querySelector("button[ref=btn]").textContent).toBe("0");
   expect(logs).toContain("onMount");

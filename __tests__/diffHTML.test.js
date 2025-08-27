@@ -2,7 +2,8 @@
  * @jest-environment jsdom
  */
 
-import diffHTML from "../lib/diffHTML";
+import diffHTML, { patchChildren } from "../lib/diffHTML";
+import { jest } from "@jest/globals";
 
 function createEl(html) {
   const el = document.createElement("div");
@@ -62,7 +63,9 @@ describe("diffHTML", () => {
   });
 
   test("patchNode: replaces keyed element when tagName differs", () => {
-    const el = createEl('<div data-key="x" class="old"><div data-key="y" class="old">Old</div></div>');
+    const el = createEl(
+      '<div data-key="x" class="old"><div data-key="y" class="old">Old</div></div>'
+    );
 
     const html = `<span data-key="x" class="new"><span data-key="y" class="new">Hello</span></span>`;
     diffHTML(el, html);
@@ -73,7 +76,9 @@ describe("diffHTML", () => {
   });
 
   test("patchNode: replaces keyed element when tagName differs", () => {
-    const el = createEl('<div data-key="x" class="old"><div data-key="y" class="old">Old</div></div>');
+    const el = createEl(
+      '<div data-key="x" class="old"><div data-key="y" class="old">Old</div></div>'
+    );
 
     const html = `<div data-key="x" class="new"><span data-key="y" class="new">Hello</span></span>`;
     diffHTML(el, html);
@@ -136,5 +141,45 @@ describe("diffHTML", () => {
       "<div><span><b>New</b></span></div><div><span>New</span></div>";
     diffHTML(el, html);
     expect(el.innerHTML).toContain("New");
+  });
+});
+describe("patchChildren", () => {
+  // Helper to access patchChildren directly
+
+  function createEl(html) {
+    const el = document.createElement("div");
+    el.innerHTML = html;
+    return el;
+  }
+
+  test("removes extra child nodes when new has fewer", () => {
+    const fromEl = createEl("<span>A</span><span>B</span>");
+    const toEl = createEl("<span>A</span>");
+    patchChildren(fromEl, toEl);
+    expect(fromEl.childNodes.length).toBe(1);
+    expect(fromEl.innerHTML).toBe("<span>A</span>");
+  });
+
+  test("adds child nodes when new has more", () => {
+    const fromEl = createEl("<span>A</span>");
+    const toEl = createEl("<span>A</span><span>B</span>");
+    patchChildren(fromEl, toEl);
+    expect(fromEl.childNodes.length).toBe(2);
+    expect(fromEl.innerHTML).toBe("<span>A</span><span>B</span>");
+  });
+
+  test("patches text nodes", () => {
+    const fromEl = createEl("Hello");
+    const toEl = createEl("World");
+    patchChildren(fromEl, toEl);
+    expect(fromEl.textContent).toBe("World");
+  });
+
+  test("skips removal of nodes with data-comp-root", () => {
+    const fromEl = createEl('<span data-comp-root="true">A</span>');
+    const toEl = createEl("");
+    patchChildren(fromEl, toEl);
+    expect(fromEl.childNodes.length).toBe(1);
+    expect(fromEl.firstChild.getAttribute("data-comp-root")).toBe("true");
   });
 });
