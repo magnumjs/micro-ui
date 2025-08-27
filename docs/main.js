@@ -163,8 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
       <hr />
       <h4>PDF Guides</h4>
       <ul>
-        <li><a href="/pdf/MagnumJS_MicroUI_QuickStart.pdf" target="_blank">Quick Start PDF</a></li>
-        <li><a href="/pdf/MagnumJS_MicroUI_DevGuide.pdf" target="_blank">Dev Guide PDF</a></li>
+        <li><a href="./pdf/MagnumJS_MicroUI_QuickStart.pdf" target="_blank">Quick Start PDF</a></li>
+        <li><a href="pdf/MagnumJS_MicroUI_DevGuide.pdf" target="_blank">Dev Guide PDF</a></li>
       </ul>
       <hr />
       <h4>Examples</h4>
