@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/magnumjs/micro-ui/compare/v1.5.0...v1.6.0) (2025-08-27)
+
+
+### Features
+
+* new data-comp hydrate for child declarative usage ([7bd9f52](https://github.com/magnumjs/micro-ui/commit/7bd9f52ee8b1c69a011902f87bc905d57a6caaf4))
+
 ## [1.5.0](https://github.com/magnumjs/micro-ui/compare/v1.4.0...v1.5.0) (2025-08-25)
 
 
