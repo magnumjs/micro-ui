@@ -68,7 +68,6 @@ describe('Parent component with named & default slots', () => {
     expect(document.body.innerHTML).toContain('Child like');
     expect(document.body.innerHTML).not.toContain('Loaded');
 
-// console.log('Initial render complete', document.body.innerHTML);
     
     // Click button -> should toggle back to "Loaded"
     document.querySelector('button').click();

@@ -1,5 +1,5 @@
 import { createComponent } from "../lib/reactive-core.js";
-import { shared } from "../lib/compose/shared.js";
+import { shared, useSharedState } from "../lib/compose/shared.js";
 
 describe("shared composable", () => {
   test("shared value is accessible across components", async () => {
@@ -7,13 +7,13 @@ describe("shared composable", () => {
     document.body.appendChild(container);
 
     const Comp1 = createComponent(function () {
-      const [get, set] = shared("global", 100);
+      const [get, set] = useSharedState("global", 100);
       this.onMount(() => set(200));
       return `<span>${get()}</span>`;
     });
 
     const Comp2 = createComponent(function () {
-      const [get] = shared("global", 100);
+      const [get] = useSharedState("global", 100);
       return `<strong>${get()}</strong>`;
     });
 
@@ -35,7 +35,7 @@ describe("shared composable", () => {
     document.body.appendChild(containerB);
 
     const CompA = createComponent(function () {
-      const [get, set] = shared("autoRender", 1);
+      const [get, set] = useSharedState("autoRender", 1);
       this.onMount(() => {
         // simulate later update
         set(2);
@@ -44,7 +44,7 @@ describe("shared composable", () => {
     });
 
     const CompB = createComponent(function () {
-      const [get] = shared("autoRender", 1);
+      const [get] = useSharedState("autoRender", 1);
       return `<div class="b">${get()}</div>`;
     });
 
@@ -68,7 +68,7 @@ describe("shared.js object merge coverage", () => {
     shared.clear();
     let result;
     const Comp = createComponent(() => {
-      const [get, set] = shared("mergeTest", { a: 1, b: 2 });
+      const [get, set] = useSharedState("mergeTest", { a: 1, b: 2 });
       Comp.onMount(() => set({ b: 3, c: 4 }));
       result = get();
       return "<div></div>";
@@ -82,7 +82,7 @@ describe("shared.js object merge coverage", () => {
     shared.clear();
     let result;
     const Comp = createComponent(() => {
-      const [get, set] = shared("replaceTest", { a: 1 });
+      const [get, set] = useSharedState("replaceTest", { a: 1 });
 
       Comp.onMount(() => set(42));
       result = get();
@@ -97,7 +97,7 @@ describe("shared.js object merge coverage", () => {
     shared.clear();
     let result;
     const Comp = createComponent(() => {
-      const [get, set] = shared("funcTest", { a: 1 });
+      const [get, set] = useSharedState("funcTest", { a: 1 });
       Comp.onMount(() => set((prev) => ({ ...prev, b: 2 })));
       result = get();
       return "<div></div>";
@@ -109,9 +109,9 @@ describe("shared.js object merge coverage", () => {
 });
 
 describe("shared.js error coverage", () => {
-  test("shared throws if called outside a component", () => {
-    expect(() => shared("fail", 123)).toThrow(
-      "shared() must be called inside a component"
+  test("useSharedState throws if called outside a component", () => {
+    expect(() => useSharedState("fail", 123)).toThrow(
+      "useSharedState() must be called inside a component"
     );
   });
 });

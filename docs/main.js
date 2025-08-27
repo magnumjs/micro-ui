@@ -161,6 +161,12 @@ document.addEventListener("DOMContentLoaded", () => {
         <li><a href="#getting-started" data-section="getting-started">🚀 Getting Started</a></li>
       </ul>
       <hr />
+      <h4>PDF Guides</h4>
+      <ul>
+        <li><a href="/pdf/MagnumJS_MicroUI_QuickStart.pdf" target="_blank">Quick Start PDF</a></li>
+        <li><a href="/pdf/MagnumJS_MicroUI_DevGuide.pdf" target="_blank">Dev Guide PDF</a></li>
+      </ul>
+      <hr />
       <h4>Examples</h4>
       <ul>
         <li><a href="#counter" data-section="counter">🧮 Counter</a></li>
