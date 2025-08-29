@@ -16,6 +16,11 @@
       "import": "./dist/magnumjs-micro-ui.esm.js",
       "require": "./dist/magnumjs-micro-ui.js"
     },
+    "./esmall": {
+      "default": "./dist/magnumjs-micro-ui.all.esm.js",
+      "import": "./dist/magnumjs-micro-ui.all.esm.js",
+      "require": "./dist/magnumjs-micro-ui.all.js"
+    },
     "./context": {
       "default": "./dist/magnumjs-micro-ui-context.esm.js",
       "import": "./dist/magnumjs-micro-ui-context.esm.js",

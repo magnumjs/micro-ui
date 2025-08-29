@@ -1,3 +1,15 @@
+/* Active nav indicator circle */
+.nav-active-circle {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #0077cc;
+  margin-left: 8px;
+  vertical-align: middle;
+  box-shadow: 0 0 4px #0077cc44;
+  align-self: center;
+}
 /* Unified grid layout for docs site */
 .docs-layout {
   display: grid;

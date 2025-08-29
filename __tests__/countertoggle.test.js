@@ -1,7 +1,7 @@
 import { createComponent } from "../lib/reactive-core.js";
 import { slot, event, effect } from "../lib/compose/index.js";
 
-xtest("CounterWithToggle handles refs, events, and lifecycle", async () => {
+test("CounterWithToggle handles refs, events, and lifecycle", async () => {
   const logs = [];
 
   const CounterWithToggle = createComponent({

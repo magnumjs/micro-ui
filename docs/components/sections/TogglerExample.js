@@ -1,32 +1,33 @@
 import { createComponent } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js";
+import { useState } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui-hooks.esm.js";
+import { escapeCode } from "../../docs/utils/escapeCode.js";
 
 
-// const [getCartVisible, setCartVisible] = setState([true, true, true, true]);
-
-// const Toggler = createComponent(({ index }) => {
+const cartVisible = useState([true, true, true, true]);
+const Toggler = createComponent(({ index }) => {
 //   effect(() => {
-//     // Log visibility changes for demo
-//     console.log('Cart', index, 'visible:', getCartVisible()[index]);
-//   }, [getCartVisible()[index]]);
-//   function toggle() {
-//     const vis = getCartVisible().slice();
-//     vis[index] = !vis[index];
-//     setCartVisible(vis);
-//   }
-//   if (!getCartVisible()[index]) return null;
-//   return `<div class="cart" data-comp="cart" id="cart-${index}">
-//     <h4>Cart ${index + 1}</h4>
-//     <button type="button" class="toggle-btn">Toggle</button>
-//     <div>Shared Value: ${getCartVisible()[index]}</div>
-//   </div>`;
-// });
-
-const TogglerWidget = createComponent(() => {
-  return `<div class="toggler-widget">
-    <div class="column">${[0,1].map(i => Toggler({ index: i })).join('')}</div>
-    <div class="column">${[2,3].map(i => Toggler({ index: i })).join('')}</div>
-  </div>`;
+//     console.log('Cart', index, 'visible:', cartVisible.get()[index]);
+//   }, [cartVisible.get()[index]]);
+  function toggle() {
+    const vis = cartVisible.get().slice();
+    vis[index] = !vis[index];
+    cartVisible.set(vis);
+  }
+//   if (!cartVisible.get()[index]) return null;
+  return `<div class="cart" data-comp="cart" id="cart-${index}">` +
+    `<h4>Cart ${index + 1}</h4>` +
+    `<button type="button" class="toggle-btn" onclick="${toggle}">Toggle</button>` +
+    // `<div>Shared Value: ${cartVisible.get()[index]}</div>` +
+    `</div>`;
 });
+const TogglerWidget = createComponent(() => {
+  return `<div class="toggler-widget">` +
+    `<div class="column">` + [0,1].map(i => Toggler({ index: i })).join("") + `</div>` +
+    `<div class="column">` + [2,3].map(i => Toggler({ index: i })).join("") + `</div>` +
+    `</div>`;
+});
+
+
 
 // Step-by-step code lines for Toggler example
 
@@ -85,7 +86,48 @@ const explanations = [
 ];
 
 export const TogglerExampleSection = createComponent(() => {
-  return `<section class="toggler-example-section" style="padding:2em;text-align:center;color:#888;font-size:1.5em;">
-    Section not found 404
-  </section>`;
+  // Mount the live widget after render
+  setTimeout(() => {
+    if (document.getElementById('toggler-demo')) {
+      TogglerWidget.mount('#toggler-demo');
+    }
+  }, 0);
+  const finalCode = [
+    'const cartVisible = value([true, true, true, true]);',
+    'const Toggler = createComponent(({ index }) => {',
+    '  effect(() => {',
+    "    console.log('Cart', index, 'visible:', cartVisible.get()[index]);",
+    '  }, [cartVisible.get()[index]]);',
+    '  function toggle() {',
+    '    const vis = cartVisible.get().slice();',
+    '    vis[index] = !vis[index];',
+    '    cartVisible.set(vis);',
+    '  }',
+    '  if (!cartVisible.get()[index]) return null;',
+    '  return `<div class=\"cart\" data-comp=\"cart\" id=\"cart-${index}\">` +',
+    '    `<h4>Cart ${index + 1}</h4>` +',
+    '    `<button type=\"button\" class=\"toggle-btn\" onclick=\"${toggle}\">Toggle</button>` +',
+    '    `<div>Shared Value: ${cartVisible.get()[index]}</div>` +',
+    '    `</div>`;',
+    '});',
+    'const TogglerWidget = createComponent(() => {',
+    '  return `<div class=\"toggler-widget\">` +',
+    '    `<div class=\"column\">` + [0,1].map(i => Toggler({ index: i })).join("") + `</div>` +',
+    '    `<div class=\"column\">` + [2,3].map(i => Toggler({ index: i })).join("") + `</div>` +',
+    '    `</div>`;',
+    '});',
+    'TogglerWidget.mount("#toggler-demo");'
+  ].join('\n');
+  return `
+    <section class="toggler-example-section" style="padding:2em;max-width:700px;margin:auto;">
+      <h2>🔀 Toggler Live Example</h2>
+      <div id="toggler-demo" style="margin-bottom:2em;"></div>
+      <h3>Step-by-Step Code</h3>
+      <ol style="text-align:left;">
+        ${codeLines.map((line, i) => `<li><pre class="line-numbers language-js"><code class="language-js">${escapeCode(line)}</code></pre><div>${explanations[i] || ''}</div></li>`).join('')}
+      </ol>
+      <h3>Final Implementation</h3>
+      <pre class="line-numbers language-js" style="background:#f4f4f4;padding:1em;border-radius:6px;"><code class="language-js">${escapeCode(finalCode)}</code></pre>
+    </section>
+  `;
 });
