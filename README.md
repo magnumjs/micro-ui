@@ -32,8 +32,7 @@ npm i @magnumjs/micro-ui
 ```
 
 ### 📄 PDF Guides
-- [MicroUI Quick Start PDF](docs/pdf/MagnumJS_MicroUI_QuickStart.pdf)
-- [MicroUI Dev Guide PDF](docs/pdf/MagnumJS_MicroUI_DevGuide.pdf)
+- [MicroUI Components, API, Dev .. ](docs/pdf/)
 
 ```js
 import { createComponent } from "@magnumjs/micro-ui";

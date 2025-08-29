@@ -1,6 +1,6 @@
 import { createComponent } from '../lib/reactive-core.js';
 
-xdescribe('componentFn _childCache and _renderIndex', () => {
+describe('componentFn _childCache and _renderIndex', () => {
   it('creates and caches unique stateful child instances per renderIndex when mounted', async () => {
     const Child = createComponent({
       state: { count: 0 },

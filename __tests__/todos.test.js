@@ -62,7 +62,7 @@ test("fails to hydrate correctly without data-comp", async () => {
 // Simple child with `data-comp`
 const TodoItem2 = createComponent({
   render({ props }) {
-    return `<li data-comp="TodoItem" data-ref="item-${props.id}">${props.text}</li>`;
+    return `<li data-comp="TodoItem" data-ref="item-${props.id}" data-key="${props.key}">${props.text}</li>`;
   },
 });
 
@@ -79,7 +79,7 @@ const TodoList2 = createComponent({
   },
 });
 
-xtest("reuses mounted children with data-comp + data-key when reordering", async () => {
+test("reuses mounted children with data-comp + data-key when reordering", async () => {
   const list = TodoList2();
   document.body.innerHTML = "";
   list.mount(document.body);
@@ -127,7 +127,7 @@ xtest("reuses mounted children with data-comp + data-key when reordering", async
 // Child with `data-comp`
 const TodoItem3 = createComponent({
   render({ props }) {
-    return `<li data-comp="TodoItem" data-ref="item-${props.id}">${props.text}</li>`;
+    return `<li data-comp="TodoItem" data-ref="item-${props.id}" data-key="${props.key}">${props.text}</li>`;
   },
 });
 

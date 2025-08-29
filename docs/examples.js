@@ -20,4 +20,15 @@ export function showTodoDemo(root) {
   `;
   // Optionally, mount your Todo component to #todo-demo
 }
+
+export function showTogglerDemo(root) {
+  root.innerHTML = `
+    <section id="toggler">
+      <h2>🔀 Toggler Example</h2>
+      <div id="toggler-demo"></div>
+      <pre><code class="language-js">// Toggler demo code here</code></pre>
+    </section>
+  `;
+  // Optionally, mount your TogglerWidget component to #toggler-demo
+}
 // Add more example functions as needed

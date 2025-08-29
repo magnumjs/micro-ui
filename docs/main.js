@@ -15,6 +15,8 @@ import { CounterExampleSection } from "./components/sections/CounterExample.js";
 import { TodoListExampleSection } from "./components/sections/TodoListExample.js";
 import { ApiHooksSection } from "./components/sections/ApiHooks.js";
 import { TogglerExampleSection } from "./components/sections/TogglerExample.js";
+import { PdfGuidesSection } from "./components/sections/PdfGuidesSection.js";
+import { LoginMessageExampleSection } from "./components/sections/LoginMessageExample.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // ...existing code...
@@ -28,6 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('hashchange', () => {
     const section = location.hash.replace('#', '') || 'getting-started';
     showSection(section);
+    // Re-render sidebar to update active indicator
+    SidebarNav.mount(document.querySelector('.sidebar'));
   });
   // Delegate navigation clicks inside content-area
   document.getElementById('content-area').addEventListener('click', (e) => {
@@ -101,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Central content area strategy: separate containers for each section
   const contentArea = document.getElementById('content-area');
-  const sectionIds = ['getting-started', 'docs', 'api-createComponent', 'api', 'counter', 'todo-list', 'api-hooks', 'toggler-example'];
+  const sectionIds = ['getting-started', 'docs', 'api-createComponent', 'api', 'counter', 'todo-list', 'api-hooks', 'toggler-example', 'login-message-example', 'pdf-guides'];
   const sectionComponents = {
     'getting-started': GettingStarted,
     'docs': DocsSection,
@@ -110,7 +114,9 @@ document.addEventListener("DOMContentLoaded", () => {
     'counter': CounterExampleSection,
     'todo-list': TodoListExampleSection,
     'api-hooks': ApiHooksSection,
-    'toggler-example': TogglerExampleSection
+    'toggler-example': TogglerExampleSection,
+    'login-message-example': LoginMessageExampleSection,
+    'pdf-guides': PdfGuidesSection
   };
   // Create and mount each section container once
   sectionIds.forEach(id => {
@@ -161,31 +167,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   // Sidebar navigation using micro-ui with sections
-  const SidebarNav = createComponent(() => `
+  const SidebarNav = createComponent(({state}) => `
     <div>
       <h3>📚 Navigation</h3>
       <ul>
-        <li><a href="#getting-started" data-section="getting-started">🚀 Getting Started</a></li>
+        <li style="position:relative;display:flex;align-items:center;"> <a href="#getting-started" data-section="getting-started" style="flex:1;">🚀 Getting Started</a>${location.hash === '#getting-started' ? '<span class="nav-active-circle"></span>' : ''}</li>
       </ul>
       <hr />
-      <h4>PDF Guides</h4>
-      <ul>
-        <li><a href="./pdf/MagnumJS_MicroUI_QuickStart.pdf" target="_blank">Quick Start PDF</a></li>
-        <li><a href="pdf/MagnumJS_MicroUI_DevGuide.pdf" target="_blank">Dev Guide PDF</a></li>
-        <li><a href="pdf/MicroUI_Components_Guide.pdf" target="_blank">Components PDF</a></li>
-      </ul>
+  <h4><a href="#pdf-guides" data-section="pdf-guides" id="pdf-guides-link" style="text-decoration:none;color:inherit;cursor:pointer;">PDF Guides</a></h4>
       <hr />
       <h4>Examples</h4>
       <ul>
-        <li><a href="#counter" data-section="counter">🧮 Counter</a></li>
-        <li><a href="#todo-list" data-section="todo-list">✅ TodoList</a></li>
-  <li><a href="#toggler-example" data-section="toggler-example">🔀 Toggler</a></li>
+        <li style="position:relative;display:flex;align-items:center;"> <a href="#counter" data-section="counter" style="flex:1;">🧮 Counter</a>${location.hash === '#counter' ? '<span class="nav-active-circle"></span>' : ''}</li>
+        <li style="position:relative;display:flex;align-items:center;"> <a href="#todo-list" data-section="todo-list" style="flex:1;">✅ TodoList</a>${location.hash === '#todo-list' ? '<span class="nav-active-circle"></span>' : ''}</li>
+        <li style="position:relative;display:flex;align-items:center;"> <a href="#toggler-example" data-section="toggler-example" style="flex:1;">🔀 Toggler</a>${location.hash === '#toggler-example' ? '<span class="nav-active-circle"></span>' : ''}</li>
+        <li style="position:relative;display:flex;align-items:center;"> <a href="#login-message-example" data-section="login-message-example" style="flex:1;">🔑 Login Message</a>${location.hash === '#login-message-example' ? '<span class="nav-active-circle"></span>' : ''}</li>
       </ul>
       <hr />
       <h4>API Docs</h4>
       <ul>
-        <li><a href="#api" data-section="api">Core API</a></li>
-        <li><a href="#api-hooks" data-section="api-hooks">Compose Hooks</a></li>
+        <li style="position:relative;display:flex;align-items:center;"> <a href="#api" data-section="api" style="flex:1;">Core API</a>${location.hash === '#api' ? '<span class="nav-active-circle"></span>' : ''}</li>
+        <li style="position:relative;display:flex;align-items:center;"> <a href="#api-hooks" data-section="api-hooks" style="flex:1;">Compose Hooks</a>${location.hash === '#api-hooks' ? '<span class="nav-active-circle"></span>' : ''}</li>
       </ul>
       <hr />
       <h4>Project</h4>
@@ -198,8 +200,11 @@ document.addEventListener("DOMContentLoaded", () => {
       "click *": (ctx) => {
         const section = ctx.event.target.dataset.section;
         if (section) {
-          console.log(section)
+          ctx.setState({section})
           window.location.hash = `#${section}`;
+          ctx.event.preventDefault();
+          // Re-render sidebar immediately after click
+          SidebarNav.mount(document.querySelector('.sidebar'));
         }
       }
     }
