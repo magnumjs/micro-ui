@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/magnumjs/micro-ui/compare/v1.7.0...v1.8.0) (2025-08-29)
+
+
+### Features
+
+* check for keys in child comps and maintain order ([3fc8d95](https://github.com/magnumjs/micro-ui/commit/3fc8d95f0db4c54701355cf6736b7cc669d02d96))
+
 ## [1.7.0](https://github.com/magnumjs/micro-ui/compare/v1.6.0...v1.7.0) (2025-08-29)
 
 
