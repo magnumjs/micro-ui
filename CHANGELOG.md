@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/magnumjs/micro-ui/compare/v1.6.0...v1.7.0) (2025-08-29)
+
+
+### Features
+
+* data-comp with cloned instances ([be0fe9e](https://github.com/magnumjs/micro-ui/commit/be0fe9e7c603b0354e6899dbb42cf44907fc522a))
+
 ## [1.6.0](https://github.com/magnumjs/micro-ui/compare/v1.5.0...v1.6.0) (2025-08-27)
 
 
