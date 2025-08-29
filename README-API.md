@@ -144,7 +144,7 @@ Demo running at http://localhost:3000
 - `Counter`
 - `TodoList`
 
-All can be found in [`docs/example/components/`](./docs/example/components).
+All can be found in [`docs/components/`](./docs/components).
 
 ---
 
