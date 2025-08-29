@@ -122,7 +122,7 @@ Tests live under `__tests__/`.
 
 ## 📖 Docs
 
-The `example/docs/` directory contains an auto-generated documentation UI with:
+The `docs/` directory contains an auto-generated documentation UI with:
 
 - Live interactive demos
 - Prettified source code (via Prism)
