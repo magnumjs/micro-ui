@@ -2,6 +2,14 @@ import { runBeforeHook } from "../lib/reactive-core-helpers/runBeforeHook.js";
 import { jest, describe, test, expect } from "@jest/globals";
 
 describe("runBeforeHook", () => {
+  let originalConsoleError;
+  beforeAll(() => {
+    originalConsoleError = console.error;
+    console.error = jest.fn();
+  });
+  afterAll(() => {
+    console.error = originalConsoleError;
+  });
   test("calls single sync hook", done => {
     const hook = jest.fn(() => {});
     runBeforeHook(hook, () => {

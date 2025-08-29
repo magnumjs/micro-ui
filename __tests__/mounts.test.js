@@ -1,11 +1,12 @@
 import { createComponent, useCurrentComponent } from "../lib/reactive-core.js";
 import { jest, describe, test, expect } from "@jest/globals";
 import injectSlotContent from "../lib/injectSlotContent.js";
+
 test("reuses mounted child and updates DOM correctly after parent update", async () => {
   // Simple child component with render count
-  const Child = createComponent(function () {
+  const Child = createComponent(function Counter() {
     this.setCount = (n) => this.setState({ count: n });
-
+    console.log('render', this.state);
     return `<div>Child Count: ${this.state.count}</div>`;
   },{
     state: { count: 0 },
@@ -17,12 +18,16 @@ test("reuses mounted child and updates DOM correctly after parent update", async
   });
 
   const child = Child();
+
   const parent = Parent({ slots: { default: child } });
 
   // Mount parent into DOM
   const container = document.createElement("div");
   parent.mount(container);
 
+
+  // console.log(parent._id, child._id)
+  // console.log(container.innerHTML)
   expect(container.innerHTML).toContain("Child Count: 0");
 
   // Update parent — child should be reused, not remounted
