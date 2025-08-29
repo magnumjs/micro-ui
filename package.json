@@ -17,14 +17,17 @@
       "require": "./dist/magnumjs-micro-ui.js"
     },
     "./context": {
+      "default": "./dist/magnumjs-micro-ui-context.esm.js",
       "import": "./dist/magnumjs-micro-ui-context.esm.js",
       "require": "./dist/magnumjs-micro-ui-context.js"
     },
     "./hooks": {
+      "default": "./dist/magnumjs-micro-ui-hooks.esm.js",
       "import": "./dist/magnumjs-micro-ui-hooks.esm.js",
       "require": "./dist/magnumjs-micro-ui-hooks.js"
     },
     "./compose": {
+      "default": "./dist/magnumjs-micro-ui-compose.esm.js",
       "import": "./dist/magnumjs-micro-ui-compose.esm.js",
       "require": "./dist/magnumjs-micro-ui-compose.js"
     }

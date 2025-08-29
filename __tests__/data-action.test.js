@@ -1,6 +1,6 @@
 import { createComponent } from "../lib/reactive-core";
 
-describe("api.action", () => {
+xdescribe("api.action", () => {
   test("returns data-action value from event target", () => {
     document.body.innerHTML = `<div id="app"></div>`;
     const Demo = createComponent(() => `

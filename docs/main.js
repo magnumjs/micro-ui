@@ -12,6 +12,9 @@ import { GettingStarted } from "./components/sections/GettingStarted.js";
 import { ApiSection } from "./components/sections/Api.js";
 import { CreateComponentSection } from "./components/sections/CreateComponent.js";
 import { CounterExampleSection } from "./components/sections/CounterExample.js";
+import { TodoListExampleSection } from "./components/sections/TodoListExample.js";
+import { ApiHooksSection } from "./components/sections/ApiHooks.js";
+import { TogglerExampleSection } from "./components/sections/TogglerExample.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // ...existing code...
@@ -76,9 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
     </a>
     <nav>
       <ul class="docs-nav">
-        <li><a href="#getting-started" data-section="getting-started">Getting Started</a></li>
-        <li><a href="#docs" data-section="docs">Docs</a></li>
-        <li><a href="#api" data-section="api">API</a></li>
+  <li><a href="#getting-started" data-section="getting-started">Getting Started</a></li>
+  <li><a href="#docs" data-section="docs">Docs</a></li>
+  <li><a href="#api" data-section="api">API</a></li>
+  <!-- Advanced Usage removed from top nav -->
       </ul>
     </nav>
   `, {
@@ -97,13 +101,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Central content area strategy: separate containers for each section
   const contentArea = document.getElementById('content-area');
-  const sectionIds = ['getting-started', 'docs', 'api-createComponent', 'api', 'counter'];
+  const sectionIds = ['getting-started', 'docs', 'api-createComponent', 'api', 'counter', 'todo-list', 'api-hooks', 'toggler-example'];
   const sectionComponents = {
     'getting-started': GettingStarted,
     'docs': DocsSection,
     'api': ApiSection,
     'api-createComponent': CreateComponentSection,
-    'counter': CounterExampleSection
+    'counter': CounterExampleSection,
+    'todo-list': TodoListExampleSection,
+    'api-hooks': ApiHooksSection,
+    'toggler-example': TogglerExampleSection
   };
   // Create and mount each section container once
   sectionIds.forEach(id => {
@@ -165,25 +172,20 @@ document.addEventListener("DOMContentLoaded", () => {
       <ul>
         <li><a href="./pdf/MagnumJS_MicroUI_QuickStart.pdf" target="_blank">Quick Start PDF</a></li>
         <li><a href="pdf/MagnumJS_MicroUI_DevGuide.pdf" target="_blank">Dev Guide PDF</a></li>
+        <li><a href="pdf/MicroUI_Components_Guide.pdf" target="_blank">Components PDF</a></li>
       </ul>
       <hr />
       <h4>Examples</h4>
       <ul>
         <li><a href="#counter" data-section="counter">🧮 Counter</a></li>
-        <li><a href="#todo" data-section="todo">✅ TodoList</a></li>
-        <li><a href="#auth-card" data-section="auth-card">🔐 AuthCard</a></li>
-        <li><a href="#welcome-card" data-section="welcome-card">👋 WelcomeCard</a></li>
-        <li><a href="#refs-demo" data-section="refs-demo">🔍 Refs Demo</a></li>
-        <li><a href="#card-demo" data-section="card-demo">🎉 Cards Demo</a></li>
-        <li><a href="#fallback-card-demo" data-section="fallback-card-demo">🧩 Fallback Cards Demo</a></li>
+        <li><a href="#todo-list" data-section="todo-list">✅ TodoList</a></li>
+  <li><a href="#toggler-example" data-section="toggler-example">🔀 Toggler</a></li>
       </ul>
       <hr />
       <h4>API Docs</h4>
       <ul>
-        <li><a href="#api-createComponent" data-section="api-createComponent">createComponent</a></li>
-        <li><a href="#api-createState" data-section="api-createState">createState</a></li>
-        <li><a href="#api-renderList" data-section="api-renderList">renderList</a></li>
-        <li><a href="#api-shared" data-section="api-shared">shared</a></li>
+        <li><a href="#api" data-section="api">Core API</a></li>
+        <li><a href="#api-hooks" data-section="api-hooks">Compose Hooks</a></li>
       </ul>
       <hr />
       <h4>Project</h4>
@@ -207,7 +209,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Modular docs section logic
   function showSection(sectionId) {
-  renderSection(sectionId);
+    // Always show docs section for advanced usage steps
+    if (sectionId.startsWith('advanced-usage')) {
+      renderSection('docs');
+      setTimeout(() => {
+        // Only trigger click for step 1
+        if (sectionId === 'advanced-usage') {
+          const showAdvanced = document.getElementById('show-advanced-usage');
+          if (showAdvanced) showAdvanced.click();
+        }
+        // DocsSection will handle stepper for other hashes
+      }, 0);
+      return;
+    }
+    // If navigating to advanced-usage, always show docs section
+    if (sectionId === 'advanced-usage') {
+      renderSection('docs');
+      setTimeout(() => {
+        const showAdvanced = document.getElementById('show-advanced-usage');
+        if (showAdvanced) showAdvanced.click();
+      }, 0);
+      return;
+    }
+    // Fix: treat api-hooks-step-* as api-hooks for stepper navigation
+    if (sectionId.startsWith('api-hooks-step-')) {
+      renderSection('api-hooks');
+      return;
+    }
+    renderSection(sectionId);
   }
 
 });

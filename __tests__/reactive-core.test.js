@@ -369,4 +369,129 @@ describe("createComponent", () => {
     await new Promise((resolve) => setTimeout(resolve, 50));
     expect(container.innerHTML).toContain("Test");
   });
+
+  it("should create a component with a function signature", () => {
+    const comp = createComponent(() => "<div>Test</div>");
+    expect(typeof comp).toBe("function");
+    expect(comp.render().toString()).toContain("Test");
+  });
+
+  it("should create a component with object signature", () => {
+    const comp = createComponent({
+      render: () => "<span>Obj</span>",
+      state: { foo: 1 },
+      custom: "bar",
+    });
+    expect(typeof comp).toBe("function");
+    expect(comp.render().toString()).toContain("Obj");
+    expect(comp.state).toEqual({ foo: 1 });
+    expect(comp.custom).toBe("bar");
+  });
+
+  it("should assign unique _id to each component", () => {
+    const comp1 = createComponent(() => "<div>1</div>");
+    const comp2 = createComponent(() => "<div>2</div>");
+    expect(comp1._id).not.toBe(comp2._id);
+  });
+
+  it("should expose .el as null before mount and as container after mount", () => {
+    const comp = createComponent(() => "<div>Mount</div>");
+    expect(comp.el).toBeNull();
+    comp.mount(container);
+    expect(comp.el).toBe(container);
+  });
+
+  it("should expose .props and update them on mount/update", () => {
+    const comp = createComponent(({ props }) => `<div>${props.msg}</div>`);
+    comp.mount(container, { msg: "Hello" });
+    expect(comp.props.msg).toBe("Hello");
+    comp.update({ msg: "World" });
+    expect(comp.props.msg).toBe("World");
+  });
+
+  it("should call setState and trigger re-render", () => {
+    const comp = createComponent(({ state }) => `<div>${state.count}</div>`, {
+      state: { count: 0 },
+    });
+    comp.mount(container);
+    comp.setState({ count: 5 });
+    setTimeout(() => {
+      expect(container.innerHTML).toContain("5");
+    }, 0);
+  });
+
+  it("should call onUnmount lifecycle when unmounted", () => {
+    const onUnmount = jest.fn();
+    const comp = createComponent(() => "<div>Bye</div>", { onUnmount });
+    comp.mount(container);
+    comp.unmount();
+    expect(onUnmount).toHaveBeenCalled();
+  });
+
+  it("should support .onMount, .onUnmount, .onBeforeMount, .onBeforeUnmount, .onUpdate registration", async () => {
+    const onMount = jest.fn();
+    const onUnmount = jest.fn();
+    const onBeforeMount = jest.fn();
+    const onBeforeUnmount = jest.fn();
+    const onUpdate = jest.fn();
+    const comp = createComponent(() => "<div>Life</div>");
+    comp.onMount(onMount);
+    comp.onUnmount(onUnmount);
+    comp.onBeforeMount(onBeforeMount);
+    comp.onBeforeUnmount(onBeforeUnmount);
+    comp.onUpdate(onUpdate);
+    comp.mount(container);
+    await Promise.resolve();
+    comp.update({ foo: "bar" });
+    expect(onMount).toHaveBeenCalled();
+    comp.unmount();
+    await Promise.resolve();
+    expect(onUnmount).toHaveBeenCalled();
+    expect(onBeforeMount).toHaveBeenCalled();
+    expect(onBeforeUnmount).toHaveBeenCalled();
+    expect(onUpdate).toHaveBeenCalled();
+  });
+
+  it("should allow event registration via .addEvent", () => {
+    const handler = jest.fn();
+    const comp = createComponent(() => `<button id="btn">Click</button>`);
+    comp.addEvent("click #btn", handler);
+    comp.mount(container);
+    container.querySelector("#btn").click();
+    expect(handler).toHaveBeenCalled();
+  });
+
+  it("should expose .ref and .refs for DOM refs", () => {
+    const comp = createComponent(() => `<input data-ref="myinput" />`);
+    comp.mount(container);
+    expect(comp.ref("myinput")).toBe(
+      container.querySelector("[data-ref='myinput']")
+    );
+    expect(comp.refs.myinput).toBe(
+      container.querySelector("[data-ref='myinput']")
+    );
+  });
+
+  it("should return correct .toString before and after render", () => {
+  const comp = createComponent(() => `<div>Str</div>`);
+  // Before mount, toString returns the component ID (number)
+  expect(typeof comp.toString()).toBe("number");
+  comp.mount(container);
+  comp.update();
+  expect(comp.toString()).toContain("Str");
+  });
+
+  it("should clone from template and preserve initialProps", () => {
+    const base = createComponent(() => "<div>Base</div>", { state: { a: 1 } });
+    const clone = base._templateSource ? base._templateSource : undefined;
+    expect(clone).toBeUndefined(); // _templateSource only set on clones
+    const cloned = base._frozenTemplate
+      ? createComponent(
+          base._frozenTemplate.renderFn,
+          base._frozenTemplate.options
+        )
+      : undefined;
+    expect(cloned).toBeDefined();
+    expect(cloned.state).toEqual({ a: 1 });
+  });
 });
