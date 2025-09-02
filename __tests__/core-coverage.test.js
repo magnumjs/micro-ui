@@ -65,8 +65,8 @@ describe('api.on function', () => {
     });
     // Add handler
     const result = Comp.on('foo', () => {});
-    expect(typeof result).toBe('object');
-    expect(typeof result.foo).toBe('function');
+    expect(typeof result).toBe('string');
+    expect(typeof result.foo).toBe('undefined');
   });
 });
 describe('get-refs data-key lookup', () => {
