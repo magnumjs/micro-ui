@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/magnumjs/micro-ui/compare/v1.8.0...v1.9.0) (2025-09-02)
+
+
+### Features
+
+* add ref for instance and on event func ([3105938](https://github.com/magnumjs/micro-ui/commit/3105938f5e8269df7a2a483160ccf24b89f2c6f3))
+* inline this.on event ([389018b](https://github.com/magnumjs/micro-ui/commit/389018b97d57c71be0a8bd72beecca41819b0f2e))
+
 ## [1.8.0](https://github.com/magnumjs/micro-ui/compare/v1.7.0...v1.8.0) (2025-08-29)
 
 
