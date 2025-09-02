@@ -472,13 +472,31 @@ describe("createComponent", () => {
     );
   });
 
+  it("should return correct value", () => {
+    const comp = createComponent(() => `Str`);
+    // Before mount, toString returns the component ID (number)
+    expect(typeof comp.toString()).toBe("string");
+    comp.mount(container);
+    comp.update();
+    expect(comp.toString()).toContain("Str");
+  });
+
+  it("should return correct value", () => {
+    const comp = createComponent(`Str`);
+    // Before mount, toString returns the component ID (number)
+    expect(typeof comp.toString()).toBe("string");
+    comp.mount(container);
+    comp.update();
+    expect(comp.toString()).toContain("Str");
+  });
+
   it("should return correct .toString before and after render", () => {
-  const comp = createComponent(() => `<div>Str</div>`);
-  // Before mount, toString returns the component ID (number)
-  expect(typeof comp.toString()).toBe("number");
-  comp.mount(container);
-  comp.update();
-  expect(comp.toString()).toContain("Str");
+    const comp = createComponent(() => `<div>Str</div>`);
+    // Before mount, toString returns the component ID (number)
+    expect(typeof comp.toString()).toBe("string");
+    comp.mount(container);
+    comp.update();
+    expect(comp.toString()).toContain("Str");
   });
 
   it("should clone from template and preserve initialProps", () => {

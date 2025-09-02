@@ -1,30 +1,77 @@
-import { createComponent } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js";
-import { useState } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui-hooks.esm.js";
+import { createComponent, useSharedState, effect } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.all.esm.js";
 import { escapeCode } from "../../docs/utils/escapeCode.js";
 
 
-const cartVisible = useState([true, true, true, true]);
-const Toggler = createComponent(({ index }) => {
-//   effect(() => {
-//     console.log('Cart', index, 'visible:', cartVisible.get()[index]);
-//   }, [cartVisible.get()[index]]);
-  function toggle() {
-    const vis = cartVisible.get().slice();
-    vis[index] = !vis[index];
-    cartVisible.set(vis);
+
+const Card = createComponent({
+  render() {
+    return `
+      <div class="card">
+        <h3>${this.props.title}</h3>
+        <p>Total: $${this.props.total}</p>
+        <button data-action-click="removeMe">Remove</button>
+      </div>
+    `;
+  },
+
+  removeMe() {
+    // Tell parent we want to be removed
+    // Directly call the parent function
+    if (typeof this.props.remove === "function") {
+      this.props.remove(this.props.id);
+    }
+    //this.emit("remove", this.props.id);
   }
-//   if (!cartVisible.get()[index]) return null;
-  return `<div class="cart" data-comp="cart" id="cart-${index}">` +
-    `<h4>Cart ${index + 1}</h4>` +
-    `<button type="button" class="toggle-btn" onclick="${toggle}">Toggle</button>` +
-    // `<div>Shared Value: ${cartVisible.get()[index]}</div>` +
-    `</div>`;
 });
-const TogglerWidget = createComponent(() => {
-  return `<div class="toggler-widget">` +
-    `<div class="column">` + [0,1].map(i => Toggler({ index: i })).join("") + `</div>` +
-    `<div class="column">` + [2,3].map(i => Toggler({ index: i })).join("") + `</div>` +
-    `</div>`;
+
+const TogglerWidget = createComponent({
+  state: {
+    cards: [
+      { id: 1, title: "Card 1", total: 2 },
+      { id: 2, title: "Card 2", total: 5 },
+      { id: 3, title: "Card 3", total: 0 }
+    ]
+  },
+
+  render() {
+    return `
+      <div>
+        <button data-action-click="addCard">Add Card</button>
+        <div class="cards" data-ref="cards">
+          ${this.state.cards.map(card =>
+            Card({
+              key: card.id,
+              id: card.id,
+              title: card.title,
+              total: card.total,
+              remove: (id) => {
+                 TogglerWidget.removeCard(id);
+              }
+            })
+          ).join("")}
+        </div>
+      </div>
+    `;
+  },
+
+  addCard() {
+    const nextId = this.state.cards.length
+      ? Math.max(...this.state.cards.map(c => c.id)) + 1
+      : 1;
+
+    this.setState({
+      cards: [
+        ...this.state.cards,
+        { id: nextId, title: `Card ${nextId}`, total: 0 }
+      ]
+    });
+  },
+
+  removeCard(id) {
+    this.setState({
+      cards: this.state.cards.filter(card => card.id !== id)
+    });
+  }
 });
 
 

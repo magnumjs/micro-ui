@@ -9,7 +9,7 @@ describe("componentFn.toString()", () => {
     });
 
     // Before mount, toString should be NOT empty
-    expect(Comp.toString()).toBe(1);
+    expect(Comp.toString()).toBe("1");
 
     // Mount the component
     const container = document.createElement("div");
@@ -32,7 +32,7 @@ describe("componentFn.toString()", () => {
     });
 
     // Before mount, toString should be NOT empty
-    expect(comp.toString()).toBe(2);
+    expect(comp.toString()).toBe("2");
 
     // Mount the component
     comp.mount(container);
