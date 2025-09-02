@@ -6,7 +6,7 @@ test("can manually add Comp to get its id for data-comp attribute", () => {
   // Use .toString() to get the id before mount
   const compId = Comp.toString();
   // Should be a number (the id)
-  expect(typeof compId).toBe("number");
+  expect(typeof compId).toBe("string");
 
   // Use the id in markup
   const html = `<div data-comp="${compId}"></div>`;
