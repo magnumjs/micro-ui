@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/magnumjs/micro-ui/compare/v1.9.0...v1.10.0) (2025-09-03)
+
+
+### Features
+
+* add hooks ([6547b4c](https://github.com/magnumjs/micro-ui/commit/6547b4c2b3cce1d4e573afdab213db69d996bb4d))
+
 ## [1.9.0](https://github.com/magnumjs/micro-ui/compare/v1.8.0...v1.9.0) (2025-09-02)
 
 
