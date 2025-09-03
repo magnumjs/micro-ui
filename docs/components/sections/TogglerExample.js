@@ -1,4 +1,4 @@
-import { createComponent, useSharedState, effect } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.all.esm.js";
+import { createComponent, useContext, useEffect } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.all.esm.js";
 import { escapeCode } from "../../docs/utils/escapeCode.js";
 
 

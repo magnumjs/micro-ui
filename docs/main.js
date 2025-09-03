@@ -1,7 +1,7 @@
 import { WelcomeCard } from "./components/WelcomeCard.js";
 import { Counter } from "./components/Counter.browser.js";
 import { AuthCard } from "./components/AuthCard.js";
-import { appState } from "./state.js";
+// import { appState } from "./state.js";
 import { fetchUser, loginUser, logoutUser } from "./logic.js";
 import ShowHide from "./components/ShowHide.js";
 import { initTodoList } from "./components/TodoList.init.js";
