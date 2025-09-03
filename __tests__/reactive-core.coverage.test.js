@@ -1,6 +1,6 @@
 import { createComponent, renderList, useCurrentComponent } from "../lib/reactive-core.js";
 import { jest, describe, test, expect, beforeEach, afterEach } from "@jest/globals";
-import { createChannelMap } from "../lib/compose/context.js";
+import { createChannelMap } from "../lib/reactive-core-helpers/context.js";
 
 describe("reactive-core full coverage", () => {
   let container;

@@ -1,5 +1,5 @@
 import { createComponent } from "../lib/reactive-core.js";
-import { createState } from "../lib/compose/context.js";
+import { createState } from "../lib/reactive-core-helpers/context.js";
 import {
   jest,
   describe,

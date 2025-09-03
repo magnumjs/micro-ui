@@ -3,7 +3,7 @@
  */
 
 import { createComponent } from "../lib/reactive-core.js"; // your full MicroUI core
-import { context } from "../lib/compose/context.js"; // context management
+import { context } from "../lib/reactive-core-helpers/context.js"; // context management
 import { jest, describe, test, expect, beforeEach } from "@jest/globals";
 function waitUntil(conditionFn, timeout = 1000) {
   return new Promise((resolve, reject) => {
