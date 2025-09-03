@@ -1,34 +1,34 @@
 import { createComponent } from "../lib/reactive-core.js";
-import { slot, event, effect } from "../lib/compose/index.js";
+import { useState, useEffect } from "../lib/hooks/index.js";
 
 test("CounterWithToggle handles refs, events, and lifecycle", async () => {
   const logs = [];
 
   const CounterWithToggle = createComponent({
     render() {
-      const [count, setCount] = slot(0);
+      const [count, setCount] = useState(0);
 
       const setVisible = this.props.setVisible;
       const visible = this.props.visible;
       // Events
-      event("click button[ref=btn]", () => {
+      this.addEvent("click button[ref=btn]", () => {
         logs.push("button clicked");
         setCount((c) => c + 1);
       });
-      event("click button[ref=toggle]", () =>{
+      this.addEvent("click button[ref=toggle]", () =>{
         console.log("toggle clicked");
         setVisible((v) => !v);
 
       });
 
       // Effect for tracking count
-      effect(() => {
-        logs.push(`count=${count()}`);
+      useEffect(() => {
+        logs.push(`count=${count}`);
       }, [count]);
-      console.log('CounterWithToggle mounted', visible?.());
-      return visible?.()
+      console.log('CounterWithToggle mounted', visible);
+      return visible
         ? `<div>
-            <button ref="btn">${count()}</button>
+            <button ref="btn">${count}</button>
             <button ref="toggle">Toggle</button>
           </div>`
         : null;
@@ -49,9 +49,10 @@ test("CounterWithToggle handles refs, events, and lifecycle", async () => {
 
   const ParentContainer = createComponent({
     render() {
-      const [visible, setVisible] = slot(true);
+      const [visible, setVisible] = useState(true);
+
 console.log(
-  `ParentContainer mounted, visible=${visible?.()}`
+  `ParentContainer mounted, visible=${visible}`
 );
       ParentContainer.setVisible = setVisible; // Expose for testing
       //   CounterWithToggle.update({ visible, setVisible });

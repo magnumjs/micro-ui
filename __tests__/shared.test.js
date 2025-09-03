@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { createState, context, shared } from "../lib/compose/context.js";
+import { createState, context, shared } from "../lib/reactive-core-helpers/context.js";
 import {
   describe,
   test,

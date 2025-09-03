@@ -3,7 +3,7 @@
  */
 
 import { createComponent } from "../lib/reactive-core";
-import { shared, context } from "../lib/compose/context.js"; // context management
+import { shared, context } from "../lib/reactive-core-helpers/context.js"; // context management
 import { describe, beforeEach, test, expect } from "@jest/globals";
 
 describe("App login/logout flow", () => {

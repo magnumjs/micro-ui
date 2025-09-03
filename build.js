@@ -16,20 +16,6 @@ const builds = [
     ],
   },
   {
-    entry: "lib/compose/context.js",
-    formats: [
-      { format: "esm", outfile: "dist/magnumjs-micro-ui-context.esm.js" },
-      { format: "iife", outfile: "dist/magnumjs-micro-ui-context.js", globalName: "MicroUIContext" },
-    ],
-  },
-  {
-    entry: "lib/compose/reactive-composables.js",
-    formats: [
-      { format: "esm", outfile: "dist/magnumjs-micro-ui-compose.esm.js" },
-      { format: "iife", outfile: "dist/magnumjs-micro-ui-compose.js", globalName: "MicroUICompose" },
-    ],
-  },
-  {
     entry: "lib/hooks/index.js",
     formats: [
       { format: "esm", outfile: "dist/magnumjs-micro-ui-hooks.esm.js" },
