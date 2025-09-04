@@ -8,10 +8,31 @@ import { jest } from '@jest/globals';
 
 
 describe('useFetch', () => {
+  it('explicitly covers useFetch.js lines 19-27 (success and error)', async () => {
+    global.fetch = jest.fn().mockImplementationOnce(() => Promise.resolve({
+      json: () => Promise.resolve({ ok: true })
+    }));
+    let api;
+    const Comp = createComponent({
+      render() {
+        api = useFetch('/cover');
+        return '<div></div>';
+      }
+    });
+    Comp();
+    await api.refresh();
+    expect(api.get().data).toEqual({ ok: true });
+    expect(api.get().loading).toBe(false);
+    // Error branch
+    global.fetch = jest.fn().mockImplementationOnce(() => Promise.reject('fail'));
+    await api.refresh();
+    expect(api.get().error).toBe('fail');
+    expect(api.get().loading).toBe(false);
+  });
   it('throws if called outside a component render', () => {
     expect(() => useFetch('/fail')).toThrow('useFetch must be called inside a component render or lifecycle');
   });
-  beforeAll(() => {
+  beforeEach(() => {
     global.fetch = jest.fn().mockImplementation((url) => Promise.resolve({
       json: () => Promise.resolve({ result: 'ok', url }),
     }));

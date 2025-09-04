@@ -1,67 +1,107 @@
-import { useState } from '../../lib/hooks/useState.js';
-import { createComponent } from '../../lib/reactive-core.js';
-import { jest } from '@jest/globals';
+import { useState, useEffect } from "../../lib/hooks/index.js";
+import { createComponent } from "../../lib/reactive-core.js";
+import { jest } from "@jest/globals";
 
-describe('useState', () => {
-  it('throws if called outside a component render', () => {
-    expect(() => useState(0)).toThrow('useState must be inside render()');
+describe("useState", () => {
+  it("throws if useState is called outside render", () => {
+    expect(() => useState()).toThrow();
   });
-  it('auto-generates setters for object state and updates only on change', async () => {
+
+  it("does not rerender if state is Object.is equal", () => {
+    let renderCount = 0;
+    const Comp = createComponent({
+      render() {
+        useState(1);
+        renderCount++;
+        return `<div></div>`;
+      },
+    });
+    const container = document.createElement("div");
+    Comp.mount(container);
+    Comp.setState(1); // Should not rerender
+    expect(renderCount).toBe(1);
+  });
+
+  it("cleans up state on unmount", () => {
+    let cleaned = false;
+    const Comp = createComponent({
+      render() {
+        const [state, setState] = useState(1);
+        // Simulate cleanup
+        useEffect(
+          () => () => {
+            cleaned = true;
+          },
+          []
+        );
+        return `<div></div>`;
+      },
+    });
+    const container = document.createElement("div");
+    Comp.mount(container);
+    Comp.unmount();
+    expect(cleaned).toBe(true);
+  });
+
+  it("throws if called outside a component render", () => {
+    expect(() => useState(0)).toThrow("useState must be inside render()");
+  });
+  it("auto-generates setters for object state and updates only on change", async () => {
     let count, setCount, value, setValue;
     const Comp = createComponent({
-      state: { count: 0, value: 'a' },
+      state: { count: 0, value: "a" },
       render() {
         [count, setCount] = useState(Comp.state.count);
         [value, setValue] = useState(Comp.state.value);
-        return '<div></div>';
-      }
+        return "<div></div>";
+      },
     });
     if (Comp.mount) {
-      Comp.mount(document.createElement('div'));
+      Comp.mount(document.createElement("div"));
     } else {
       Comp();
     }
     // Test auto-generated setter exists
-    expect(typeof Comp.setCount).toBe('function');
-    expect(typeof Comp.setValue).toBe('function');
+    expect(typeof Comp.setCount).toBe("function");
+    expect(typeof Comp.setValue).toBe("function");
     // Update count and value
     Comp.setCount(5);
-    Comp.setValue('b');
+    Comp.setValue("b");
     await Promise.resolve();
     expect(Comp.state.count).toBe(5);
-    expect(Comp.state.value).toBe('b');
+    expect(Comp.state.value).toBe("b");
     // Should not update if value is unchanged
     const prevCount = Comp.state.count;
     Comp.setCount(5);
     await Promise.resolve();
     expect(Comp.state.count).toBe(prevCount);
   });
-  it('initializes and gets value inside a component', () => {
+  it("initializes and gets value inside a component", () => {
     let val;
     const Comp = createComponent({
       render() {
         [val] = useState(5);
-        return '';
-      }
+        return "";
+      },
     });
     if (Comp.mount) {
-      Comp.mount(document.createElement('div'));
+      Comp.mount(document.createElement("div"));
     } else {
       Comp();
     }
     expect(val).toBe(5);
   });
 
-  it('updates value inside a component and reflects in next render', async () => {
+  it("updates value inside a component and reflects in next render", async () => {
     let val, setVal;
     const Comp = createComponent({
       render() {
         [val, setVal] = useState(1);
-        return '<!-- test -->';
-      }
+        return "<!-- test -->";
+      },
     });
     if (Comp.mount) {
-      Comp.mount(document.createElement('div'));
+      Comp.mount(document.createElement("div"));
     } else {
       Comp();
     }

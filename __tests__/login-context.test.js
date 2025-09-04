@@ -5,7 +5,7 @@
 import { createComponent } from "../lib/reactive-core.js";
 import { context } from "../lib/utils/context.js";
 import { describe, test, expect, beforeEach } from "@jest/globals";
-import { useEmits } from "../lib/hooks/useEmits.js";
+import { useEmit } from "../lib/hooks/useEmit.js";
 
 function waitUntil(fn, timeout = 1000) {
   return new Promise((resolve, reject) => {
@@ -32,7 +32,7 @@ describe("Login flow using context pub/sub", () => {
   test("User login updates AuthStatus via context", async () => {
     // AuthStatus listens for auth::login
     const AuthStatus = createComponent(() => {
-          useEmits()
+          useEmit()
       return `<div data-ref="status">Not logged in</div>`;
     }, {
       on: {
