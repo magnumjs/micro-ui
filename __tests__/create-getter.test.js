@@ -1,7 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import { createComponent, renderList } from "../lib/reactive-core.js";
+import { createComponent } from "../lib/reactive-core.js";
+import { renderList } from "../lib/utils/";
 
 describe("createComponent state getter", () => {
   test("returns the internal state via getter", () => {

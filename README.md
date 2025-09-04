@@ -73,7 +73,7 @@ Parent.mount({ children: Child });
 Create a shared state store with event-based updates:
 
 ```js
-import { shared } from "@magnumjs/micro-ui";
+import { shared } from "@magnumjs/micro-ui/utils";
 
 const auth = shared("auth", { user: null });
 
@@ -240,13 +240,13 @@ const Demo = createComponent({
   }
 });
 
-// Hooks: event, effect, value, shared
+// Hooks: effect, state, context ..
 // Compose your own hooks, e.g. useFetch
-import { event, effect, value, shared } from "@magnumjs/micro-ui/compose";
+import { useEffect, useState, useContext } from "@magnumjs/micro-ui/hooks";
 
 function useFetch(url) {
-  const data = value(null);
-  effect(() => {
+  const data = useState(null);
+  useEffect(() => {
     fetch(url).then(res => res.json()).then(data.set);
   }, [url]);
   return data;
@@ -280,7 +280,7 @@ If `render()` returns `null`, the previous DOM is cached and restored if `render
 Renders keyed list efficiently:
 
 ```js
-import { renderList } from "@magnumjs/micro-ui";
+import { renderList } from "@magnumjs/micro-ui/utils";
 
 renderList(data, item => `<li>${item.label}</li>`, item => item.id);
 ```

@@ -2,7 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { createComponent, renderList } from "../lib/reactive-core.js";
+import { createComponent } from "../lib/reactive-core.js";
+import { renderList } from "../lib/utils/";
 import { fireEvent, screen } from '@testing-library/dom';
 
 describe("diffHTML branch coverage: moves existing DOM nodes", () => {

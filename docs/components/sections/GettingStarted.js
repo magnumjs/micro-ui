@@ -16,8 +16,8 @@ export const GettingStarted = createComponent(() => `
     <pre><code class="language-bash">npm install @magnumjs/micro-ui</code></pre>
     <h3>Quick Example</h3>
     <pre class="line-numbers"><code class="language-js">
-${escapeCode(`import { createComponent } from '@magnumjs/micro-ui
-import { createState } from '@magnumjs/micro-ui/utils
+${escapeCode(`import { createComponent } from '@magnumjs/micro-ui';
+import { createState } from '@magnumjs/micro-ui/utils';
 
 const state = createState({ count: 0 });
 

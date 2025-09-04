@@ -27,7 +27,7 @@ function onRemove(id) {
 TodoList.mount('#todo-demo', { todos, onAdd, onToggle, onRemove });`;
 
 
-const codeExample2 = `import { createComponent, renderList } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js";
+const codeExample2 = `import { createComponent, renderList } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.all.esm.js";
 
 export const TodoList = createComponent(
   ({ props:{todos = [], onToggle, onRemove, onAdd} }) => {

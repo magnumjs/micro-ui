@@ -2,7 +2,9 @@
  * @jest-environment jsdom
  */
 
-import { createComponent, renderList } from '../lib/reactive-core.js';
+import { createComponent } from '../lib/reactive-core.js';
+import { renderList } from "../lib/utils/";
+
 
 describe('renderList and DOM diffing', () => {
   let root;
