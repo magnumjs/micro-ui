@@ -23,6 +23,13 @@ const builds = [
     ],
   },
   {
+    entry: "lib/utils/index.js",
+    formats: [
+      { format: "esm", outfile: "dist/magnumjs-micro-ui-utils.esm.js" },
+      { format: "iife", outfile: "dist/magnumjs-micro-ui-utils.js", globalName: "MicroUIUtils" },
+    ],
+  },
+  {
     entry: "lib/micro-ui-all.js",
     formats: [
       { format: "esm", outfile: "dist/magnumjs-micro-ui.all.esm.js" },

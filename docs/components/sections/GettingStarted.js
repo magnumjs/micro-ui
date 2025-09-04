@@ -1,4 +1,5 @@
 import { createComponent } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js";
+import { escapeCode } from "../../docs/utils/escapeCode.js";
 
 export const GettingStarted = createComponent(() => `
   <section id="getting-started">
@@ -15,7 +16,8 @@ export const GettingStarted = createComponent(() => `
     <pre><code class="language-bash">npm install @magnumjs/micro-ui</code></pre>
     <h3>Quick Example</h3>
     <pre class="line-numbers"><code class="language-js">
-import { createComponent, createState } from '@magnumjs/micro-ui';
+${escapeCode(`import { createComponent } from '@magnumjs/micro-ui
+import { createState } from '@magnumjs/micro-ui/utils
 
 const state = createState({ count: 0 });
 
@@ -27,7 +29,7 @@ const Counter = createComponent(({ count }) => \`
 Counter.mount('#app');
 state.subscribe(({ count }) => Counter.update({ count }));
 document.getElementById('inc').onclick = () => state.setState({ count: state.state.count + 1 });
-    </code></pre>
+    `)}</code></pre>
     <h3>Features</h3>
     <ul>
       <li>Reactive state management with <code>createState</code></li>

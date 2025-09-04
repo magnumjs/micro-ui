@@ -3,6 +3,9 @@ import { createComponent } from '../../lib/reactive-core.js';
 import { jest } from '@jest/globals';
 
 describe('useState', () => {
+  it('throws if called outside a component render', () => {
+    expect(() => useState(0)).toThrow('useState must be inside render()');
+  });
   it('auto-generates setters for object state and updates only on change', async () => {
     let count, setCount, value, setValue;
     const Comp = createComponent({
