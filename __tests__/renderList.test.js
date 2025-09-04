@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { renderList } from "../lib/reactive-core.js";
+import { renderList } from "../lib/utils/";
 
 describe("renderList", () => {
   it("renders keyed list correctly", () => {

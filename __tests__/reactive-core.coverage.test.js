@@ -1,4 +1,5 @@
-import { createComponent, renderList, useCurrentComponent } from "../lib/reactive-core.js";
+import { createComponent, useCurrentComponent } from "../lib/reactive-core.js";
+import { renderList } from "../lib/utils/";
 import { useEmits } from '../lib/hooks/useEmits.js';
 import { jest, describe, test, expect, beforeEach, afterEach } from "@jest/globals";
 import { createChannelMap } from "../lib/utils/context.js";

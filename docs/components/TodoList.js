@@ -1,4 +1,4 @@
-import { createComponent, renderList } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.esm.js";
+import { createComponent, renderList } from "https://unpkg.com/@magnumjs/micro-ui/dist/magnumjs-micro-ui.all.esm.js";
 
 export const TodoList = createComponent(
   ({ props:{todos = [], onToggle, onRemove, onAdd} }) => {

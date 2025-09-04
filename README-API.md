@@ -56,7 +56,8 @@ npm install @magnumjs/micro-ui
 ### Counter Component
 
 ```js
-import { createComponent, createState } from "@magnumjs/micro-ui";
+import { createComponent } from "@magnumjs/micro-ui";
+import { createState } from "@magnumjs/micro-ui/utils";
 
 const state = createState({ count: 0 });
 

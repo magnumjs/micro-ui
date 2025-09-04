@@ -1,4 +1,5 @@
-import { createComponent, renderList } from "../lib/reactive-core";
+import { createComponent } from "../lib/reactive-core";
+import { renderList } from "../lib/utils/";
 
 describe("renderList utility", () => {
   test("adds data-key attribute to each rendered item (covers line 358)", () => {

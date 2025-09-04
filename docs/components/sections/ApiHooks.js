@@ -10,7 +10,7 @@ export const ApiHooksSection = createComponent(() => `
         <li><b>Arguments:</b> <code>name</code> (string), <code>handler</code> (function)</li>
         <li><b>Returns:</b> Unsubscribe function</li>
         <li><b>Example:</b>
-          <pre class="line-numbers"><code class="language-js">event('user:login', (user) =&gt; {
+          <pre class="line-numbers"><code class="language-js">useEvent('user:login', (user) =&gt; {
   console.log('User logged in:', user);
 });
 </code></pre>
@@ -19,13 +19,13 @@ export const ApiHooksSection = createComponent(() => `
       <button id="next-api-hooks" type="button" style="float:right;">Next &rarr;</button>
     </div>
     <div id="api-hooks-step-2" style="display:none;">
-      <h3>effect(fn, deps)</h3>
+      <h3>useEffect(fn, deps)</h3>
       <p><b>Purpose:</b> Run a side effect when dependencies change (similar to React's useEffect).</p>
       <ul>
         <li><b>Arguments:</b> <code>fn</code> (function), <code>deps</code> (array)</li>
         <li><b>Returns:</b> Unsubscribe/cleanup function</li>
         <li><b>Example:</b>
-          <pre class="line-numbers"><code class="language-js">effect(() =&gt; {
+          <pre class="line-numbers"><code class="language-js">useEffect(() =&gt; {
   console.log('Effect ran');
   return () =&gt; console.log('Cleanup');
 }, [dep1, dep2]);
@@ -42,7 +42,8 @@ export const ApiHooksSection = createComponent(() => `
         <li><b>Arguments:</b> <code>initial</code> (any)</li>
         <li><b>Returns:</b> Value API with <code>get</code>, <code>set</code>, <code>subscribe</code></li>
         <li><b>Example:</b>
-          <pre class="line-numbers"><code class="language-js">const count = value(0);
+          <pre class="line-numbers"><code class="language-js">
+const count = useState(0);
 count.subscribe(val =&gt; console.log(val));
 count.set(1);
 </code></pre>
