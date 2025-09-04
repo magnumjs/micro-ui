@@ -25,6 +25,11 @@
       "default": "./dist/magnumjs-micro-ui-hooks.esm.js",
       "import": "./dist/magnumjs-micro-ui-hooks.esm.js",
       "require": "./dist/magnumjs-micro-ui-hooks.js"
+    },
+    "./utils": {
+      "default": "./dist/magnumjs-micro-ui-utils.esm.js",
+      "import": "./dist/magnumjs-micro-ui-utils.esm.js",
+      "require": "./dist/magnumjs-micro-ui-utils.js"
     }
   },
   "browser": "dist/magnumjs-micro-ui.js",

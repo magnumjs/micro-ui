@@ -1,4 +1,5 @@
 import { createComponent } from "../lib/reactive-core.js";
+import { useEmits } from "../lib/hooks/useEmits.js";
 
 describe("context-based events (::channel)", () => {
   let Toolbar, Content, rootToolbar, rootContent;
@@ -12,6 +13,7 @@ describe("context-based events (::channel)", () => {
 
     Toolbar = createComponent({
       render() {
+        useEmits()
         return `
           <div>
             <button data-action="light">Light</button>
@@ -29,6 +31,7 @@ describe("context-based events (::channel)", () => {
     Content = createComponent({
       state: { theme: "light" },
       render({ state }) {
+        useEmits()
         return `<div class="content ${state.theme}">Theme: ${state.theme}</div>`;
       },
       on: {
@@ -65,6 +68,7 @@ describe("context-based events (::channel)", () => {
     const ExtraContent = createComponent({
       state: { theme: "light" },
       render({ state }) {
+        useEmits()
         return `<p>${state.theme}</p>`;
       },
       on: {
@@ -97,12 +101,13 @@ describe("context-based events (::channel)", () => {
 
     const RuntimeComponent = createComponent({
       render() {
+        useEmits()
         return `<div>Runtime theme: ${runtimeTheme}</div>`;
       },
       onMount() {
         this.onEmitGlobal("theme::change", (theme) => {
           runtimeTheme = theme;
-          this._render(); // force rerender
+          this.update(); // force rerender
         });
       },
     });

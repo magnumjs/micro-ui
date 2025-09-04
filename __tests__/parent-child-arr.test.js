@@ -3,12 +3,14 @@
  */
 import { createComponent } from "../lib/reactive-core";
 import { jest, describe, test, expect, beforeEach } from "@jest/globals";
+import { useEmits } from "../lib/hooks/useEmits.js";
 
 const mockHandler = jest.fn();
 
 const Child = ({ item }) =>
   createComponent({
     render() {
+      useEmits()
       return `
       <div data-ref="child">
         <span>${item ? item.label : ""}</span>
@@ -43,6 +45,8 @@ const Parent = createComponent({
     });
   },
   render({ state }) {
+          useEmits()
+
     return `
       <div data-ref="parent">
         <h2>Parent</h2>

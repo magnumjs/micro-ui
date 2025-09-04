@@ -1,6 +1,7 @@
 import { createComponent, renderList, useCurrentComponent } from "../lib/reactive-core.js";
+import { useEmits } from '../lib/hooks/useEmits.js';
 import { jest, describe, test, expect, beforeEach, afterEach } from "@jest/globals";
-import { createChannelMap } from "../lib/reactive-core-helpers/context.js";
+import { createChannelMap } from "../lib/utils/context.js";
 
 describe("reactive-core full coverage", () => {
   let container;
@@ -49,7 +50,10 @@ describe("reactive-core full coverage", () => {
 
   test("event delegation and local/global event bus", () => {
     const clickHandler = jest.fn();
-    const comp = createComponent(() => `<button id='btn'>Click</button>`, {
+    const comp = createComponent(() => {
+      useEmits();
+      return `<button id='btn'>Click</button>`;
+    }, {
       on: { "click #btn": clickHandler }
     });
     comp.mount(container);

@@ -8,6 +8,9 @@ import { jest } from '@jest/globals';
 
 
 describe('useFetch', () => {
+  it('throws if called outside a component render', () => {
+    expect(() => useFetch('/fail')).toThrow('useFetch must be called inside a component render or lifecycle');
+  });
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((url) => Promise.resolve({
       json: () => Promise.resolve({ result: 'ok', url }),
