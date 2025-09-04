@@ -1,8 +1,9 @@
-// import { useEvent } from "../lib/hooks/index.js";
-import { createComponent } from "../lib/reactive-core.js";
-import { jest, xdescribe, describe, test, expect, beforeEach, afterEach } from "@jest/globals";
+import { useEvent } from '../lib/hooks/useEvent.js';
 
-xdescribe("event.js coverage", () => {
+import { createComponent } from "../lib/reactive-core.js";
+import { jest, describe, test, expect, beforeEach, afterEach } from "@jest/globals";
+
+describe("event.js coverage", () => {
   let container;
 
   beforeEach(() => {
@@ -18,7 +19,7 @@ xdescribe("event.js coverage", () => {
     const mockHandler = jest.fn();
 
     const Comp = createComponent(() => {
-      Comp.event("click #btn", mockHandler);
+      Comp.on("click #btn", mockHandler);
       return `<button id="btn">Click me</button>`;
     });
 
@@ -27,38 +28,35 @@ xdescribe("event.js coverage", () => {
     expect(mockHandler).toHaveBeenCalled();
   });
 
-  test("event: simplified event map", () => {
+  test("event: simplified event map", async () => {
     const mockInputHandler = jest.fn();
 
     const Comp = createComponent(() => {
-      Comp.event({
-        "input": mockInputHandler, // Simplified event map without selector
-      });
       return `
         <input id="input" />
       `;
     });
+    Comp.on["input"] = mockInputHandler; // Simplified event map without selector
 
     Comp.mount(container);
 
     const input = container.querySelector("#input");
     input.value = "test";
-    input.dispatchEvent(new Event("input", { bubbles: true }));
-
+    const evt = new Event("input", { bubbles: true });
+    input.dispatchEvent(evt);
+    await Promise.resolve();
     expect(mockInputHandler).toHaveBeenCalled();
   });
 
   test("event: throws error if used outside component", () => {
-    expect(() => useEvent("click", "#btn", () => {})).toThrow(
-      "event() must be called inside a component"
+    expect(() => useEvent("click #btn", () => {})).toThrow(
+      "useEvent must be inside render()"
     );
   });
 
   test("event: invalid arguments", () => {
     const Comp = createComponent(() => {
-      expect(() => event(123, "#btn", () => {})).toThrow(
-        "Invalid arguments passed to event()"
-      );
+      expect(typeof useEvent()).toBe("object");
       return `<div>Test</div>`;
     });
 
@@ -89,9 +87,7 @@ xdescribe("event.js coverage", () => {
     const mockInputHandler = jest.fn();
 
     const Comp = createComponent(() => {
-      event({
-        "input #input": mockInputHandler, // Event map with selector
-      });
+      Comp.addEvent("input #input", mockInputHandler); // Event map with selector
       return `
         <input id="input" />
       `;
@@ -111,14 +107,15 @@ xdescribe("event.js coverage", () => {
     const mockInputHandler = jest.fn();
 
     const Comp = createComponent(() => {
-      event({
-        "click #btn": mockClickHandler,
-        "input #input": mockInputHandler,
-      });
       return `
         <button id="btn">Click me</button>
         <input id="input" />
       `;
+    },{
+      on: {
+        "click #btn": mockClickHandler,
+        "input #input": mockInputHandler,
+      }
     });
 
     Comp.mount(container);

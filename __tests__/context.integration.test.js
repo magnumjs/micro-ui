@@ -4,7 +4,7 @@
 
 import { createComponent } from "../lib/reactive-core.js"; // your full MicroUI core
 import { context } from "../lib/utils/context.js"; // context management
-import { useEmits } from "../lib/hooks/useEmits.js";
+import { useEmit } from "../lib/hooks/useEmit.js";
 import { jest, describe, test, expect, beforeEach } from "@jest/globals";
 function waitUntil(conditionFn, timeout = 1000) {
   return new Promise((resolve, reject) => {
@@ -31,7 +31,7 @@ test("Consumer receives context event emitted by Provider", async () => {
   const received = [];
 
   const Consumer = createComponent(() => {
-    useEmits()
+    useEmit()
     return `<div data-ref="output">Waiting...</div>`;
   }, {
     on: {

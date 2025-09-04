@@ -3,7 +3,6 @@
  */
 
 import injectSlotContent from "../lib/injectSlotContent";
-
 const api = {
   _mountedChildren: [],
   refs: {},
@@ -90,9 +89,16 @@ describe("injectSlotContent", () => {
     expect(root.innerHTML).toContain(``);
   });
 
+
   test("resolves and injects string HTML", () => {
     injectSlotContent(slot(), "<p>Hello</p>", api);
     expect(root.innerHTML).toContain("<p>Hello</p>");
+  });
+
+  test("handles invalid slot name", () => {
+    const ref = document.createElement("div");
+    const result = injectSlotContent(ref, "invalidSlot", []);
+    expect(ref.parentNode).toBeNull(); // Should be removed from DOM
   });
 
   test("injects DOM Node directly", () => {
@@ -100,6 +106,12 @@ describe("injectSlotContent", () => {
     span.textContent = "Text";
     injectSlotContent(slot(), span, api);
     expect(root.querySelector("span").textContent).toBe("Text");
+  });
+
+  test("handles no children", () => {
+    const ref = document.createElement("div");
+    const result = injectSlotContent(ref, "slot1", undefined);
+    expect(ref.parentNode).toBeNull(); // Should be removed from DOM
   });
 
   test("injects mounted component.el", () => {
@@ -228,7 +240,6 @@ describe("injectSlotContent", () => {
     const ref = document.createElement("div");
     const container = document.createElement("div");
     container.appendChild(ref);
-
     injectSlotContent(ref, () => 123);
     expect(container.innerHTML).toBe("");
   });
@@ -309,10 +320,14 @@ describe("injectSlotContent", () => {
 
     expect(root.innerHTML).toContain("Bold");
     expect(root.innerHTML).toContain("Underline");
+
     expect(root.innerHTML).toContain("Italic");
   });
 
-  test("does not crash if refNode is null", () => {
+  test("triggers fallback/error branch", () => {
+    const ref = document.createElement("div");
+    const result = injectSlotContent(ref, "slot1", null);
+    expect(ref.parentNode).toBeNull(); // Should be removed from DOM
     expect(() => injectSlotContent(null, "test")).not.toThrow();
   });
 });

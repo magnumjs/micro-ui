@@ -1,30 +1,46 @@
 import { createComponent } from "../../lib/reactive-core.js";
-import { useEmits } from "../../lib/hooks/useEmits.js";
+import { useEmit } from "../../lib/hooks/useEmit.js";
 import { jest } from "@jest/globals";
 
-describe("useEmits", () => {
+describe("useEmit", () => {
+  it('executes multiple onUnmount callbacks', () => {
+    let api, compInstance;
+    const calls = [];
+    const Comp = createComponent({
+      render() {
+        api = useEmit();
+        compInstance = this;
+        this.onUnmount(() => calls.push('first'));
+        this.onUnmount(() => calls.push('second'));
+        return '<div></div>';
+      }
+    });
+    Comp.mount(document.createElement('div'));
+    Comp.unmount();
+    expect(calls).toEqual(expect.arrayContaining(['first', 'second']));
+  });
   it('throws if called outside a component render', () => {
-    expect(() => useEmits()).toThrow('useEmits must be inside render()');
+    expect(() => useEmit()).toThrow('useEmit must be inside render()');
   });
 
   it('returns the same API if called twice in the same render', () => {
     let api1, api2;
     const Comp = createComponent({
       render() {
-        api1 = useEmits();
-        api2 = useEmits();
+        api1 = useEmit();
+        api2 = useEmit();
         return '<div></div>';
       }
     });
     Comp();
     expect(api1).toBe(api2);
   });
-  it.only("registers and cleans up context event listeners via useContextListeners", async () => {
+  it("registers and cleans up context event listeners via useContextListeners", async () => {
     let api, compInstance;
     const contextHandler = jest.fn();
     const Comp = createComponent(
       () => {
-        api = useEmits();
+        api = useEmit();
         compInstance = this;
         return "<div></div>";
       },
@@ -34,14 +50,14 @@ describe("useEmits", () => {
         },
       }
     );
-    Comp();
+    Comp.mount(document.createElement('div'));
     await Promise.resolve(); // Ensure listeners are registered
     Comp.emit("foo", 123);
     await Promise.resolve();
     expect(contextHandler).toHaveBeenCalledWith(123);
     Comp.unmount();
     await Promise.resolve();
-    //Comp.emit("foo", 456);
+    Comp.emit("foo", 456);
     expect(contextHandler.mock.calls.length).toBe(1);
   });
   it("attaches local emit/onEmit API and calls handler", () => {
@@ -49,7 +65,7 @@ describe("useEmits", () => {
     const handler = jest.fn();
     const Comp = createComponent({
       render() {
-        api = useEmits();
+        api = useEmit();
         return "<div></div>";
       },
     });
@@ -64,7 +80,7 @@ describe("useEmits", () => {
     const handler = jest.fn();
     const Comp = createComponent({
       render() {
-        api = useEmits();
+        api = useEmit();
         return "<div></div>";
       },
     });
@@ -79,7 +95,7 @@ describe("useEmits", () => {
     const handler = jest.fn();
     const Comp = createComponent({
       render() {
-        api = useEmits();
+        api = useEmit();
         compInstance = this;
         return "<div></div>";
       },
