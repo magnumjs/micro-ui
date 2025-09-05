@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/magnumjs/micro-ui/compare/v1.10.1...v1.11.0) (2025-09-05)
+
+
+### Features
+
+* add onBeforeRender hook for hooks to preprocess renderFn html string ([cad0fd8](https://github.com/magnumjs/micro-ui/commit/cad0fd8f3ac173e87d422806e8652cca82f167e9))
+
 ### [1.10.1](https://github.com/magnumjs/micro-ui/compare/v1.10.0...v1.10.1) (2025-09-04)
 
 
