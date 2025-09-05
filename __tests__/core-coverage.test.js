@@ -1,9 +1,7 @@
-
 import { createComponent } from "../lib/reactive-core.js";
 import getRef from "../lib/get-refs.js";
 import { jest } from "@jest/globals";
-
-
+import { useEvent } from "../lib/hooks/useEvent.js";
 
 describe("setState Object.is optimization", () => {
   it("does not rerender if state is Object.is equal", async () => {
@@ -26,18 +24,22 @@ describe("setState Object.is optimization", () => {
   });
 
   it("core on function is chainable and registers multiple events", () => {
+    const run = () => {
+      const handler1 = jest.fn();
+      const handler2 = jest.fn();
+      const chain = Comp.on("foo", handler1).on("bar", handler2);
+      expect(typeof chain.on).toBe("function");
+      expect(chain.toString()).toMatch(/data-ref="h\w+"/);
+      // Simulate event dispatch if your system allows
+      // (You may need to trigger the event on the DOM to fully cover handler registration)
+    };
     const Comp = createComponent({
       render() {
+        useEvent();
+        run();
         return `<div></div>`;
       },
     });
-    const handler1 = jest.fn();
-    const handler2 = jest.fn();
-    const chain = Comp.on("foo", handler1).on("bar", handler2);
-    expect(typeof chain.on).toBe("function");
-    expect(chain.toString()).toMatch(/data-ref="h\w+"/);
-    // Simulate event dispatch if your system allows
-    // (You may need to trigger the event on the DOM to fully cover handler registration)
   });
 });
 
@@ -78,13 +80,16 @@ describe("api.on function", () => {
   it("adds event handler and returns on object", () => {
     const Comp = createComponent({
       render() {
+        useEvent();
+
+        // Add handler
+        const result = Comp.on("foo", () => {});
+        expect(typeof result).toBe("object");
+        expect(typeof result.foo).toBe("undefined");
+
         return `<div></div>`;
       },
     });
-    // Add handler
-    const result = Comp.on("foo", () => {});
-    expect(typeof result).toBe("object");
-    expect(typeof result.foo).toBe("undefined");
   });
 });
 describe("get-refs data-key lookup", () => {

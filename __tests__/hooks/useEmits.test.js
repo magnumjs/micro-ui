@@ -3,34 +3,52 @@ import { useEmit } from "../../lib/hooks/useEmit.js";
 import { jest } from "@jest/globals";
 
 describe("useEmit", () => {
-  it('executes multiple onUnmount callbacks', () => {
+  it("calls multiple handlers for the same event via onEmit", () => {
+    let api;
+    const handler1 = jest.fn();
+    const handler2 = jest.fn();
+    const Comp = createComponent({
+      render() {
+        api = useEmit();
+        return "<div></div>";
+      },
+    });
+    Comp();
+    api.onEmit("multi", handler1);
+    api.onEmit("multi", handler2);
+    api.emit("multi", 123);
+    expect(handler1).toHaveBeenCalledWith(123);
+    expect(handler2).toHaveBeenCalledWith(123);
+  });
+
+  it("executes multiple onUnmount callbacks", () => {
     let api, compInstance;
     const calls = [];
     const Comp = createComponent({
       render() {
         api = useEmit();
         compInstance = this;
-        this.onUnmount(() => calls.push('first'));
-        this.onUnmount(() => calls.push('second'));
-        return '<div></div>';
-      }
+        this.onUnmount(() => calls.push("first"));
+        this.onUnmount(() => calls.push("second"));
+        return "<div></div>";
+      },
     });
-    Comp.mount(document.createElement('div'));
+    Comp.mount(document.createElement("div"));
     Comp.unmount();
-    expect(calls).toEqual(expect.arrayContaining(['first', 'second']));
+    expect(calls).toEqual(expect.arrayContaining(["first", "second"]));
   });
-  it('throws if called outside a component render', () => {
-    expect(() => useEmit()).toThrow('useEmit must be inside render()');
+  it("throws if called outside a component render", () => {
+    expect(() => useEmit()).toThrow("useEmit must be inside render()");
   });
 
-  it('returns the same API if called twice in the same render', () => {
+  it("returns the same API if called twice in the same render", () => {
     let api1, api2;
     const Comp = createComponent({
       render() {
         api1 = useEmit();
         api2 = useEmit();
-        return '<div></div>';
-      }
+        return "<div></div>";
+      },
     });
     Comp();
     expect(api1).toBe(api2);
@@ -50,7 +68,7 @@ describe("useEmit", () => {
         },
       }
     );
-    Comp.mount(document.createElement('div'));
+    Comp.mount(document.createElement("div"));
     await Promise.resolve(); // Ensure listeners are registered
     Comp.emit("foo", 123);
     await Promise.resolve();

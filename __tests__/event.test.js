@@ -19,11 +19,13 @@ describe("event.js coverage", () => {
     const mockHandler = jest.fn();
 
     const Comp = createComponent(() => {
-      Comp.on("click #btn", mockHandler);
       return `<button id="btn">Click me</button>`;
     });
 
+    Comp.addEvent("click #btn", mockHandler);
+
     Comp.mount(container);
+
     container.querySelector("#btn").click();
     expect(mockHandler).toHaveBeenCalled();
   });
