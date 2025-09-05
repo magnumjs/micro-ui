@@ -1,3 +1,15 @@
+
+/**
+ * @jest-environment jsdom
+ */
+
+import { createComponent } from "../../lib/reactive-core.js";
+import { useEvent } from "../../lib/hooks/useEvent.js";
+import { jest } from "@jest/globals";
+
+describe("useEvent", () => {
+
+
   it("explicitly chains all event helpers for coverage (lines 13, 15, 18)", () => {
     let api;
     const handler = jest.fn();
@@ -28,15 +40,6 @@
     expect(handler).toHaveBeenCalledTimes(6);
     Comp.unmount();
   });
-/**
- * @jest-environment jsdom
- */
-
-import { createComponent } from "../../lib/reactive-core.js";
-import { useEvent } from "../../lib/hooks/useEvent.js";
-import { jest } from "@jest/globals";
-
-describe("useEvent", () => {
 
   it('covers useEvent.js lines 13, 15, 18 by chaining .on() -- ', () => {
     let api;

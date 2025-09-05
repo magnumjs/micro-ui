@@ -59,10 +59,31 @@ describe("this.ref() behavior", () => {
     expect(el.id).toBe("submitBtn");
   });
 
-  test("returns null for missing element", () => {
+  // test("returns null for missing element", () => {
+  //   expect(component.ref("missingRef")).toBeNull(); // valid ref name, not present
+  //   expect(() => component.ref(".input-not-exist")).toThrow(/ref\(\) invalid selector/); // invalid selector, should throw
+  //   expect(() => component.ref("#input-not-exist")).toThrow(/ref\(\) invalid selector/); // invalid selector, should throw
+  //   expect(() => component.ref("#.input-not-exist")).toThrow(/ref\(\) invalid selector/); // invalid selector, should throw
+  // });
+  test("returns null and warns for invalid selector", () => {
+    const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
     expect(component.ref("missingRef")).toBeNull(); // valid ref name, not present
-    expect(() => component.ref(".input-not-exist")).toThrow(/ref\(\) invalid selector/); // invalid selector, should throw
-    expect(() => component.ref("#input-not-exist")).toThrow(/ref\(\) invalid selector/); // invalid selector, should throw
-    expect(() => component.ref("#.input-not-exist")).toThrow(/ref\(\) invalid selector/); // invalid selector, should throw
+
+    component.ref(".input-not-exist");
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/ref\(\) invalid selector/)
+    );
+
+    component.ref("#input-not-exist");
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/ref\(\) invalid selector/)
+    );
+
+    component.ref("#.input-not-exist");
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/ref\(\) invalid selector/)
+    );
+
+    warnSpy.mockRestore();
   });
 });
