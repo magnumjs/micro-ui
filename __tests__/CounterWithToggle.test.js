@@ -43,6 +43,8 @@ describe("CounterWithToggle null return unmount/remount with DOM caching", () =>
 
     // Allow any pending microtasks
     await Promise.resolve();
+    await Promise.resolve();
+    await Promise.resolve();
 
     // First mount assertions
     expect(lifecycle.onMount).toHaveBeenCalledTimes(1);
