@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.3](https://github.com/magnumjs/micro-ui/compare/v1.11.2...v1.11.3) (2025-09-07)
+
+
+### Bug Fixes
+
+* data-key for props.key on mount ([686b299](https://github.com/magnumjs/micro-ui/commit/686b2994a7c28b7201da0764d7eb69e71fae26e4))
+
 ### [1.11.2](https://github.com/magnumjs/micro-ui/compare/v1.11.1...v1.11.2) (2025-09-07)
 
 
