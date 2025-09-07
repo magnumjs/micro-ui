@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.2](https://github.com/magnumjs/micro-ui/compare/v1.11.1...v1.11.2) (2025-09-07)
+
+
+### Bug Fixes
+
+* change to allow data-key to be added to root element for diffhtml ([242a3db](https://github.com/magnumjs/micro-ui/commit/242a3db1d03a509b36cfe79b5b33fcac184dac9d))
+
 ### [1.11.1](https://github.com/magnumjs/micro-ui/compare/v1.11.0...v1.11.1) (2025-09-05)
 
 ## [1.11.0](https://github.com/magnumjs/micro-ui/compare/v1.10.1...v1.11.0) (2025-09-05)
