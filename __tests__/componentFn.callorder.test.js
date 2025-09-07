@@ -56,12 +56,10 @@ describe("componentFn child instance output in parent", () => {
   it("renders different output for each child when given different props", () => {
     // Use imported createComponent (ESM)
     const Child = createComponent(({ props }) => {
-    //   console.log('render child', this, props);
       return `<span>${props.label}</span>`;
     });
 
     const Parent = createComponent(({ props }) => {
-        // console.log('render parent', props);
       const labels = props.labels || (props && props.labels);
       return labels.map((label) => Child({ label }));
     });

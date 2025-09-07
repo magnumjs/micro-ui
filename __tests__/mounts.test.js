@@ -6,7 +6,6 @@ test("reuses mounted child and updates DOM correctly after parent update", async
   // Simple child component with render count
   const Child = createComponent(function Counter() {
     this.setCount = (n) => this.setState({ count: n });
-    console.log('render', this.state);
     return `<div>Child Count: ${this.state.count}</div>`;
   },{
     state: { count: 0 },
@@ -26,8 +25,6 @@ test("reuses mounted child and updates DOM correctly after parent update", async
   parent.mount(container);
 
 
-  // console.log(parent._id, child._id)
-  // console.log(container.innerHTML)
   expect(container.innerHTML).toContain("Child Count: 0");
 
   // Update parent — child should be reused, not remounted

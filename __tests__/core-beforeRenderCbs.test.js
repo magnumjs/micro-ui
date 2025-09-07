@@ -7,12 +7,10 @@ import { jest } from "@jest/globals";
 describe("_beforeRenderCbs hook", () => {
   it("calls all beforeRender callbacks and modifies html via options and this.onBeforeRender(cb)", () => {
     const beforeRenderA = jest.fn((html) => {
-      console.log("Before Render A:", html);
       // Modify html string
       if (typeof html === "string" || html instanceof String) {
         html = html.replace(/Hello/, "Hi");
       }
-      console.log("Before Render A Modified:", html);
       return html;
     });
     const beforeRenderB = jest.fn((html) => {

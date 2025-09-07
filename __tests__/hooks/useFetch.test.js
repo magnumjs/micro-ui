@@ -61,7 +61,6 @@ describe('useFetch', () => {
     Comp();
     await api.refresh(); // force fetch
     await new Promise(r => setTimeout(r, 0)); // wait for microtask
-    console.log('After refresh:', api.get());
     expect(api.get().data).toEqual({ result: 'ok', url: '/test' });
     expect(api.get().loading).toBe(false);
   }, 5000);
@@ -99,7 +98,6 @@ describe('useFetch', () => {
     Comp();
     await api.refresh(); // force fetch
     await new Promise(r => setTimeout(r, 0)); // wait for microtask
-    console.log('After refresh (error):', api.get());
     expect(api.get().error).toBe('fail');
     expect(api.get().loading).toBe(false);
   }, 5000);

@@ -20,7 +20,6 @@ const Child = ({ item }) =>
     },
     on: {
       "click button"() {
-        console.log("Child item on click:", item);
         if (item) {
           this.emitGlobal("child:clicked", { id: item.id, label: item.label });
         } else {
@@ -40,7 +39,6 @@ const Parent = createComponent({
   },
   onMount() {
     this.onEmitGlobal("child:clicked", (event) => {
-      console.log("clicked", event);
       mockHandler(event);
     });
   },
@@ -83,7 +81,6 @@ test("Parent preserves child instances and receives bubbled events", async () =>
   await Promise.resolve();
 
   expect(mockHandler).toHaveBeenCalledWith({ id: 1, label: "Alpha" });
-  console.log(Parent.el.innerHTML);
 
   // Save reference to the second child element
   const secondChildBefore = Parent.el.querySelectorAll('[data-ref="child"]')[1];

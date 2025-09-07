@@ -41,12 +41,15 @@ describe('data-key attribute propagation', () => {
   });
 
   it('sets data-key for multiple child instances in a loop and maintains them across rerenders', () => {
-    const Child = createComponent(({ props }) => {
+    
+    const fun = ({ props }) => {
       return `<span>Child ${props.key}</span>`;
-    });
+    }
+    const Child = createComponent(fun);
+
 
     const Parent = createComponent(({ props }) => {
-      return `<div>Parent${props.childKeys.map((key, i) => Child({ key })).join('')}</div>`;
+      return `<div>Parent${props.childKeys.map((key, i) => Child({ key }))}</div>`;
     });
 
     document.body.innerHTML = '<div id="parent"></div>';
@@ -57,7 +60,8 @@ describe('data-key attribute propagation', () => {
     Parent.mount(parentEl, { key: 'parentKey', childKeys });
 
     expect(parentEl.getAttribute('data-key')).toBe('parentKey');
-    let renderedChildRootEls = parentEl.querySelectorAll('div[data-key]');
+    let renderedChildRootEls = parentEl.querySelectorAll('[data-comp-root*="fun"]');
+
     childKeys.forEach((key, i) => {
       expect(renderedChildRootEls[i].getAttribute('data-key')).toBe(key);
     });
@@ -67,7 +71,9 @@ describe('data-key attribute propagation', () => {
     Parent.update({ key: 'parentKey2', childKeys: newChildKeys });
 
     expect(parentEl.getAttribute('data-key')).toBe('parentKey2');
-    renderedChildRootEls = parentEl.querySelectorAll('div[data-key]');
+    renderedChildRootEls = parentEl.querySelectorAll('[data-comp-root*="fun"]');
+
+
     newChildKeys.forEach((key, i) => {
       expect(renderedChildRootEls[i].getAttribute('data-key')).toBe(key);
     });
@@ -76,7 +82,7 @@ describe('data-key attribute propagation', () => {
     Parent.update({ key: 'parentKey2', childKeys: newChildKeys });
 
     expect(parentEl.getAttribute('data-key')).toBe('parentKey2');
-    renderedChildRootEls = parentEl.querySelectorAll('div[data-key]');
+    renderedChildRootEls = parentEl.querySelectorAll('[data-comp-root*="fun"]');
     newChildKeys.forEach((key, i) => {
       expect(renderedChildRootEls[i].getAttribute('data-key')).toBe(key);
     });
