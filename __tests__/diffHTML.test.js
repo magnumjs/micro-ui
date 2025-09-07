@@ -12,6 +12,48 @@ function createEl(html) {
 }
 
 describe("diffHTML", () => {
+  test("diffs elements without data-key by position, not by identity", () => {
+    const el = document.createElement("div");
+    el.innerHTML = `<div>A</div><div>B</div>`;
+    // New HTML swaps the order
+    const htmlSwapped = `<div>B</div><div>A</div>`;
+    diffHTML(el, htmlSwapped);
+    // Should update by position, not by identity
+    expect(el.children.length).toBe(2);
+    expect(el.firstChild.textContent).toBe("B");
+    expect(el.lastChild.textContent).toBe("A");
+  });
+  test("component with default prop.key is assigned data-key and diffs based on key vs no key", () => {
+    // Simulate a component with a default prop.key
+    const key = "comp-123";
+    // Initial render with data-key
+    const el = document.createElement("div");
+    el.innerHTML = `<div data-key="${key}">A</div>`;
+    // New HTML with same key, should patch not replace
+    const htmlSameKey = `<div data-key="${key}">B</div>`;
+    diffHTML(el, htmlSameKey);
+    const updated = el.querySelector(`[data-key='${key}']`);
+    expect(updated.textContent).toBe("B");
+    // New HTML with no key, should replace
+    const htmlNoKey = `<div>C</div>`;
+    diffHTML(el, htmlNoKey);
+    expect(el.children.length).toBe(1);
+    expect(el.firstChild.getAttribute("data-key")).toBeNull();
+    expect(el.textContent).toBe("C");
+  });
+  test("uses data-key on the root element, not just children", () => {
+    // Create a root element with data-key
+    const el = document.createElement("div");
+    el.setAttribute("data-key", "root-key");
+    el.textContent = "OldRoot";
+    // New HTML with same data-key but different content
+    const html = '<div data-key="root-key">NewRoot</div>';
+    diffHTML(el, html);
+    // Should update the child element's content
+    const updated = el.querySelector('[data-key="root-key"]');
+    expect(updated).not.toBeNull();
+    expect(updated.textContent).toBe("NewRoot");
+  });
   test("returns false if el is null", () => {
     expect(diffHTML(null, "<div></div>")).toBe(false);
   });

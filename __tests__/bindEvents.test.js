@@ -19,6 +19,26 @@ function waitUntil(predicate) {
 }
 
 describe("bindEvents", () => {
+  test("binds event using data-key on a child element, not just root", () => {
+    const api = { state: {}, setState: jest.fn(), props: {}, refs: {} };
+    const on = {
+      "click .child": jest.fn(),
+    };
+    const boundEvents = [];
+    // Create a root and child element with data-key
+    const root = document.createElement("div");
+    const child = document.createElement("div");
+    child.className = "child";
+    child.setAttribute("data-key", "child-key");
+    root.appendChild(child);
+    document.body.appendChild(root);
+    // Bind events
+    bindEvents(api, root, on, boundEvents);
+    // Simulate click on child
+    child.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    expect(on["click .child"]).toHaveBeenCalled();
+    document.body.removeChild(root);
+  });
   let root, el, api, boundEvents, handler;
 
   beforeEach(() => {
