@@ -5,7 +5,6 @@ describe("componentFn clone and call order cache", () => {
     const Child = createComponent({
       state: { count: 0 },
       render({ props, state }) {
-        console.log("rendering child", props.idx);
         return `<div data-ref="child">Child ${props.idx}: ${state.count}</div>`;
       },
       onMount() {
@@ -34,7 +33,6 @@ describe("componentFn clone and call order cache", () => {
     // Trigger parent re-render with new items
     Parent.setState({ items: [4, 5] });
     await Promise.resolve();
-    console.log(document.body.innerHTML);
 
     const children2 = container.querySelectorAll('[data-ref="child"]');
     expect(children2.length).toBe(2);
@@ -46,7 +44,6 @@ describe("componentFn clone and call order cache", () => {
     const Child = createComponent({
       state: { count: 0 },
       render({ props, state }) {
-        console.log("rendering child", props.idx);
         return `<div data-ref="child">Child ${props.idx}: ${state.count}</div>`;
       },
       onMount() {
@@ -75,7 +72,6 @@ describe("componentFn clone and call order cache", () => {
     // Trigger parent re-render with new items
     Parent.setState({ items: [4, 5] });
     await Promise.resolve();
-    console.log(document.body.innerHTML);
 
     const children2 = container.querySelectorAll('[data-ref="child"]');
     expect(children2.length).toBe(2);

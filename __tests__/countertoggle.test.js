@@ -16,7 +16,6 @@ test("CounterWithToggle handles refs, events, and lifecycle", async () => {
         setCount((c) => c + 1);
       });
       this.addEvent("click button[ref=toggle]", () =>{
-        console.log("toggle clicked");
         setVisible((v) => !v);
 
       });
@@ -25,7 +24,6 @@ test("CounterWithToggle handles refs, events, and lifecycle", async () => {
       useEffect(() => {
         logs.push(`count=${count}`);
       }, [count]);
-      console.log('CounterWithToggle mounted', visible);
       return visible
         ? `<div>
             <button ref="btn">${count}</button>
@@ -51,9 +49,6 @@ test("CounterWithToggle handles refs, events, and lifecycle", async () => {
     render() {
       const [visible, setVisible] = useState(true);
 
-console.log(
-  `ParentContainer mounted, visible=${visible}`
-);
       ParentContainer.setVisible = setVisible; // Expose for testing
       //   CounterWithToggle.update({ visible, setVisible });
 
@@ -85,7 +80,6 @@ console.log(
   // Toggle visibility (should unmount inner DOM but not destroy component instance)
   document.body.querySelector("button[ref=toggle]").click();
   await Promise.resolve();
-  console.log(document.body.innerHTML);
   expect(document.body.querySelector("button[ref=toggle]")).toBeNull();
   expect(logs).toContain("onBeforeUnmount");
   expect(logs).toContain("onUnmount");

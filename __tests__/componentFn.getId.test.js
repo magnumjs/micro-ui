@@ -18,7 +18,6 @@ test("componentFn.getId returns the correct _id and can be used to select the co
   const compId = InnerComp.getId();
   const selector = `[data-comp='${compId}']`;
 
-//   console.log(div.outerHTML);
   expect(div.querySelector(selector)).not.toBeNull();
   expect(div.querySelector(selector).outerHTML).toContain("inside you");
   expect(div.querySelector('span').outerHTML).toContain("Hello");

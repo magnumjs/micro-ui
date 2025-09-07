@@ -112,8 +112,6 @@ test("reuses mounted children with data-comp + data-key when reordering", async 
   const newFirst = list.el.querySelector('[data-ref="item-1"]');
   const newSecond = list.el.querySelector('[data-ref="item-2"]');
 
-      console.log(list.el.outerHTML);
-
   // ✅ Same DOM nodes reused
   expect(newFirst).toEqual(firstItem);
   expect(newSecond).toBe(secondItem);
