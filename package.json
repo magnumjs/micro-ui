@@ -42,7 +42,7 @@
     "bump": "npm version patch --no-git-tag-version",
     "build": "node build.js",
     "prepublishOnly": "npm run build",
-    "release": "git diff --quiet HEAD lib/ || standard-version",
+    "release": "standard-version",
     "start": "node server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --coverageReporters=text --coverageReporters=html --coverageDirectory=coverage"
   },
