@@ -95,7 +95,7 @@ state.subscribe(({ count }) => {
 ### Browser install
 
 ```js
-<script src="//unpkg.com/@magnumjs/micro-ui"></script>
+<script src="//unpkg.com/@magnumjs/micro-ui?browser"></script>
 ```
 
 ```js
@@ -105,7 +105,7 @@ const Hello = createComponent(() => `<h1>Hello World</h1>`);
 Hello.mount("#app");
 ```
 
-[JS Bin](https://jsbin.com/zudomodira/1/edit?js,output)
+[JS Bin](https://jsbin.com/zozocohuti/?output)
 
 ---
 

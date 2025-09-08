@@ -4,7 +4,7 @@
   "description": "A tiny reactive component system with declarative slots, keyed lists, reactive props, and DOM diffing.",
   "type": "module",
   "main": "dist/magnumjs-micro-ui.js",
-  "unpkg": "dist/magnumjs-micro-ui.all.js",
+  "unpkg": "dist/magnumjs-micro-ui.all.esm.js",
   "module": "dist/magnumjs-micro-ui.esm.js",
   "exports": {
     ".": {
@@ -42,7 +42,7 @@
     "bump": "npm version patch --no-git-tag-version",
     "build": "node build.js",
     "prepublishOnly": "npm run build",
-    "release": "standard-version",
+    "release": "git diff --quiet HEAD lib/ || standard-version",
     "start": "node server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --coverageReporters=text --coverageReporters=html --coverageDirectory=coverage"
   },
