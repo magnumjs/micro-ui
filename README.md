@@ -58,7 +58,7 @@ const ClickCounter = createComponent({
 ClickCounter.mount("#app");
 ```
 
-[JSBin](https://jsbin.com/qiwegidage/1/edit?js,output)
+[JSBin](https://output.jsbin.com/dodocoregi/?output)
 
 ## 🧩 Composability for Components
 
@@ -76,7 +76,7 @@ const Child = createComponent(() => `<p>Hello</p>`);
 Parent.mount({ children: Child });
 ```
 
-[JSBin](https://jsbin.com/sayefosepa/1/edit?js,output)
+[JSBin](https://jsbin.com/xopederaro/?output)
 
 ## 📡 Global Shared State with `shared()`
 
