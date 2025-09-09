@@ -1,7 +1,7 @@
 import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
 import DocsSection from "../../comps/DocsSection.js";
 import { CounterFunc, CounterSetup } from "./CounterCode.js";
-import { escapeCode } from "../../docs/utils/escapeCode.js";
+import { escapeCode } from "../../utils/escapeCode.js";
 
 
 
@@ -25,7 +25,7 @@ function unescapeFunctionCode(escapedCode) {
   unescapedCode = unescapedCode.replace(/\\u([0-9a-fA-F]{4})/g, (match, hex) => {
     return String.fromCharCode(parseInt(hex, 16));
   });
-console.log(unescapedCode)
+
   return unescapedCode;
 }
 
@@ -49,7 +49,7 @@ export const CounterExample = createComponent({
   render() {
     return `
         <h3>Counter Example</h3>
-        <div data-comp="${CounterInstance}">${CounterInstance()}</div>
+        ${CounterInstance()}
         <p>This is a placeholder for the Counter demo.</p>
         ${DocsSection({
   title: "Getting Started",

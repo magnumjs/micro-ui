@@ -2,7 +2,12 @@
  * @jest-environment jsdom
  */
 import { screen, fireEvent } from "@testing-library/dom";
-import { Counter } from "../docs/components/Counter.js";
+import { CounterFunc, CounterSetup } from "../docs/pages/examples/CounterCode";
+import { createComponent } from "../lib/reactive-core";
+
+
+const Counter = createComponent(CounterFunc, CounterSetup);
+
 
 document.body.innerHTML = '<div id="test-root"></div>';
 
