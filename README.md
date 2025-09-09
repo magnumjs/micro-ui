@@ -76,7 +76,7 @@ const Child = createComponent(() => `<p>Hello</p>`);
 Parent.mount({ children: Child });
 ```
 
-[JSBin](https://jsbin.com/xopederaro/?output)
+[JSBin](https://jsbin.com/dituwivuxa/edit?output)
 
 ## 📡 Global Shared State with `shared()`
 
