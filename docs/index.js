@@ -2,7 +2,7 @@ import { createComponent } from "//unpkg.com/@magnumjs/micro-ui";
 import { Layout } from "./comps/Layout.js";
 import { Home } from "./pages/Home.js";
 import { GettingStarted } from "./pages/GettingStarted.js";
-import { API } from "./pages/API.js";
+import { API } from "./pages/Api.js";
 import { Docs } from "./pages/Docs.js";
 import { Examples } from "./pages/Examples.js";
 import { CounterExample } from "./pages/examples/Counter.js";
