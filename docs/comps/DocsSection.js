@@ -1,5 +1,5 @@
 import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
-import { escapeCode } from "../docs/utils/escapeCode.js";
+import { escapeCode } from "../utils/escapeCode.js";
 
 export default createComponent({
   onUpdate(){
