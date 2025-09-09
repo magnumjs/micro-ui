@@ -58,7 +58,7 @@ const ClickCounter = createComponent({
 ClickCounter.mount("#app");
 ```
 
-[JSBin](https://output.jsbin.com/dodocoregi/?output)
+[JSBin](https://jsbin.com/gecahebomi/edit?output)
 
 ## 🧩 Composability for Components
 
