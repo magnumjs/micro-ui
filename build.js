@@ -16,7 +16,7 @@ const builds = [
     ],
   },
   {
-    entry: "lib/hooks/index.js",
+    entry: "lib/micro-ui-hooks.js",
     formats: [
       { format: "esm", outfile: "dist/magnumjs-micro-ui-hooks.esm.js" },
       { format: "iife", outfile: "dist/magnumjs-micro-ui-hooks.js", globalName: "MicroUIHooks" },
