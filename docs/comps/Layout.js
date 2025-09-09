@@ -1,4 +1,4 @@
-import { createComponent } from '//unpkg.com/@magnumjs/micro-ui';
+import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
 import { Navbar } from './Navbar.js';
 import { Sidebar } from './Sidebar.js';
 import { Content } from './Content.js';

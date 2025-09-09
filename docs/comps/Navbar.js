@@ -1,4 +1,4 @@
-import { createComponent } from '//unpkg.com/@magnumjs/micro-ui';
+import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
 
 export const Navbar = createComponent(function ({ props: { brand, links = [] } }) {
   return `

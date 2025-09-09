@@ -1,5 +1,5 @@
 // lib/Alert.js
-import { createComponent } from '//unpkg.com/@magnumjs/micro-ui';
+import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
 
 
 /*
