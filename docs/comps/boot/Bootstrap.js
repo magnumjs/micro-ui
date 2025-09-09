@@ -1,5 +1,5 @@
 // micro-ui-bootstrap-starter.js
-import { createComponent } from '//unpkg.com/@magnumjs/micro-ui';
+import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
 
 // --- Layout Components ---
 export const Container = createComponent(({ props }) => {

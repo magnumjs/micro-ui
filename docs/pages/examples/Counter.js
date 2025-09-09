@@ -1,4 +1,4 @@
-import { createComponent } from "//unpkg.com/@magnumjs/micro-ui";
+import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
 import DocsSection from "../../comps/DocsSection.js";
 import { CounterFunc, CounterSetup } from "./CounterCode.js";
 import { escapeCode } from "../../docs/utils/escapeCode.js";
