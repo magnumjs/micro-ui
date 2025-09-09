@@ -1,5 +1,5 @@
 /*!
- * @magnumjs/micro-ui v1.10.1
+ * @magnumjs/micro-ui v1.11.4
  * Author: Michael Glazer
  * Website: https://github.com/magnumjs/micro-ui#readme
  */

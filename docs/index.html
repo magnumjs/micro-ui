@@ -1,76 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Micro UI Reactive Library</title>
-    <link href="docs/prism.css" rel="stylesheet" />
-    <link href="style.css" rel="stylesheet" />
-  </head>
-  <body>
-    <!-- docs/Header.html -->
-    <header class="docs-header">
-      <a href="./" style="text-decoration:none;color:inherit;">
-        <h1>🧩 Micro Reactive UI Library Docs</h1>
-      </a>
-      <nav>
-        <ul class="docs-nav">
-          <li><a href="./">Getting Started</a></li>
-          <li><a href="#docs" id="nav-docs">Docs</a></li>
-          <li><a href="#api" id="nav-api">API</a></li>
-        </ul>
-      </nav>
-    </header>
-    <div class="docs-layout">
-      <aside class="sidebar">
-        <h3>📚 Navigation</h3>
-        <ul>
-          <li><a href="#getting-started">🚀 Getting Started</a></li>
-        </ul>
-        <hr />
-        <h4><a href="docs/pdf/index.html" style="color:inherit;text-decoration:none;">PDF Guides</a></h4>
-        <ul>
-          <li><a href="docs/pdf/MagnumJS_MicroUI_QuickStart.pdf" target="_blank">Quick Start PDF</a></li>
-          <li><a href="docs/pdf/MagnumJS_MicroUI_DevGuide.pdf" target="_blank">Dev Guide PDF</a></li>
-          <li><a href="docs/pdf/MicroUI_Components_Guide.pdf" target="_blank">Components PDF</a></li>
-          <li><a href="docs/pdf/MicroUI_API_Guide.pdf" target="_blank">API PDF</a></li>
-        </ul>
-        <hr />
-        <h4>Examples</h4>
-        <ul>
-          <li id="nav-counter"><a href="#counter">🧮 Counter</a></li>
-          <li id="nav-todo"><a href="#todo">✅ TodoList</a></li>
-          <li id="nav-auth-card"><a href="#auth-card">🔐 AuthCard</a></li>
-          <li id="nav-welcome-card">
-            <a href="#welcome-card">👋 WelcomeCard</a>
-          </li>
-          <li id="nav-refs-demo"><a href="#refs-demo">🔍 Refs Demo</a></li>
-          <li id="nav-card-demo"><a href="#card-demo">🎉 Cards Demo</a></li>
-          <li><a href="#fallback-card-demo">🧩 Fallback Cards Demo</a></li>
-        </ul>
-        <hr />
-        <h4>API Docs</h4>
-        <ul>
-          <li><a href="#api-createState">createState</a></li>
-          <li><a href="#api-createComponent">createComponent</a></li>
-          <li><a href="#api-renderList">renderList</a></li>
-          <li><a href="#api-shared">shared</a></li>
-        </ul>
-        <hr />
-        <h4>Project</h4>
-        <ul>
-          <li>
-            <a href="https://github.com/magnumjs/micro-ui" target="_blank"
-              >GitHub Homepage</a
-            >
-          </li>
-        </ul>
-      </aside>
-      <main id="docs-root">
-  <!-- Central content area for dynamic section rendering -->
-  <div id="content-area"></div>
-      </main>
-    </div>
-    <script type="module" src="./main.js"></script>
-    <script src="docs/prism.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>Micro-UI Docs</title>
+  <link href="docs/prism.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="./index.js"></script>
+  <script src="docs/prism.js"></script>
+</body>
 </html>
