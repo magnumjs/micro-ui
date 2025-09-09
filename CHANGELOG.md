@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.5](https://github.com/magnumjs/micro-ui/compare/v1.11.4...v1.11.5) (2025-09-09)
+
+
+### Bug Fixes
+
+* diffhtml fix for key ([ed8983c](https://github.com/magnumjs/micro-ui/commit/ed8983c7701d377f6079a6528f0337e838bfe7f0))
+
 ### [1.11.4](https://github.com/magnumjs/micro-ui/compare/v1.11.3...v1.11.4) (2025-09-08)
 
 
