@@ -1,6 +1,6 @@
 // API.js
 
-import { escapeCode } from "../../docs/utils/escapeCode.js";
+import { escapeCode } from "../docs/utils/escapeCode.js";
 import { Alert } from "../comps/boot/Alert.js";
 
 
