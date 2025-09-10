@@ -95,7 +95,7 @@ state.subscribe(({ count }) => {
 ### Browser install
 
 ```js
-<script src="//unpkg.com/@magnumjs/micro-ui?browser"></script>
+<script src="//unpkg.com/@magnumjs/micro-ui"></script>
 ```
 
 ```js
@@ -105,7 +105,7 @@ const Hello = createComponent(() => `<h1>Hello World</h1>`);
 Hello.mount("#app");
 ```
 
-[JS Bin](https://jsbin.com/zozocohuti/?output)
+[JS Bin](https://jsbin.com/xasuvirihu/edit?output)
 
 ---
 
@@ -145,7 +145,7 @@ Demo running at http://localhost:3000
 - `Counter`
 - `TodoList`
 
-All can be found in [`docs/components/`](./docs/components).
+All can be found in [`docs/comps/`](./docs/comps).
 
 ---
 
