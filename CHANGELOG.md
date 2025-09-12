@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/magnumjs/micro-ui/compare/v1.11.5...v1.12.0) (2025-09-12)
+
+
+### Features
+
+* new clone public method with no conditions and diffhtml improve ([8a52be7](https://github.com/magnumjs/micro-ui/commit/8a52be792ec0fdf3dd4a8632f6f51afe646852a6))
+
 ### [1.11.5](https://github.com/magnumjs/micro-ui/compare/v1.11.4...v1.11.5) (2025-09-09)
 
 
