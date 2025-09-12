@@ -1,7 +1,7 @@
 // API.js
 
 import { escapeCode } from "../utils/escapeCode.js";
-import { Alert } from "../comps/boot/Alert.js";
+import { Alert, Accordion } from "../comps/boot/Bootstrap.js";
 
 
 export const API = `
@@ -20,13 +20,62 @@ export const API = `
         </ul>
       </div>
     </div>
+  <h5 class="mt-4 mb-2">Lifecycle Methods & Signatures <a href="#/api-instance" class="ms-2 small">See: Component Instance API</a></h5>
+    ${Accordion({
+      id: "api-lifecycle-accordion",
+       items : [{
+          title: "onMount",
+          content: `<code>onMount(fn)</code><br>Called after the component is mounted in the DOM.<br><b>Signature:</b> <code>fn()</code><br><b>Context:</b> <code>this</code> (component instance API)`
+        },
+        {
+          title: "onUnmount",
+          content: `<code>onUnmount(fn)</code><br>Called before the component is removed from the DOM.<br><b>Signature:</b> <code>fn()</code><br><b>Context:</b> <code>this</code> (component instance API)`
+        },
+        {
+          title: "onBeforeMount",
+          content: `<code>onBeforeMount(fn)</code><br>Called before the component is mounted.<br><b>Signature:</b> <code>fn()</code><br><b>Context:</b> <code>this</code> (component instance API)`
+        },
+        {
+          title: "onBeforeUnmount",
+          content: `<code>onBeforeUnmount(fn)</code><br>Called before the component is unmounted.<br><b>Signature:</b> <code>fn()</code><br><b>Context:</b> <code>this</code> (component instance API)`
+        },
+        {
+          title: "onUpdate",
+          content: `<code>onUpdate(fn)</code><br>Called after the component updates.<br><b>Signature:</b> <code>fn(prevProps)</code><br><b>Context:</b> <code>this</code> (component instance API)<br><b>Arguments:</b> <code>prevProps</code> (object)`
+        },
+        {
+          title: "onBeforeRender",
+          content: `<code>onBeforeRender(fn)</code><br>Called before rendering HTML after <code>render</code> is called.<br><b>Signature:</b> <code>fn(html)</code><br><b>Context:</b> <code>this</code> (component instance API)<br><b>Arguments:</b> <code>html</code> (string)`
+        }
+      
+      ]})}
     <h5 class="mt-4 mb-2">Common Usage Example</h5>
     <pre class="bg-dark text-light rounded p-3 text-start" style="font-size:0.95em;"><code>
-import &#123; createComponent &#125; from '//unpkg.com/@magnumjs/micro-ui';
+${escapeCode(`import { createComponent } from '//unpkg.com/@magnumjs/micro-ui';
 
-// Usage:
+// Define a child component that takes a label and color
+const Child = createComponent({
+  render({ props }) {
+    return \`<span style="color:\${props.color};font-weight:bold;">\${props.label}</span>\`;
+  }
+});
 
-</code></pre>
+// Define a parent component that renders multiple children with unique params
+const Parent = createComponent({
+  render() {
+    return \`
+      <div>
+        \${Child({ key: 'one', label: 'First', color: 'red' })}
+        \${Child({ key: 'two', label: 'Second', color: 'green' })}
+        \${Child({ key: 'three', label: 'Third', color: 'blue' })}
+      </div>
+    \`;
+  }
+});
+
+// Mount the parent component
+Parent.mount(document.getElementById('parent-demo'));
+`)}</code></pre>
     ${Alert({
       type: 'info',
       message: `<b>Tip:</b> <code>createComponent</code> supports advanced patterns like slots, keyed lists, and lifecycle hooks for more complex UIs.`,
