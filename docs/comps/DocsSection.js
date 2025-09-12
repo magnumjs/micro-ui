@@ -1,7 +1,7 @@
 import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
 import { escapeCode } from "../utils/escapeCode.js";
 
-export default createComponent({
+export const DocsSection = createComponent({
   onUpdate(){
     Prism.highlightAllUnder(this.el.querySelector('.card-body'));
   },

@@ -1,3 +1,18 @@
+// --- Box ---
+// Usage: Box({ className: "p-4 border rounded bg-light", style: "", content: "..." })
+export const Box = createComponent(({ props }) => {
+   const className = [
+      "p-3",
+      "border",
+      "rounded",
+      "shadow-sm",
+      props.className || "" // allow custom overrides
+    ].join(" ");
+
+  const style = props.style || "";
+  const content = typeof props.content === 'function' ? props.content() : (props.content || '');
+  return `<div class='${className}' style='${style}'>${content}</div>`;
+});
 // micro-ui-bootstrap-starter.js
 import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
 
@@ -30,6 +45,7 @@ export const Button = createComponent(({ props }) => {
 
 // --- Card ---
 export const Card = createComponent(({ props }) => {
+  const { title, text, imageUrl, linkUrl, buttonText } = props;
   const body = typeof props.body === 'function' ? props.body() : (props.body || '');
   return `
     <div class="card ${props.className || ''}" style="${props.style || ''}">
@@ -42,16 +58,23 @@ export const Card = createComponent(({ props }) => {
 });
 
 // --- Alert ---
-export const Alert = createComponent(({ props }) => {
-  const type = props.type || "info";
-  const dismissible = props.dismissible ? "alert-dismissible fade show" : "";
-  const message = typeof props.message === 'function' ? props.message() : (props.message || 'Alert message');
-  return `
-    <div class="alert alert-${type} ${dismissible}" role="alert">
-      ${message}
-      ${props.dismissible ? `<button type="button" class="btn-close" data-bs-dismiss="alert"></button>` : ''}
-    </div>
-  `;
+export const Alert = createComponent({
+  render({ props }) {
+    const type = props.type || "info";
+    const dismissible = props.dismissible ? "alert-dismissible fade show" : "";
+    const message = typeof props.message === 'function' ? props.message() : (props.message || 'Alert message');
+    return `
+      <div class="alert alert-${type} ${dismissible}" role="alert">
+        ${message}
+        ${props.dismissible ? `<button type="button" class="btn-close" data-bs-dismiss="alert"></button>` : ''}
+      </div>
+    `;
+  },
+  onMount() {
+    if (this.props.onClose && typeof this.props.onClose === 'function') {
+      this.el.addEventListener('closed.bs.alert', this.props.onClose);
+    }
+  }
 });
 
 // --- Modal ---
@@ -100,4 +123,25 @@ export const Spinner = createComponent(({ props }) => {
   return `<div class="spinner-border text-${props.color || 'primary'}" role="status">
     <span class="visually-hidden">${label}</span>
   </div>`;
+});
+
+
+// --- Flexible Grid ---
+// Usage:
+// BootstrapGrid({
+//   containerClass: "container",
+//   rows: [
+//     { rowClass: "row", columns: [ { className: "col-md-6", content: "Left" }, { className: "col-md-6", content: "Right" } ] }
+//   ]
+// })
+export const BootstrapGrid = createComponent(({ props }) => {
+  const containerClass = props.containerClass || "container";
+  const rows = props.rows || [];
+  return `<div class='${containerClass}'>${
+    rows.map(row => `
+      <div class='${row.rowClass || "row"}'>${
+        row.columns.map(col => `<div class='${col.className || "col"}'>${col.content || ""}</div>`).join("")
+      }</div>
+    `).join("")
+  }</div>`;
 });

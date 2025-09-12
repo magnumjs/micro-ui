@@ -2,7 +2,7 @@ import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
 
 export const Sidebar = createComponent({
   state: { open: null },
-  render({ props, state }, setState) {
+  render({ props, state }) {
     const { items, title, className = '', style = '', renderItem } = props;
     const { open } = state;
     const currentHash = location.hash;
