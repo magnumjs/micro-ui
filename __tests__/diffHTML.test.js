@@ -184,6 +184,24 @@ describe("diffHTML", () => {
     diffHTML(el, html);
     expect(el.innerHTML).toContain("New");
   });
+
+  test("patchElement: handles missing data-key attribute (undefined)", () => {
+    const el = createEl('<div>A</div>');
+    const html = '<div>B</div>';
+    diffHTML(el, html);
+    expect(el.children.length).toBe(1);
+    expect(el.firstChild.getAttribute("data-key")).toBeNull();
+    expect(el.textContent).toBe("B");
+  });
+
+  test("patchElement: handles falsy key values", () => {
+    const el = createEl('<div data-key="">A</div>');
+    const html = '<div data-key="">B</div>';
+    diffHTML(el, html);
+    expect(el.children.length).toBe(1);
+    expect(el.firstChild.getAttribute("data-key")).toBe("");
+    expect(el.textContent).toBe("B");
+  });
 });
 describe("patchChildren", () => {
   // Helper to access patchChildren directly
@@ -223,5 +241,25 @@ describe("patchChildren", () => {
     patchChildren(fromEl, toEl);
     expect(fromEl.childNodes.length).toBe(1);
     expect(fromEl.firstChild.getAttribute("data-comp-root")).toBe("true");
+  });
+
+  test("patchNode: removes comment node when new is missing", () => {
+    const fromEl = createEl("");
+    const commentNode = document.createComment("test");
+    fromEl.appendChild(commentNode);
+    const toEl = createEl("");
+    patchChildren(fromEl, toEl);
+    expect(fromEl.childNodes.length).toBe(0);
+  });
+
+  test("patchNode: adds comment node when old is missing", () => {
+    const fromEl = createEl("");
+    const toEl = createEl("");
+    const commentNode = document.createComment("test");
+    toEl.appendChild(commentNode);
+    patchChildren(fromEl, toEl);
+    expect(fromEl.childNodes.length).toBe(1);
+    expect(fromEl.firstChild.nodeType).toBe(Node.COMMENT_NODE);
+    expect(fromEl.firstChild.nodeValue).toBe("test");
   });
 });
