@@ -67,7 +67,7 @@ export const Home = createComponent({
     }
 
     // Load and display Counter source code in the "Code" tab
-    loadSourceCode("/pages/examples/CounterCode.js").then((src) => {
+    loadSourceCode("./pages/examples/CounterCode.js").then((src) => {
       const pre = document.querySelector("#counter-source code");
       if (pre) pre.innerHTML = escapeCode(src);
 
