@@ -12,7 +12,6 @@ const InputField = createComponent({
   }
 });
 
-//        ${InputField({ key: "myinput", value: state.text, onInput: (val) => this.setState({ text: val }) })}
 
 const Parent = createComponent({
   state: { text: "" },
@@ -20,7 +19,7 @@ const Parent = createComponent({
     return `
       <div>
         <label>Type something:</label>
-        <div data-comp="${InputField.getId()}"></div>
+         ${InputField({ key: "myinput", value: state.text, onInput: (val) => this.setState({ text: val }) })}
         <p>Echo: ${state.text}</p>
       </div>
     `;
