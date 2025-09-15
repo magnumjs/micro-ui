@@ -275,6 +275,84 @@ Smart keyed list renderer. Keys are used in data-key="..." for diffing.
 
 ---
 
+
+## Lifecycle Hooks
+
+Below are code examples for each lifecycle method. Click to expand each example.
+
+<details>
+<summary><b>onMount</b></summary>
+
+```js
+const Comp = createComponent(() => '<div>Mounted!</div>', {
+  onMount() {
+    console.log('Component mounted');
+  }
+});
+```
+</details>
+
+<details>
+<summary><b>onUnmount</b></summary>
+
+```js
+const Comp = createComponent(() => '<div>Unmounted!</div>', {
+  onUnmount() {
+    console.log('Component unmounted');
+  }
+});
+```
+</details>
+
+<details>
+<summary><b>onBeforeMount</b></summary>
+
+```js
+const Comp = createComponent(() => '<div>Before Mount!</div>', {
+  onBeforeMount() {
+    console.log('Before mounting');
+  }
+});
+```
+</details>
+
+<details>
+<summary><b>onBeforeUnmount</b></summary>
+
+```js
+const Comp = createComponent(() => '<div>Before Unmount!</div>', {
+  onBeforeUnmount() {
+    console.log('Before unmounting');
+  }
+});
+```
+</details>
+
+<details>
+<summary><b>onUpdate</b></summary>
+
+```js
+const Comp = createComponent(() => '<div>Updated!</div>', {
+  onUpdate() {
+    console.log('Component updated');
+  }
+});
+```
+</details>
+
+<details>
+<summary><b>onBeforeRender</b></summary>
+
+```js
+const Comp = createComponent(() => '<div>Before Render!</div>', {
+  onBeforeRender() {
+    console.log('Before rendering');
+  }
+});
+```
+</details>
+
+
 ## 🧼 Formatting
 
 Prism runs in the browser to auto-format code in documentation:
@@ -323,3 +401,5 @@ Inspired by:
 ## 📜 License
 
 MIT — Build freely, learn deeply!
+
+---
