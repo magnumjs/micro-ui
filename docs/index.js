@@ -7,6 +7,7 @@ import { ApiInstance } from "./pages/ApiInstance.js";
 import { Docs } from "./pages/Docs.js";
 import { Examples } from "./pages/Examples.js";
 import { CounterExample } from "./pages/examples/Counter.js";
+import { ParentChildInputExample } from "./pages/examples/ParentChildInput.js";
 
 const routes = {
   "/": Home,
@@ -16,6 +17,7 @@ const routes = {
   "/api-instance": ApiInstance,
   "/examples": Examples,
   "/examples/counter": CounterExample,
+  "/examples/parentchildinput": ParentChildInputExample,
 };
 
 const App = createComponent({
@@ -44,7 +46,10 @@ const App = createComponent({
         {
           href: "#/examples",
           label: "Examples",
-          children: [{ href: "#/examples/counter", label: "Counter Example" }],
+          children: [
+            { href: "#/examples/counter", label: "Counter Example" },
+            { href: "#/examples/parentchildinput", label: "Parent Child Input Example" }
+          ],
         },
       ],
       page: this.state.page,

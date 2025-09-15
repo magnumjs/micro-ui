@@ -62,18 +62,44 @@ ClickCounter.mount("#app");
 
 ## 🧩 Composability for Components
 
+
+
 ```js
-const Parent = createComponent(
-  ({ props }) => `
-  <div>
-    <slot></slot> <!-- Will auto-map to props.children.default -->
-  </div>
-`
-);
+// Child component (function literal style)
+const Child = createComponent(() => `<p>Hello from Child!</p>`);
 
-const Child = createComponent(() => `<p>Hello</p>`);
+// Sibling component with a callback prop
+const Sibling = createComponent(({ props }) => `
+  <button data-action-click="notifyParent">Notify Parent</button>
+`, {
+  on: {
+    "click:notifyParent"() {
+      if (typeof this.props.onNotify === "function") {
+        this.props.onNotify();
+      }
+    }
+  }
+});
 
-Parent.mount({ children: Child });
+// Parent component calls Child() and Sibling() inline in render
+const Parent = createComponent({
+  state: { notified: false },
+  render() {
+    // Callback to rerender parent
+    const handleNotify = () => {
+      this.setState({ notified: true });
+    };
+    return `
+      <div>
+        ${Child()}
+        ${Sibling({ onNotify: handleNotify })}
+        <p>Sibling notified: ${this.state.notified}</p>
+      </div>
+    `;
+  }
+});
+
+Parent.mount("#app");
 ```
 
 [JSBin](https://jsbin.com/dituwivuxa/edit?output)

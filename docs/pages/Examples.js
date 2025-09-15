@@ -5,6 +5,9 @@ export const Examples = `
     <li class="list-group-item">
       <a href="#/examples/counter">Counter Example</a>
     </li>
+    <li class="list-group-item">
+      <a href="#/examples/parentchildinput">Parent-Child Controlled Input</a>
+    </li>
     <!-- Add more example links here -->
   </ul>
   <div id="example-content">

@@ -1,7 +1,8 @@
 import { DocsSection } from "../comps/DocsSection.js";
 import { TabbedContent } from "../comps/boot/TabbedContent.js";
+import { escapeCode } from "../utils/escapeCode.js";
 
-const nestingSource = `import { createComponent } from '@magnumjs/micro-ui';
+const nestingSource = escapeCode(`import { createComponent } from '@magnumjs/micro-ui';
 
 const Child = createComponent({
   props: { label: "" },
@@ -17,7 +18,7 @@ const Parent = createComponent({
 });
 
 Parent.mount(document.getElementById('parent-demo'));
-`;
+`);
 
 const nestingDemo = `
 <div id="parent-demo"></div>
@@ -66,5 +67,31 @@ export const Docs = DocsSection({
       <li>Organize components in separate files for maintainability.</li>
     </ul>
   `,
-  code: `import { createComponent } from "@magnumjs/micro-ui";`
+  code: `// Child triggers parent update via callback
+import { createComponent } from "@magnumjs/micro-ui";
+
+const Child = createComponent({
+  render({ props }) {
+    return \`<button id='child-btn'>\${props.label}</button>\`;
+  },
+  on: {
+    "click #child-btn": function () {
+      if (this.props.onChildClick) this.props.onChildClick();
+    }
+  }
+});
+
+const Parent = createComponent({
+  state: { count: 0 },
+  render({ state }) {
+    return \`
+      <div>
+        <p>Count: \${state.count}</p>
+        \${Child({ label: "Increment", onChildClick: () => this.setState({ count: state.count + 1 }) })}
+      </div>
+    \`;
+  }
+});
+
+Parent.mount(document.getElementById("parent-demo"));`
 });
