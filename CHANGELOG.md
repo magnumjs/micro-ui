@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.1](https://github.com/magnumjs/micro-ui/compare/v1.13.0...v1.13.1) (2025-09-15)
+
+
+### Bug Fixes
+
+* activeElement ([0670454](https://github.com/magnumjs/micro-ui/commit/067045476e4af1478abae4f59204fadbd0fd38c4))
+
 ## [1.13.0](https://github.com/magnumjs/micro-ui/compare/v1.12.0...v1.13.0) (2025-09-15)
 
 
