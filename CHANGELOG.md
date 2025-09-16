@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.3](https://github.com/magnumjs/micro-ui/compare/v1.13.2...v1.13.3) (2025-09-16)
+
+
+### Bug Fixes
+
+* slot content reuse ([f18beda](https://github.com/magnumjs/micro-ui/commit/f18bedaf3b6d273f5d2ab3dc14ab7c03eb0e3650))
+
 ### [1.13.2](https://github.com/magnumjs/micro-ui/compare/v1.13.1...v1.13.2) (2025-09-16)
 
 
