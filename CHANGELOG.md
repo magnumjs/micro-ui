@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.4](https://github.com/magnumjs/micro-ui/compare/v1.13.3...v1.13.4) (2025-09-16)
+
+
+### Bug Fixes
+
+* core issues with index and child comps cleanup ([34299be](https://github.com/magnumjs/micro-ui/commit/34299bef47e4893c07c6df9ec51398c2ca99a6e4))
+
 ### [1.13.3](https://github.com/magnumjs/micro-ui/compare/v1.13.2...v1.13.3) (2025-09-16)
 
 
