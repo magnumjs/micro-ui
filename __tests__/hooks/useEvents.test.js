@@ -8,19 +8,17 @@ import { useEmit } from "../../lib/hooks/useEmit.js";
 
 describe("useEvents", () => {
   test("mergeDataRefs merges multiple data-ref attributes into one", () => {
-    let mergedHtml;
     const Comp = createComponent({
       render() {
         useEvents();
         // Simulate a tag with multiple data-ref attributes
-        const html = '<div data-ref="a" data-ref="b" data-ref="c"></div>';
+        return '<div data-ref="a" data-ref="b" data-ref="c"></div>';
         // The hook should merge these
-        mergedHtml = Comp._beforeRenderCbs[0](html);
-        return mergedHtml;
       },
     });
-    Comp();
-    expect(mergedHtml).toBe('<div data-ref="a b c"></div>');
+    const container = document.createElement("div");
+    Comp.mount(container);
+    expect(container.innerHTML).toBe('<div data-ref="a b c"></div>');
   });
 
   it("modifies the API with .on method", () => {
