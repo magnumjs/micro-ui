@@ -1,4 +1,4 @@
-import { runBeforeHook } from "../lib/reactive-core-helpers/runBeforeHook.js";
+import { runBeforeHook } from "../lib/core/runBeforeHook.js";
 import { jest, describe, test, expect } from "@jest/globals";
 
 describe("runBeforeHook", () => {
