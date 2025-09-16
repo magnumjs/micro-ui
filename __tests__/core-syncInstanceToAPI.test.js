@@ -1,4 +1,4 @@
-import { syncInstanceToAPI } from "../lib/reactive-core-helpers/syncInstanceToAPI.js";
+import { syncInstanceToAPI } from "../lib/core/syncInstanceToAPI.js";
 
 describe("syncInstanceToAPI", () => {
   it("copies missing keys from instance to componentFn as getters", () => {

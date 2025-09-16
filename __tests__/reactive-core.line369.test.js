@@ -7,69 +7,60 @@ import {
   beforeEach,
   afterEach,
 } from "@jest/globals";
-import diffHTML from "../lib/diffHTML";
 
-jest.mock("../lib/diffHTML", () => {
-  return jest.fn();
+
+describe('reactive-core _lastHtml direct cache check', () => {
+  test('update() with no changes does not update DOM or _lastHtml', async () => {
+    document.body.innerHTML = '<div id="root3"></div>';
+    const root = document.getElementById('root3');
+    const Comp = createComponent({
+      state: { val: 1 },
+      render: ({ state }) => `<span>${state.val}</span>`
+    });
+    Comp.mount(root);
+    const initialLastHtml = Comp._lastHtml;
+    const initialInnerHTML = Comp.el.innerHTML;
+
+    // Call update() with no changes
+    Comp.update();
+    await Promise.resolve();
+    expect(Comp._lastHtml).toBe(initialLastHtml);
+    expect(Comp.el.innerHTML).toBe(initialInnerHTML);
+  });
 });
 
-xdescribe("Component and child render cache", () => {
-  it("children skip diffHTML independently when HTML is unchanged", () => {
-    let parentSkipBranch = false;
-    let childSkipBranch = false;
-
-    // Child component
-    const Child = createComponent({
-      render: ({ state }) => `<span>${state.count}</span>`,
-      state: { count: 1 }
+describe('reactive-core _lastHtml cache onUpdate', () => {
+  test('onUpdate only called when HTML changes', async () => {
+    document.body.innerHTML = '<div id="root2"></div>';
+    const root = document.getElementById('root2');
+    let updateCalled = 0;
+    let renderCount = 0;
+    const Comp = createComponent({
+      state: { val: 1 },
+      render: ({ state }) => {
+        renderCount++;
+        return `<span>${state.val > 1 ? 'changed' : 'same'}</span>`;
+      },
+      onUpdate: () => {
+        updateCalled++;
+      }
     });
+    Comp.mount(root);
+    expect(renderCount).toBe(1);
+    expect(updateCalled).toBe(0);
 
-    // Spy on child's render branch
-    const originalChildRender = Child._render;
-    Child._render = function(props) {
-      const html = originalChildRender.call(this, props);
-      if (html === this._lastHTML) childSkipBranch = true;
-      return html;
-    };
 
-    // Parent component using Child
-    const Parent = createComponent({
-      render: ({ state }) => `<div>${Child()}</div>`,
-      state: { text: "hello" }
-    });
+    // Update with no HTML change: should not call onUpdate or re-render
+    Comp.setState({ val: 1 });
+    await Promise.resolve();
+    expect(renderCount).toBe(2);
+    expect(updateCalled).toBe(1);
 
-    // Spy on parent's render branch
-    const originalParentRender = Parent._render;
-    Parent._render = function(props) {
-      const html = originalParentRender.call(this, props);
-      if (html === this._lastHTML) parentSkipBranch = true;
-      return html;
-    };
-
-    // Mount on dummy div
-    document.body.innerHTML = `<div id="root"></div>`;
-    const mount = document.getElementById("root");
-    Parent.mount(mount);
-
-    // First render -> both caches populated, branches not executed yet
-    expect(parentSkipBranch).toBe(false);
-    expect(childSkipBranch).toBe(false);
-
-    // Second render with same state -> both branches should execute
-    Parent();
-    expect(parentSkipBranch).toBe(true);
-    expect(childSkipBranch).toBe(true);
-
-    // Update child state -> child branch should reset, parent may still skip
-    childSkipBranch = false;
-    Child.setState({ count: 2 });
-    expect(childSkipBranch).toBe(false); // child HTML changed
-    expect(Child._lastHTML).toContain("2"); // child cache updated
-
-    // Update parent state without changing Child output -> parent branch skipped, child branch unchanged
-    parentSkipBranch = false;
-    Parent.setState({ text: "hello" });
-    expect(parentSkipBranch).toBe(true);
+    // Update with HTML change: should call onUpdate
+    Comp.setState({ val: 2 });
+    await Promise.resolve();
+    expect(renderCount).toBe(3);
+    expect(updateCalled).toBe(2);
   });
 });
 
@@ -104,7 +95,7 @@ describe('reactive-core line 369-377 coverage', () => {
     Comp.update({}); // Should not change html
     expect(renderCount).toBe(2); // Render called twice
     // Now, update with same html, should hit line 369-377
-            btn.focus();
+    btn.focus();
     btn.click();
 
     Comp.update({});

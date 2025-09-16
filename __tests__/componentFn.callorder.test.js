@@ -20,18 +20,23 @@ describe("componentFn child instance call order cache", () => {
     // First parent render
     const parent = Parent();
     // The parent should have a call cache with two unique instances
-    expect(parent._childCallCache).toBeDefined();
-    const first = parent._childCallCache[0];
-    const second = parent._childCallCache[1];
-    expect(first).not.toBe(second);
-    // Call Parent() again (simulate re-render)
-    // The same call order should reuse the same instances
-    expect(parent._childCallCache[0]).toBe(first);
-    expect(parent._childCallCache[1]).toBe(second);
-    // If a third call is made, a new instance is created
-    Child();
-    expect(parent._childCallCache[2]).not.toBe(first);
-    expect(parent._childCallCache[2]).not.toBe(second);
+  expect(parent._childCallCache).toBeDefined();
+  // Use the same composite key logic as the core
+  const compId = Child._id;
+  const key0 = `idx:0|comp:${compId}`;
+  const key1 = `idx:1|comp:${compId}`;
+  const key2 = `idx:2|comp:${compId}`;
+  const first = parent._childCallCache[key0];
+  const second = parent._childCallCache[key1];
+  expect(first).not.toBe(second);
+  // Call Parent() again (simulate re-render)
+  // The same call order should reuse the same instances
+  expect(parent._childCallCache[key0]).toBe(first);
+  expect(parent._childCallCache[key1]).toBe(second);
+  // If a third call is made, a new instance is created
+  Child();
+  expect(parent._childCallCache[key2]).not.toBe(first);
+  expect(parent._childCallCache[key2]).not.toBe(second);
   });
 });
 
