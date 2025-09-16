@@ -25,8 +25,7 @@ const Parent = createComponent({
     `;
   }
 });
-
-export const ParentChildInputExample = createComponent({
+const ParentChildInputExample = createComponent({
   render() {
     return `
       <h3>Parent-Child Controlled Input Example</h3>
@@ -35,8 +34,12 @@ export const ParentChildInputExample = createComponent({
       ${DocsSection({
         title: "Controlled Input Pattern",
         body: "Parent passes value and handler to child input; child updates parent state.",
-        code: `// ...see source above...`
+        codeUrl: `./pages/examples/ParentChildInput.js`
       })}
     `;
-  }
+  },
 });
+
+
+
+export { ParentChildInputExample };
