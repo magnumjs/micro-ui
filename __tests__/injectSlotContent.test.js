@@ -281,7 +281,7 @@ describe("injectSlotContent", () => {
     // Inject using wrapper with `.el`
     injectSlotContent(ref, [wrapper], api);
 
-    expect(container.innerHTML).toBe("<div>Hello from .el</div>");
+    expect(container.innerHTML).toBe("<!--slot--><div>Hello from .el</div>");
   });
 
   test("injects array of mounted components", () => {
