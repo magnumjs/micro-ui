@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.2](https://github.com/magnumjs/micro-ui/compare/v1.13.1...v1.13.2) (2025-09-16)
+
+
+### Bug Fixes
+
+* restore active element focus and selection ([3c512d2](https://github.com/magnumjs/micro-ui/commit/3c512d2a3259b1b5ad33b6ba10d093579e47e3ee))
+
 ### [1.13.1](https://github.com/magnumjs/micro-ui/compare/v1.13.0...v1.13.1) (2025-09-15)
 
 
