@@ -44,7 +44,7 @@
     "prepublishOnly": "npm run build",
     "release": "standard-version",
     "start": "node server.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --coverageReporters=text --coverageReporters=html --coverageDirectory=coverage"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --coverageReporters=text --coverageReporters=html --coverageReporters=\"json-summary\" --coverageDirectory=coverage"
   },
   "publishConfig": {
     "access": "public"

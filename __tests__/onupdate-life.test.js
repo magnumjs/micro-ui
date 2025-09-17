@@ -90,7 +90,15 @@ describe("onUpdate lifecycle", () => {
 
     await new Promise((resolve) => setTimeout(resolve, 70));
     // onUpdate should run only once and not loop
-    expect(logs).toEqual(["onMount", "onUpdate", "onUpdate"]);
+    expect(logs).toEqual(["onMount"]);
+    expect(container.textContent).toBe("0");
+
+       // Trigger update
+    Comp.setState({ count: 1 });
+
+    await new Promise((resolve) => setTimeout(resolve, 70));
+    // onUpdate should run only once and not loop
+    expect(logs).toEqual(["onMount", "onUpdate"]);
     expect(container.textContent).toBe("1");
   });
 });

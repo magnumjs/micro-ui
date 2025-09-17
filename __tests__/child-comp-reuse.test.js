@@ -7,7 +7,6 @@ test("slot hydration should reuse same child instance (no new ids on parent upda
   const Child = createComponent({
     render() {
 
-        console.log(this.props)
       // record id each time instance's render runs (constructor-time or render-time)
       ids.push(this._id);
       return `<div data-ref="child-input"><input /></div>`;
@@ -76,7 +75,6 @@ test("child component _id stays stable with keyed & non-keyed children", () => {
   Parent.update({ value1: 4, value2: 13 });
 
   const uniqueIds = Array.from(new Set(ids));
-  console.log("Child IDs:", ids);
   expect(uniqueIds.length).toBe(2); // one for non-keyed, one for keyed
 });
 
@@ -117,7 +115,6 @@ const Parent = createComponent(function Parent(props) {
   });
 
   const secondId = parent._mountedChildren[0]._id;
-  console.log(firstId, secondId);
   // ❌ currently fails because ids differ
   expect(secondId).toBe(firstId);
 });

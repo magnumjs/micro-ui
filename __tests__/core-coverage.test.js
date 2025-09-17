@@ -17,10 +17,10 @@ describe("setState Object.is optimization", () => {
     Comp.mount(container);
     Comp.setState({ value: 1 }); // Should not rerender
     await Promise.resolve();
-    expect(renderCount).toBe(2);
+    expect(renderCount).toBe(1);
     Comp.setState({ value: 2 }); // Should rerender
     await Promise.resolve();
-    expect(renderCount).toBe(3);
+    expect(renderCount).toBe(2);
   });
 
   it("core on function is chainable and registers multiple events", () => {

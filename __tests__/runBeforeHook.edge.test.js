@@ -1,5 +1,5 @@
 import { jest, test, expect, describe } from "@jest/globals";
-import { runBeforeHook } from "../lib/core/runBeforeHook.js";
+import { runBeforeHook } from "../lib/core/hooks.js";
 
 describe("runBeforeHook edge cases", () => {
   beforeEach(() => {
