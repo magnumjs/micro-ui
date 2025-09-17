@@ -26,5 +26,13 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Generate coverage badges
+        uses: jpb06/jest-badges-action@v1.2.0
+        with:
+          branches: master
+          coverage-summary-path: ./coverage/coverage-summary.json
+          output-folder: ./badges
+          fail-if-coverage-less-than: 0
+
       - name: Cleanup coverage directory
         run: rm -rf coverage

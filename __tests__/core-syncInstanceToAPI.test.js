@@ -1,4 +1,4 @@
-import { syncInstanceToAPI } from "../lib/core/syncInstanceToAPI.js";
+import { syncInstanceToAPI } from "../lib/core/propsHelpers.js";
 
 describe("syncInstanceToAPI", () => {
   it("copies missing keys from instance to componentFn as getters", () => {
