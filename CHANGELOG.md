@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/magnumjs/micro-ui/compare/v1.13.4...v1.14.0) (2025-09-18)
+
+
+### Features
+
+* added boostrap comps ([d486abd](https://github.com/magnumjs/micro-ui/commit/d486abd8bb646307fae4ba91f41f555f06ad4a67))
+
 ### [1.13.4](https://github.com/magnumjs/micro-ui/compare/v1.13.3...v1.13.4) (2025-09-16)
 
 
