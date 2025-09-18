@@ -1,3 +1,6 @@
+// micro-ui-bootstrap-starter.js
+import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
+
 // --- Box ---
 // Usage: Box({ className: "p-4 border rounded bg-light", style: "", content: "..." })
 export const Box = createComponent(({ props }) => {
@@ -13,8 +16,6 @@ export const Box = createComponent(({ props }) => {
   const content = typeof props.content === 'function' ? props.content() : (props.content || '');
   return `<div class='${className}' style='${style}'>${content}</div>`;
 });
-// micro-ui-bootstrap-starter.js
-import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
 
 // --- Layout Components ---
 export const Container = createComponent(({ props }) => {
