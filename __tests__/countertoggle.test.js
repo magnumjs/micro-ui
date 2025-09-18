@@ -85,9 +85,9 @@ test("CounterWithToggle handles refs, events, and lifecycle", async () => {
   expect(logs).toContain("onUnmount");
 
   // Toggle back (remount inner DOM)
-  //  CounterWithToggle.update(); // triggers re-render with visible=false still?
+   CounterWithToggle.update({key:1}); // triggers re-render with visible=false still?
   ParentContainer.setVisible(true); // 👈 restore slot
-  //CounterWithToggle.update();
-
+  await Promise.resolve();
+  CounterWithToggle.update();
   expect(document.body.querySelector("button[ref=btn]").textContent).toBe("1");
 });
