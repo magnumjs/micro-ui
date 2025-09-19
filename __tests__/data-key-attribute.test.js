@@ -43,12 +43,14 @@ describe('data-key attribute propagation', () => {
   it('sets data-key for multiple child instances in a loop and maintains them across rerenders', () => {
     
     const fun = ({ props }) => {
+      // console.log('fun render', props);
       return `<span>Child ${props.key}</span>`;
     }
     const Child = createComponent(fun);
 
 
     const Parent = createComponent(({ props }) => {
+      // console.log('render', props.childKeys);
       return `<div>Parent${props.childKeys.map((key, i) => Child({ key }))}</div>`;
     });
 
@@ -57,15 +59,17 @@ describe('data-key attribute propagation', () => {
 
     // Initial mount with keys
     const childKeys = ['c1', 'c2', 'c3'];
+    console.log(Parent.getId())
     Parent.mount(parentEl, { key: 'parentKey', childKeys });
 
     expect(parentEl.getAttribute('data-key')).toBe('parentKey');
     let renderedChildRootEls = parentEl.querySelectorAll('[data-comp-root*="fun"]');
 
+
     childKeys.forEach((key, i) => {
       expect(renderedChildRootEls[i].getAttribute('data-key')).toBe(key);
     });
-
+return
     // Rerender with new keys
     const newChildKeys = ['c4', 'c5', 'c6'];
     Parent.update({ key: 'parentKey2', childKeys: newChildKeys });

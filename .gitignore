@@ -9,3 +9,4 @@ coverage
 *.log
 *.tmp
 docs/code-md/
+.prettierrc.json
