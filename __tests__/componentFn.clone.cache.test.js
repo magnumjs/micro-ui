@@ -30,7 +30,7 @@ describe("componentFn clone and call order cache", () => {
     expect(children[1].textContent).toBe("Child 2: 2");
     expect(children[2].textContent).toBe("Child 3: 3");
 
-    // Trigger parent re-render with new items
+    // Trigger parent re-render with new items©
     Parent.setState({ items: [4, 5] });
     await Promise.resolve();
 
@@ -38,9 +38,11 @@ describe("componentFn clone and call order cache", () => {
     expect(children2.length).toBe(2);
     expect(children2[0].textContent).toBe("Child 4: 1");
     expect(children2[1].textContent).toBe("Child 5: 3");
+    Parent.unmount()
   });
 
   it("creates unique child instances per parent render call order and resets cache on new render", async () => {
+   document.body.innerHTML = "";
     const Child = createComponent({
       state: { count: 0 },
       render({ props, state }) {
@@ -77,6 +79,7 @@ describe("componentFn clone and call order cache", () => {
     expect(children2.length).toBe(2);
     expect(children2[0].textContent).toBe("Child 4: 0");
     expect(children2[1].textContent).toBe("Child 5: 0");
+    Parent.unmount();
   });
 });
 it("updates state via onUpdate with safety guard (no keys)", async () => {

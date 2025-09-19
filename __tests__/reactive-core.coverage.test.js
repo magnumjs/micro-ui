@@ -155,4 +155,17 @@ describe("reactive-core full coverage", () => {
     expect(fn).toHaveBeenCalledWith(123);
     bus.clear();
   });
+  test("renderComponent returns String object with _id and toFragment", () => {
+    const comp = createComponent(() => `<span>Hello</span>`);
+    // Directly call render to get the return value
+    const result = comp.render();
+    expect(typeof result).toBe("object");
+    expect(result instanceof String).toBe(true);
+    expect(result._id).toBe(comp._id);
+    expect(typeof result.toFragment).toBe("function");
+    const frag = result.toFragment();
+    expect(frag instanceof DocumentFragment).toBe(true);
+    expect(frag.firstChild.tagName).toBe("SPAN");
+    expect(frag.firstChild.textContent).toBe("Hello");
+  });
 });

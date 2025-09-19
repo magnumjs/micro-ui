@@ -1,7 +1,6 @@
-
 import { createComponent } from '//unpkg.com/@magnumjs/micro-ui?module';
 import { escapeCode } from "../utils/escapeCode.js";
-import { Card } from "./boot/Bootstrap.js";
+import { Card } from "//unpkg.com/@magnumjs/micro-ui/esmall";
 import { loadSourceCode } from "../utils/loadSourceCode.js";
 
 export const DocsSection = createComponent({
