@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/magnumjs/micro-ui/compare/v1.14.0...v1.15.0) (2025-09-19)
+
+
+### Features
+
+* allow top level cloning by key ([3799f22](https://github.com/magnumjs/micro-ui/commit/3799f2269a2edb2bad31b633eb5a01390009f2c2))
+
 ## [1.14.0](https://github.com/magnumjs/micro-ui/compare/v1.13.4...v1.14.0) (2025-09-18)
 
 
