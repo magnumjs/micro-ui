@@ -36,7 +36,12 @@ jobs:
       - name: Check for changes in lib/
         id: libchanges
         run: |
-          git diff --quiet HEAD^ HEAD -- lib/ || echo "lib_changed=true" >> $GITHUB_ENV
+          last_tag=$(git describe --tags --abbrev=0)
+          if git diff --quiet $last_tag HEAD -- lib/; then
+            echo "lib_changed=false" >> $GITHUB_ENV
+          else
+            echo "lib_changed=true" >> $GITHUB_ENV
+          fi
 
       - name: Bump version & changelog
         if: env.lib_changed == 'true'
