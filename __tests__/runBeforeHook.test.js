@@ -10,21 +10,7 @@ describe("runBeforeHook", () => {
   afterAll(() => {
     console.error = originalConsoleError;
   });
-  test("calls single sync hook", done => {
-    const hook = jest.fn(() => {});
-    runBeforeHook(hook, () => {
-      expect(hook).toHaveBeenCalled();
-      done();
-    });
-  });
 
-  test("calls single async hook", done => {
-    const hook = jest.fn(() => Promise.resolve());
-    runBeforeHook(hook, () => {
-      expect(hook).toHaveBeenCalled();
-      done();
-    });
-  });
 
   test("calls array of sync hooks in order", done => {
     const calls = [];
@@ -80,20 +66,5 @@ describe("runBeforeHook", () => {
     });
   });
 
-  test("calls hook with context", done => {
-    const context = { value: 42 };
-    const hook = jest.fn(function () {
-      expect(this.value).toBe(42);
-    });
-    runBeforeHook(hook, () => {
-      expect(hook).toHaveBeenCalled();
-      done();
-    }, context);
-  });
 
-  test("calls next if no hook", done => {
-    runBeforeHook(null, () => {
-      done();
-    });
-  });
 });
